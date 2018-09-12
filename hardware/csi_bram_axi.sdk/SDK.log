@@ -1,0 +1,8 @@
+01:54:31 INFO  : Registering command handlers for SDK TCF services
+01:54:37 INFO  : Launching XSCT server: xsct -n -interactive /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.sdk/temp_xsdb_launch_script.tcl
+01:54:44 INFO  : XSCT server has started successfully.
+01:55:01 INFO  : Successfully done setting XSCT server connection channel  
+01:55:01 INFO  : Successfully done setting SDK workspace  
+01:55:01 INFO  : Restoring global repository preferences: 
+		 /media/gabriel/Files/Xilinx18/device-tree-xlnx-xilinx-v2018.1
+01:55:02 INFO  : Processing command line option -hwspec /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.sdk/design_1_wrapper.hdf.

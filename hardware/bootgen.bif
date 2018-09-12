@@ -1,0 +1,7 @@
+//arch = zynq; split = false; format = BIN
+the_ROM_image:
+{
+    [bootloader]/home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.sdk/zynq_fsbl_0/Debug/zynq_fsbl_0.elf
+    /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.sdk/design_1_wrapper_hw_platform_0/design_1_wrapper.bit
+    /media/gabriel/Files/Xilinx18/u-boot-xlnx-xilinx-v2018.1/u-boot.elf
+}

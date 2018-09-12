@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2018.1 (64-bit)
+# SW Build 2188600 on Wed Apr  4 18:39:19 MDT 2018
+# 
+# Start of session at: Wed Sep 12 01:57:22 2018
+# Process ID: 16732
+# Current directory: /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.sdk/webtalk
+# Command line: wbtcv -mode batch -source sdk_webtalk.tcl
+# Log file: /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.sdk/webtalk/webtalk.log
+# Journal file: /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.sdk/webtalk/webtalk.jou
+#-----------------------------------------------------------
+source sdk_webtalk.tcl
