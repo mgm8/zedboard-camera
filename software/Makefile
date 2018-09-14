@@ -1,7 +1,7 @@
 TARGET=zedcam
 
 ifndef BUILD_DIR
-	BUILD_DIR=$(CURDIR)
+	BUILD_DIR=build
 endif
 
 CXX=g++
@@ -9,6 +9,7 @@ FLAGS=-std=c++11
 OPENCV_FLAGS=`pkg-config --cflags --libs opencv`
 
 all: $(BUILD_DIR)/main.o
+	mkdir -p $(BUILD_DIR)
 	$(MAKE) BUILD_DIR=$(CURDIR)/$(BUILD_DIR) -C devices
 	$(MAKE) BUILD_DIR=$(CURDIR)/$(BUILD_DIR) -C drivers
 	$(CXX) $(FLAGS) $(BUILD_DIR)/*.o -o $(BUILD_DIR)/$(TARGET) $(OPENCV_FLAGS)
