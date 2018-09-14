@@ -46,7 +46,7 @@ ZynqAXI::ZynqAXI()
     this->is_open = false;
 }
 
-ZynqAXI::ZynqAXI(uint32_t base_adr, uint32_t map_size)
+ZynqAXI::ZynqAXI(off_t base_adr, uint32_t map_size)
     : ZynqAXI()
 {
     this->Open(base_adr, map_size);
@@ -57,9 +57,9 @@ ZynqAXI::~ZynqAXI()
     this->Close();
 }
 
-bool ZynqAXI::Open(uint32_t base_adr, uint32_t map_size)
+bool ZynqAXI::Open(off_t base_adr, uint32_t map_size)
 {
-    this->dev_base = off_t(base_adr);
+    this->dev_base = base_adr;
 
     this->memfd = open("/dev/mem", O_RDWR | O_SYNC);
 
@@ -93,14 +93,14 @@ bool ZynqAXI::Close()
 {
     if (this->is_open)
     {
-        close(this->memfd);
-
         if (munmap(this->mapped_base, this->width) == -1)
         {
             throw runtime_error("Can't unmap memory from user space!");
 
             return false;
         }
+
+        close(this->memfd);
 
         this->is_open = false;
 

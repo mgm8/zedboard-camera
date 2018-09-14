@@ -77,7 +77,7 @@ class ZynqAXI
          *
          * \return None
          */
-        ZynqAXI(uint32_t base_adr, uint32_t map_size=ZYNQAXI_DEFAULT_MAP_SIZE);
+        ZynqAXI(off_t base_adr, uint32_t map_size=ZYNQAXI_DEFAULT_MAP_SIZE);
 
         /**
          * \brief Class destructor.
@@ -94,7 +94,7 @@ class ZynqAXI
          *
          * \return TRUE/FALSE if successful or not.
          */
-        bool Open(uint32_t base_adr=ZYNQAXI_DEFAULT_BASE_ADDRESS, uint32_t map_size=ZYNQAXI_DEFAULT_MAP_SIZE);
+        bool Open(off_t base_adr=ZYNQAXI_DEFAULT_BASE_ADDRESS, uint32_t map_size=ZYNQAXI_DEFAULT_MAP_SIZE);
 
         /**
          * \brief Close the device.
