@@ -37,42 +37,70 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include <errno.h>
+#include <string.h>
 
 #include "i2c.h"
 
 I2C::I2C()
 {
-    
+    this->debug = new Debug("I2C");
 }
 
 I2C::I2C(const char* dev_adr, uint8_t dev_id)
+    : I2C()
 {
     this->Setup(dev_adr, dev_id);
 }
 
 I2C::~I2C()
 {
-    if (fd >= 0)
+    errno = 0;
+
+    if (close(fd) < 0)
     {
-        close(fd);
+        this->debug->WriteEvent("Error closing device: ");
+        this->debug->WriteMsg(strerror(errno));
+        this->debug->NewLine();
     }
 }
 
 bool I2C::Setup(const char* dev_adr, uint8_t dev_id)
 {
+    this->debug->WriteEvent("Configuring peripheral ");
+    this->debug->WriteHex(dev_id);
+    this->debug->WriteMsg(" in \"");
+    this->debug->WriteMsg(dev_adr);
+    this->debug->WriteMsg("\"...");
+    this->debug->NewLine();
+
+    errno = 0;
+
     if ((fd = open(dev_adr, O_RDWR)) < 0)
     {
+        this->debug->WriteEvent("Error opening \"");
+        this->debug->WriteMsg(dev_adr);
+        this->debug->WriteMsg("\": ");
+        this->debug->WriteMsg(strerror(errno));
+        this->debug->NewLine();
+
         return false;
     }
 
+    errno = 0;
+
     if (ioctl(fd, I2C_SLAVE, dev_id) < 0)
     {
+        this->debug->WriteEvent("Error configuring peripheral ");
+        this->debug->WriteHex(dev_id);
+        this->debug->WriteMsg(": ");
+        this->debug->WriteMsg(strerror(errno));
+        this->debug->NewLine();
+
         return false;
     }
-    else
-    {
-        return true;
-    }
+
+    return true;
 }
 
 int I2C::SMBusAccess(int8_t rw, uint8_t command, uint16_t len, I2C_SMBus_Data *data)
@@ -83,8 +111,19 @@ int I2C::SMBusAccess(int8_t rw, uint8_t command, uint16_t len, I2C_SMBus_Data *d
     args.command    = command;
     args.size       = len;
     args.data       = data;
-    
-    return ioctl(fd, I2C_SMBUS, &args);
+
+    errno = 0;
+
+    if (ioctl(fd, I2C_SMBUS, &args) < 0)
+    {
+        this->debug->WriteEvent("Error during SMBus access: ");
+        this->debug->WriteMsg(strerror(errno));
+        this->debug->NewLine();
+
+        return false;
+    }
+
+    return true;
 }
 
 uint8_t I2C::Read()

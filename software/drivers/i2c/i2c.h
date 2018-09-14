@@ -38,9 +38,7 @@
 
 #include <stdint.h>
 
-#define I2C_DEV_ADR_RPI_1                   "/dev/i2c-0"
-#define I2C_DEV_ADR_RPI_2                   "/dev/i2c-1"
-#define I2C_DEV_ADR_ZED_1                   "/dev/i2c-1"
+#include <devices/debug/debug.h>
 
 // I2C definitions
 #define I2C_SLAVE                           0x0703
@@ -94,6 +92,11 @@ class I2C
 {
     private:
         int fd;     /**< File descriptor. */
+
+        /**
+         * \brief Debug messages class.
+         */
+        Debug *debug;
 
         /**
          * \brief 
