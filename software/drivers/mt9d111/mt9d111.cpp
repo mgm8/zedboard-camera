@@ -49,9 +49,6 @@ MT9D111::MT9D111()
     this->is_open = false;
 
     this->debug = new Debug("MT9D111");
-
-    this->debug->WriteEvent("Object created!");
-    this->debug->NewLine();
 }
 
 MT9D111::MT9D111(const char *dev_adr)
@@ -66,9 +63,6 @@ MT9D111::MT9D111(const char *dev_adr)
 
 MT9D111::~MT9D111()
 {
-    this->debug->WriteEvent("Destroying object...");
-    this->debug->NewLine();
-
     if (this->is_open)
     {
         delete this->i2c;
@@ -82,6 +76,7 @@ MT9D111::~MT9D111()
 bool MT9D111::Open(const char *dev_adr)
 {
     this->debug->WriteEvent(string("Opening device \"") + string(dev_adr) + string("\"..."));
+    this->debug->NewLine();
 
     this->i2c     = new I2C;
     this->reset   = new GPIO;
@@ -91,9 +86,6 @@ bool MT9D111::Open(const char *dev_adr)
         reset->Open(MT9D111_GPIO_RESET, GPIO_DIR_OUTPUT) and
         standby->Open(MT9D111_GPIO_STANDBY, GPIO_DIR_OUTPUT))
     {
-        this->debug->WriteMsg("SUCCESS!");
-        this->debug->NewLine();
-
         if (this->HardReset())
         {
             this->is_open = true;
@@ -107,7 +99,7 @@ bool MT9D111::Open(const char *dev_adr)
     }
     else
     {
-        this->debug->WriteMsg("FAILURE!");
+        this->debug->WriteEvent("Error opening device!");
         this->debug->NewLine();
 
         this->is_open = false;
@@ -168,16 +160,22 @@ bool MT9D111::WriteRegBit(uint8_t adr, uint8_t bit, bool state)
 
 bool MT9D111::HardReset()
 {
-    this->debug->WriteEvent("Hard reset...");
+    this->debug->WriteEvent("Executing hard reset...");
     this->debug->NewLine();
 
     if (!this->standby->Set(false))
     {
+        this->debug->WriteEvent("Error during hard reset!");
+        this->debug->NewLine();
+
         return false;
     }
 
     if (!this->reset->Set(false))
     {
+        this->debug->WriteEvent("Error during hard reset!");
+        this->debug->NewLine();
+
         return false;
     }
 
@@ -185,6 +183,9 @@ bool MT9D111::HardReset()
 
     if (!this->reset->Set(true))
     {
+        this->debug->WriteEvent("Error during hard reset!");
+        this->debug->NewLine();
+
         return false;
     }
 
@@ -193,30 +194,42 @@ bool MT9D111::HardReset()
 
 bool MT9D111::SoftReset()
 {
-    this->debug->WriteEvent("Soft reset...");
+    this->debug->WriteEvent("Executing soft reset...");
     this->debug->NewLine();
 
     // Bypass the PLL
     if (!this->WriteReg(MT9D111_REG_CLOCK_CONTROL, 0xA000))
     {
+        this->debug->WriteEvent("Error during soft reset!");
+        this->debug->NewLine();
+
         return false;
     }
 
     // Perform MCU reset
     if (!this->WriteReg(MT9D111_REG_ASSERT_STROBE_T3, 0x0501))
     {
+        this->debug->WriteEvent("Error during soft reset!");
+        this->debug->NewLine();
+
         return false;
     }
 
     // Enable soft reset
     if (!this->WriteReg(MT9D111_REG_RESET, 0x0021))
     {
+        this->debug->WriteEvent("Error during soft reset!");
+        this->debug->NewLine();
+
         return false;
     }
 
     // Disable soft reset
     if (!this->WriteReg(MT9D111_REG_RESET, 0x0000))
     {
+        this->debug->WriteEvent("Error during soft reset!");
+        this->debug->NewLine();
+
         return false;
     }
 
@@ -225,19 +238,51 @@ bool MT9D111::SoftReset()
 
 bool MT9D111::HardStandby(bool s)
 {
-    this->debug->WriteEvent("Hard standby...");
+    if (s)
+    {
+        this->debug->WriteEvent("Enabling hard standby...");
+    }
+    else
+    {
+        this->debug->WriteEvent("Disabling hard standby...");
+    }
+
     this->debug->NewLine();
 
-    return this->standby->Set(s);
+    if (!this->standby->Set(s))
+    {
+        this->debug->WriteEvent("Error during hard standby!");
+        this->debug->NewLine();
+
+        return false;
+    }
+
+    return true;
 }
 
 bool MT9D111::SoftStandby(bool s)
 {
-    this->debug->WriteEvent("Soft standby...");
-    this->debug->NewLine();
+    this->SetRegisterPage(MT9D111_REG_PAGE_0);
+
+    if (s)
+    {
+        this->debug->WriteEvent("Enabling soft standby...");
+    }
+    else
+    {
+        this->debug->WriteEvent("Disabling soft standby...");
+    }
 
     // Changing the STANDBY bit state
-    return this->WriteRegBit(MT9D111_REG_RESET, 2, s);
+    if (!this->WriteRegBit(MT9D111_REG_RESET, 2, s))
+    {
+        this->debug->WriteEvent("Error during soft standby!");
+        this->debug->NewLine();
+
+        return false;
+    }
+
+    return true;
 }
 
 bool MT9D111::EnablePLL(uint16_t val_1, uint16_t val_2)
@@ -255,12 +300,18 @@ bool MT9D111::EnablePLL(uint16_t val_1, uint16_t val_2)
     if (!(this->WriteReg(MT9D111_REG_PLL_CONTROL_1, val_1) and
         this->WriteReg(MT9D111_REG_PLL_CONTROL_2, val_2)))
     {
+        this->debug->WriteEvent("Error enabling the PLL!");
+        this->debug->NewLine();
+
         return false;
     }
 
     // Power up PLL
     if (!this->WriteRegBit(MT9D111_REG_CLOCK_CONTROL, 14, false))
     {
+        this->debug->WriteEvent("Error enabling the PLL!");
+        this->debug->NewLine();
+
         return false;
     }
 
@@ -270,6 +321,9 @@ bool MT9D111::EnablePLL(uint16_t val_1, uint16_t val_2)
     // Turn off PLL bypass
     if (!this->WriteRegBit(MT9D111_REG_CLOCK_CONTROL, 15, false))
     {
+        this->debug->WriteEvent("Error enabling the PLL!");
+        this->debug->NewLine();
+
         return false;
     }
 
@@ -278,7 +332,19 @@ bool MT9D111::EnablePLL(uint16_t val_1, uint16_t val_2)
 
 bool MT9D111::SetRegisterPage(uint16_t page)
 {
-    return this->WriteReg(MT9D111_REG_PAGE_REGISTER, page);
+    if (this->WriteReg(MT9D111_REG_PAGE_REGISTER, page))
+    {
+        return true;
+    }
+    else
+    {
+        this->debug->WriteEvent("Error configuring register page to ");
+        this->debug->WriteDec(page);
+        this->debug->WriteMsg("!");
+        this->debug->NewLine();
+
+        return false;
+    }
 }
 
 bool MT9D111::GetRegisterPage(uint16_t *page)
@@ -306,7 +372,13 @@ bool MT9D111::Config()
 
     for(uint8_t i=0; i<(sizeof(reg_vals_qvga_30fps)/sizeof(Register)); i++)
     {
-        this->WriteAndCheckReg(reg_vals_qvga_30fps[i].address, reg_vals_qvga_30fps[i].value);
+        if (!this->WriteAndCheckReg(reg_vals_qvga_30fps[i].address, reg_vals_qvga_30fps[i].value))
+        {
+            this->debug->WriteEvent("Error loading configuration parameters!");
+            this->debug->NewLine();
+
+            return false;
+        }
     }
 
     return true;
@@ -327,24 +399,13 @@ bool MT9D111::EnterStandby(uint8_t type)
 
 bool MT9D111::LeaveStandby(uint8_t type)
 {
-    this->debug->WriteEvent("Leaving ");
-
     switch(type)
     {
         case MT9D111_STANDBY_HARD:
-            this->debug->WriteMsg("HARD standby...");
-            this->debug->NewLine();
-
             return this->HardStandby(false);
         case MT9D111_STANDBY_SOFT:
-            this->debug->WriteMsg("SOFT standby...");
-            this->debug->NewLine();
-
             return this->SoftStandby(false);
         default:
-            this->debug->WriteMsg("HARD standby...");
-            this->debug->NewLine();
-
             return this->HardStandby(false);
     }
 }
@@ -407,6 +468,11 @@ bool MT9D111::WriteReg(uint8_t adr, uint16_t val)
     }
     else
     {
+        this->debug->WriteEvent("Error writing to register ");
+        this->debug->WriteHex(adr);
+        this->debug->WriteMsg(": Device not opened!");
+        this->debug->NewLine();
+
         return false;
     }
 }
@@ -447,6 +513,7 @@ bool MT9D111::WriteAndCheckReg(uint8_t adr, uint16_t val, unsigned int attempts)
 bool MT9D111::CheckDevice()
 {
     this->debug->WriteEvent("Checking device...");
+    this->debug->NewLine();
 
     if (this->is_open)
     {
@@ -454,7 +521,7 @@ bool MT9D111::CheckDevice()
 
         if (!this->ReadReg(MT9D111_REG_RESERVED, &reg_val))
         {
-            this->debug->WriteMsg("FAILURE!");
+            this->debug->WriteEvent("Error checking device: Reading failure!");
             this->debug->NewLine();
 
             return false;
@@ -469,9 +536,6 @@ bool MT9D111::CheckDevice()
         }
         else
         {
-            this->debug->WriteMsg("FAILURE!");
-            this->debug->NewLine();
-
             this->debug->WriteEvent("Wrong device ID! (read=");
             this->debug->WriteHex(reg_val);
             this->debug->WriteMsg(", expected=");
@@ -484,9 +548,6 @@ bool MT9D111::CheckDevice()
     }
     else
     {
-        this->debug->WriteMsg("FAILURE!");
-        this->debug->NewLine();
-
         this->debug->WriteEvent("Communication bus not opened!");
         this->debug->NewLine();
 
@@ -496,46 +557,42 @@ bool MT9D111::CheckDevice()
 
 bool MT9D111::SetMode(uint8_t mode)
 {
-    this->debug->WriteEvent("Set mode to ");
+    this->debug->WriteEvent("Configuring mode to ");
 
     switch(mode)
     {
         case MT9D111_MODE_PREVIEW:
             this->debug->WriteMsg("PREVIEW...");
+            this->debug->NewLine();
 
             if (this->WriteReg(MT9D111_REG_CONTEXT_CONTROL, 0x0000) and
                 this->WriteReg(MT9D111_REG_HORIZONTAL_BLANKING_A, 0x00AE) and
                 this->WriteReg(MT9D111_REG_VERTICAL_BLANKING_A, 0x0010) and
                 this->WriteReg(MT9D111_REG_READ_MODE_A, 0x0490))
             {
-                this->debug->WriteMsg("SUCCESS!");
-                this->debug->NewLine();
-
                 return true;
             }
             else
             {
-                this->debug->WriteMsg("FAILURE!");
+                this->debug->WriteEvent("Error configuring the mode!");
                 this->debug->NewLine();
 
                 return false;
             }
         case MT9D111_MODE_CAPTURE:
             this->debug->WriteMsg("PREVIEW...");
+            this->debug->NewLine();
 
             if (this->WriteReg(MT9D111_REG_CONTEXT_CONTROL, 0x000B) and
                 this->WriteReg(MT9D111_REG_HORIZONTAL_BLANKING_B, 0x015C) and
                 this->WriteReg(MT9D111_REG_VERTICAL_BLANKING_B, 0x0020) and
                 this->WriteReg(MT9D111_REG_READ_MODE_B, 0x0000))
             {
-                this->debug->WriteMsg("SUCCESS!");
-                this->debug->NewLine();
-
                 return true;
             }
             else
             {
-                this->debug->WriteMsg("FAILURE!");
+                this->debug->WriteEvent("Error configuring the mode!");
                 this->debug->NewLine();
 
                 return false;
@@ -647,6 +704,9 @@ bool MT9D111::SetResolution(uint8_t mode, uint16_t width, uint16_t height)
 
     if ((width > MT9D111_OUTPUT_MAX_WIDTH) or (height > MT9D111_OUTPUT_MAX_HEIGHT))
     {
+        this->debug->WriteEvent("Out-of-range resolution!");
+        this->debug->NewLine();
+
         return false;
     }
 
@@ -714,36 +774,47 @@ bool MT9D111::SetSpecialEffects(uint8_t effect)
     switch(effect)
     {
         case MT9D111_SPECIAL_EFFECTS_DISABLED:
-            this->debug->WriteMsg("DISABLED");
+            this->debug->WriteMsg("DISABLED...");
+            this->debug->NewLine();
+
             this->WriteReg(MT9D111_REG_SPECIAL_EFFECTS, MT9D111_SPECIAL_EFFECTS_DISABLED | (1 << 6));
             break;
         case MT9D111_SPECIAL_EFFECTS_MONOCHROME:
-            this->debug->WriteMsg("MONOCHROME");
+            this->debug->WriteMsg("MONOCHROME...");
+            this->debug->NewLine();
+
             this->WriteReg(MT9D111_REG_SPECIAL_EFFECTS, MT9D111_SPECIAL_EFFECTS_MONOCHROME | (1 << 6));
             break;
         case MT9D111_SPECIAL_EFFECTS_SEPIA:
-            this->debug->WriteMsg("SEPIA");
+            this->debug->WriteMsg("SEPIA...");
+            this->debug->NewLine();
+
             this->WriteReg(MT9D111_REG_SPECIAL_EFFECTS, MT9D111_SPECIAL_EFFECTS_SEPIA | (1 << 6));
             break;
         case MT9D111_SPECIAL_EFFECTS_NEGATIVE:
-            this->debug->WriteMsg("NEGATIVE");
+            this->debug->WriteMsg("NEGATIVE...");
+            this->debug->NewLine();
+
             this->WriteReg(MT9D111_REG_SPECIAL_EFFECTS, MT9D111_SPECIAL_EFFECTS_NEGATIVE | (1 << 6));
             break;
         case MT9D111_SPECIAL_EFFECTS_SOLARIZATION_WITH_UNMODIFIED_UV:
-            this->debug->WriteMsg("SOLARIZATION WITH UNMODIFIED UV");
+            this->debug->WriteMsg("SOLARIZATION WITH UNMODIFIED UV...");
+            this->debug->NewLine();
+
             this->WriteReg(MT9D111_REG_SPECIAL_EFFECTS, MT9D111_SPECIAL_EFFECTS_SOLARIZATION_WITH_UNMODIFIED_UV | (1 << 6));
             break;
         case MT9D111_SPECIAL_EFFECTS_SOLARIZATION_WITH_UV:
-            this->debug->WriteMsg("SOLARIZATION WITH UV");
+            this->debug->WriteMsg("SOLARIZATION WITH UV...");
+            this->debug->NewLine();
+
             this->WriteReg(MT9D111_REG_SPECIAL_EFFECTS, MT9D111_SPECIAL_EFFECTS_SOLARIZATION_WITH_UV | (1 << 6));
             break;
         default:
-            this->debug->WriteMsg("UNKNOWN");
+            this->debug->WriteMsg("UNKNOWN...");
+            this->debug->NewLine();
+
             return false;
     }
-
-    this->debug->WriteMsg("...");
-    this->debug->NewLine();
 
     this->SetRegisterPage(MT9D111_REG_PAGE_1);
 
@@ -781,32 +852,42 @@ bool MT9D111::SetAutoExposure(uint8_t state, uint8_t config)
             return false;
     }
 
-    this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_8_BIT_ACCESS |
-                                                                 MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
-                                                                 MT9D111_DRIVER_ID_SEQUENCER |
-                                                                 seq_state);
-
     switch(config)
     {
         case MT9D111_AUTO_EXPOSURE_OFF:
             this->debug->WriteMsg("OFF...");
+            this->debug->NewLine();
+
             break;
         case MT9D111_AUTO_EXPOSURE_FAST_SETTLING:
             this->debug->WriteMsg("FAST SETTLING...");
+            this->debug->NewLine();
+
             break;
         case MT9D111_AUTO_EXPOSURE_MANUAL:
             this->debug->WriteMsg("MANUAL...");
+            this->debug->NewLine();
+
             break;
         case MT9D111_AUTO_EXPOSURE_CONTINUOUS:
             this->debug->WriteMsg("CONTINUOUS...");
+            this->debug->NewLine();
+
             break;
         case MT9D111_AUTO_EXPOSURE_FAST_SETTLING_PLUS_METERING:
             this->debug->WriteMsg("FAST SETTLING + METERING...");
+            this->debug->NewLine();
+
             break;
         default:
             this->debug->WriteMsg("UNKNOWN...");
             return false;
     }
+
+    this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_8_BIT_ACCESS |
+                                                                 MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                 MT9D111_DRIVER_ID_SEQUENCER |
+                                                                 seq_state);
 
     this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, config);
 
@@ -822,10 +903,16 @@ bool MT9D111::SetFIFO(bool en, bool spoof)
 
     if (en)
     {
+        this->debug->WriteEvent("Enabling FIFO bypass...");
+        this->debug->NewLine();
+
         this->WriteReg(MT9D111_REG_JPEG_ENCODER_BYPASS, 1);
     }
     else
     {
+        this->debug->WriteEvent("Disabling FIFO bypass...");
+        this->debug->NewLine();
+
         this->WriteReg(MT9D111_REG_JPEG_ENCODER_BYPASS, 0);
     }
 
@@ -840,12 +927,18 @@ bool MT9D111::SetSpoofFrames(bool en, uint16_t width, uint16_t height)
 
     if (en)
     {
+        this->debug->WriteEvent("Enabling spoof frames...");
+        this->debug->NewLine();
+
         this->WriteRegBit(MT9D111_REG_OUTPUT_CONFIG, 0, true);
         this->WriteReg(MT9D111_REG_SPOOF_FRAME_WIDTH, width);
         this->WriteReg(MT9D111_REG_SPOOF_FRAME_HEIGHT, height);
     }
     else
     {
+        this->debug->WriteEvent("Disabling spoof frames...");
+        this->debug->NewLine();
+
         this->WriteRegBit(MT9D111_REG_OUTPUT_CONFIG, 0, false);
     }
 
@@ -904,19 +997,35 @@ bool MT9D111::SequencerCmd(uint8_t cmd)
 
 bool MT9D111::SetRowSkipping(uint8_t context, uint8_t skip)
 {
+    this->debug->WriteEvent("Configuring row skipping as ");
+
     // Testing skip value
     switch(skip)
     {
-        case MT9D111_SKIP_2X:   break;
-        case MT9D111_SKIP_4X:   break;
-        case MT9D111_SKIP_8X:   break;
-        case MT9D111_SKIP_16X:  break;
-        default:                return false;
+        case MT9D111_SKIP_2X:
+            this->debug->WriteMsg("2x");
+            break;
+        case MT9D111_SKIP_4X:
+            this->debug->WriteMsg("4x");
+            break;
+        case MT9D111_SKIP_8X:
+            this->debug->WriteMsg("8x");
+            break;
+        case MT9D111_SKIP_16X:
+            this->debug->WriteMsg("16x");
+            break;
+        default:
+            this->debug->WriteMsg("INVALID!");
+            this->debug->NewLine();
+            return false;
     }
 
     switch(context)
     {
         case MT9D111_MODE_PREVIEW:
+            this->debug->WriteMsg(" for PREVIEW mode...");
+            this->debug->NewLine();
+
             // Enable row skip
             this->WriteRegBit(MT9D111_REG_READ_MODE_A, 4, true);
 
@@ -942,6 +1051,9 @@ bool MT9D111::SetRowSkipping(uint8_t context, uint8_t skip)
 
             break;
         case MT9D111_MODE_CAPTURE:
+            this->debug->WriteMsg(" for CAPTURE mode...");
+            this->debug->NewLine();
+
             // Enable row skip
             this->WriteRegBit(MT9D111_REG_READ_MODE_B, 4, true);
 
@@ -975,19 +1087,35 @@ bool MT9D111::SetRowSkipping(uint8_t context, uint8_t skip)
 
 bool MT9D111::SetColSkipping(uint8_t context, uint8_t skip)
 {
+    this->debug->WriteEvent("Configuring column skipping as ");
+
     // Testing skip value
     switch(skip)
     {
-        case MT9D111_SKIP_2X:   break;
-        case MT9D111_SKIP_4X:   break;
-        case MT9D111_SKIP_8X:   break;
-        case MT9D111_SKIP_16X:  break;
-        default:                return false;
+        case MT9D111_SKIP_2X:
+            this->debug->WriteMsg("2x");
+            break;
+        case MT9D111_SKIP_4X:
+            this->debug->WriteMsg("4x");
+            break;
+        case MT9D111_SKIP_8X:
+            this->debug->WriteMsg("8x");
+            break;
+        case MT9D111_SKIP_16X:
+            this->debug->WriteMsg("16x");
+            break;
+        default:
+            this->debug->WriteMsg("INVALID!");
+            this->debug->NewLine();
+            return false;
     }
 
     switch(context)
     {
         case MT9D111_MODE_PREVIEW:
+            this->debug->WriteMsg(" for PREVIEW mode...");
+            this->debug->NewLine();
+
             // Enable row skip
             this->WriteRegBit(MT9D111_REG_READ_MODE_A, 7, true);
 
@@ -1013,6 +1141,9 @@ bool MT9D111::SetColSkipping(uint8_t context, uint8_t skip)
 
             break;
         case MT9D111_MODE_CAPTURE:
+            this->debug->WriteMsg(" for CAPTURE mode...");
+            this->debug->NewLine();
+
             // Enable row skip
             this->WriteRegBit(MT9D111_REG_READ_MODE_B, 7, true);
 
