@@ -48,6 +48,9 @@
 
 #define MT9D111_CONFIG_I2C_ID                                       MT9D111_CONFIG_I2C_ADR_LOW
 
+// Device ID code
+#define MT9D111_ID_CODE                                             0x1519
+
 // Reset types
 #define MT9D111_RESET_HARD                                          0
 #define MT9D111_RESET_SOFT                                          1

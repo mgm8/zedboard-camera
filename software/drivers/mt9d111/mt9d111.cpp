@@ -527,11 +527,8 @@ bool MT9D111::CheckDevice()
             return false;
         }
 
-        if (reg_val == 0x1519)
+        if (reg_val == MT9D111_ID_CODE)
         {
-            this->debug->WriteMsg("SUCCESS!");
-            this->debug->NewLine();
-
             return true;
         }
         else
@@ -539,7 +536,7 @@ bool MT9D111::CheckDevice()
             this->debug->WriteEvent("Wrong device ID! (read=");
             this->debug->WriteHex(reg_val);
             this->debug->WriteMsg(", expected=");
-            this->debug->WriteHex(0x1519);
+            this->debug->WriteHex(MT9D111_ID_CODE);
             this->debug->WriteMsg(")");
             this->debug->NewLine();
 
