@@ -103,7 +103,7 @@ bool I2C::Setup(const char* dev_adr, uint8_t dev_id)
     return true;
 }
 
-int I2C::SMBusAccess(int8_t rw, uint8_t command, uint16_t len, I2C_SMBus_Data *data)
+bool I2C::SMBusAccess(int8_t rw, uint8_t command, uint16_t len, I2C_SMBus_Data *data)
 {
     I2C_SMBus_IOCtl_Data args;
 
@@ -126,51 +126,80 @@ int I2C::SMBusAccess(int8_t rw, uint8_t command, uint16_t len, I2C_SMBus_Data *d
     return true;
 }
 
-uint8_t I2C::Read()
+bool I2C::Read(uint8_t *val)
 {
     I2C_SMBus_Data data;
 
     if (this->SMBusAccess(I2C_SMBUS_READ, 0, I2C_SMBUS_BYTE, &data))
     {
-        return -1;
+        *val = data.byte & 0xFF;
+
+        return true;
     }
     else
     {
-        return data.byte & 0xFF;
+        this->debug->WriteEvent("Error reading from device!");
+        this->debug->NewLine();
+
+        return false;
     }
 }
 
-uint8_t I2C::ReadReg8(uint8_t reg_adr)
+bool I2C::ReadReg8(uint8_t reg_adr, uint8_t *val)
 {
     I2C_SMBus_Data data;
 
     if (this->SMBusAccess(I2C_SMBUS_READ, reg_adr, I2C_SMBUS_BYTE_DATA, &data))
     {
-        return -1;
+        *val = data.byte & 0xFF;
+
+        return true;
     }
     else
     {
-        return data.byte & 0xFF;
+        this->debug->WriteEvent("Error reading register ");
+        this->debug->WriteHex(reg_adr);
+        this->debug->WriteMsg(" from device!");
+        this->debug->NewLine();
+
+        return false;
     }
 }
 
-uint16_t I2C::ReadReg16(uint8_t reg_adr)
+bool I2C::ReadReg16(uint8_t reg_adr, uint16_t *val)
 {
     I2C_SMBus_Data data;
 
     if (this->SMBusAccess(I2C_SMBUS_READ, reg_adr, I2C_SMBUS_WORD_DATA, &data))
     {
-        return -1;
+        *val = data.word & 0xFFFF;
+
+        return true;
     }
     else
     {
-        return data.word & 0xFFFF;
+        this->debug->WriteEvent("Error reading register ");
+        this->debug->WriteHex(reg_adr);
+        this->debug->WriteMsg(" from device!");
+        this->debug->NewLine();
+
+        return false;
     }
 }
 
 bool I2C::Write(uint8_t byte)
 {
-    return this->SMBusAccess(I2C_SMBUS_WRITE, byte, I2C_SMBUS_BYTE, NULL);
+    if (this->SMBusAccess(I2C_SMBUS_WRITE, byte, I2C_SMBUS_BYTE, NULL))
+    {
+        return true;
+    }
+    else
+    {
+        this->debug->WriteEvent("Error writing to device!");
+        this->debug->NewLine();
+
+        return false;
+    }
 }
 
 bool I2C::WriteReg8(uint8_t reg_adr, uint8_t value)
@@ -179,7 +208,19 @@ bool I2C::WriteReg8(uint8_t reg_adr, uint8_t value)
 
     data.byte = value;
     
-    return this->SMBusAccess(I2C_SMBUS_WRITE, reg_adr, I2C_SMBUS_BYTE_DATA, &data);
+    if (this->SMBusAccess(I2C_SMBUS_WRITE, reg_adr, I2C_SMBUS_BYTE_DATA, &data))
+    {
+        return true;
+    }
+    else
+    {
+        this->debug->WriteEvent("Error writing to register ");
+        this->debug->WriteHex(reg_adr);
+        this->debug->WriteMsg("!");
+        this->debug->NewLine();
+
+        return false;
+    }
 }
 
 bool I2C::WriteReg16(uint8_t reg_adr, uint16_t value)
@@ -188,7 +229,19 @@ bool I2C::WriteReg16(uint8_t reg_adr, uint16_t value)
 
     data.word = value;
     
-    return this->SMBusAccess(I2C_SMBUS_WRITE, reg_adr, I2C_SMBUS_WORD_DATA, &data);
+    if (this->SMBusAccess(I2C_SMBUS_WRITE, reg_adr, I2C_SMBUS_WORD_DATA, &data))
+    {
+        return true;
+    }
+    else
+    {
+        this->debug->WriteEvent("Error writing to register ");
+        this->debug->WriteHex(reg_adr);
+        this->debug->WriteMsg("!");
+        this->debug->NewLine();
+
+        return false;
+    }
 }
 
 //! \} End of i2c group

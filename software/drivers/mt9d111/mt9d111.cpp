@@ -414,7 +414,17 @@ bool MT9D111::ReadReg(uint8_t adr, uint16_t *val)
 {
     if (this->is_open)
     {
-        uint16_t reg_val = this->i2c->ReadReg16(adr);
+        uint16_t reg_val;
+
+        if (!this->i2c->ReadReg16(adr, &reg_val))
+        {
+            this->debug->WriteEvent("Error reading register ");
+            this->debug->WriteHex(adr);
+            this->debug->WriteMsg("!");
+            this->debug->NewLine();
+
+            return false;
+        }
 
         reg_val = ((reg_val & 0xFF00) >> 8) + ((reg_val & 0x00FF) << 8);
 
@@ -424,7 +434,7 @@ bool MT9D111::ReadReg(uint8_t adr, uint16_t *val)
     }
     else
     {
-        return true;
+        return false;
     }
 }
 
@@ -464,7 +474,17 @@ bool MT9D111::WriteReg(uint8_t adr, uint16_t val)
     {
         val = ((val & 0xFF00) >> 8) + ((val & 0x00FF) << 8);
 
-        return this->i2c->WriteReg16(adr, val);
+        if (!this->i2c->WriteReg16(adr, val))
+        {
+            this->debug->WriteEvent("Error writing to register ");
+            this->debug->WriteHex(adr);
+            this->debug->WriteMsg("!");
+            this->debug->NewLine();
+
+            return false;
+        }
+
+        return true;
     }
     else
     {

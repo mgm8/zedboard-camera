@@ -106,9 +106,9 @@ class I2C
          * \param len is the length of the data.
          * \param data is the data to be transfered.
          * 
-         * \return The ioctl() function error code.
+         * \return TRUE/FALSE in case of success or not.
          */
-        int SMBusAccess(int8_t rw, uint8_t command, uint16_t len, I2C_SMBus_Data *data);
+        bool SMBusAccess(int8_t rw, uint8_t command, uint16_t len, I2C_SMBus_Data *data);
     public:
 
         /**
@@ -150,28 +150,32 @@ class I2C
 
         /**
          * \brief Reads a byte from the device.
-         * 
-         * \return The byte read from the slave.
+         *
+         * \param[in,out] val is a pointer to return the read value.
+         *
+         * \return TRUE/FALSE in case of success or not.
          */
-        uint8_t Read();
+        bool Read(uint8_t *val);
 
         /**
          * \brief Reads a byte from a register of the device.
          * 
          * \param[in] reg_adr is the device register address.
+         * \param[in,out] val is a pointer to return the read value.
          * 
-         * \return The byte from the slave register.
+         * \return TRUE/FALSE in case of success or not.
          */
-        uint8_t ReadReg8(uint8_t reg_adr);
+        bool ReadReg8(uint8_t reg_adr, uint8_t *val);
 
         /**
          * \brief Reads a word (16-bit) from a register of the device.
          * 
          * \param[in] reg_adr is the device register address.
+         * \param[in,out] val is a pointer to return the read value.
          * 
-         * \return The word (16-bit) from the slave register.
+         * \return TRUE/FALSE in case of success or not.
          */
-        uint16_t ReadReg16(uint8_t reg_adr);
+        bool ReadReg16(uint8_t reg_adr, uint16_t *val);
 
         /**
          * \brief Write a byte to the device (No specific register).
