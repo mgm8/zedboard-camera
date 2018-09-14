@@ -174,7 +174,7 @@ class Camera
          *
          * \return True in case of success.
          */
-        bool read(cv::Mat image, int flag=0);
+        bool read(cv::Mat &image, int flag=0);
 
         /**
          * \brief Closes the capturing device.
@@ -196,7 +196,7 @@ class Camera
          *
          * \return True in case of success.
          */
-        bool retrieve(cv::Mat image, int flag=0);
+        bool retrieve(cv::Mat &image, int flag=0);
 
         /**
          * \brief Sets a property in the Camera.

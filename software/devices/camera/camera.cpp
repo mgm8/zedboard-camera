@@ -172,7 +172,7 @@ bool Camera::open(int index)
     return true;
 }
 
-bool Camera::read(Mat image, int flag)
+bool Camera::read(Mat &image, int flag)
 {
     return (this->grab() and this->retrieve(image, flag));
 }
@@ -186,7 +186,7 @@ void Camera::release()
     }
 }
 
-bool Camera::retrieve(Mat image, int flag)
+bool Camera::retrieve(Mat &image, int flag)
 {
     if (!this->buffer.empty())
     {
