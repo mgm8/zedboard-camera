@@ -146,22 +146,82 @@ bool Camera::open(int index)
             return false;
     }
 
-    if (mt9d111->Open(i2c_dev.c_str()) and
-        mt9d111->CheckDevice() and
-        mt9d111->Reset(MT9D111_RESET_SOFT))
+    if (!mt9d111->Open(i2c_dev.c_str()))
     {
-        mt9d111->Config();
-        sleep(1);
-        mt9d111->EnablePLL(0x1000, 0x0500);
-        mt9d111->SetOutputFormat(MT9D111_OUTPUT_FORMAT_RGB444x);
-        mt9d111->SetResolution(MT9D111_MODE_PREVIEW, this->width, this->height);
-        mt9d111->SetResolution(MT9D111_MODE_CAPTURE, this->width, this->height);
-        mt9d111->WriteReg(0xF0, 0x00);
-        mt9d111->WriteReg(0x21, 0x8403);
-        mt9d111->SequencerCmd(MT9D111_DRIVER_VAR_SEQUENCER_CMD_REFRESH);
+        delete mt9d111;
+
+        return false;
     }
-    else
+
+    if (!mt9d111->CheckDevice())
     {
+        delete mt9d111;
+
+        return false;
+    }
+
+    if (!mt9d111->Reset(MT9D111_RESET_SOFT))
+    {
+        delete mt9d111;
+
+        return false;
+    }
+
+    if (!mt9d111->Config())
+    {
+        delete mt9d111;
+
+        return false;
+    }
+
+    sleep(1);
+
+    if (!mt9d111->EnablePLL(0x1000, 0x0500))
+    {
+        delete mt9d111;
+
+        return false;
+    }
+
+    if (!mt9d111->SetOutputFormat(MT9D111_OUTPUT_FORMAT_RGB444x))
+    {
+        delete mt9d111;
+
+        return false;
+    }
+
+    if (!mt9d111->SetResolution(MT9D111_MODE_PREVIEW, this->width, this->height))
+    {
+        delete mt9d111;
+
+        return false;
+    }
+
+    if (!mt9d111->SetResolution(MT9D111_MODE_CAPTURE, this->width, this->height))
+    {
+        delete mt9d111;
+
+        return false;
+    }
+
+    if (!mt9d111->WriteReg(0xF0, 0x00))
+    {
+        delete mt9d111;
+
+        return false;
+    }
+
+    if (!mt9d111->WriteReg(0x21, 0x8403))
+    {
+        delete mt9d111;
+
+        return false;
+    }
+
+    if (!mt9d111->SequencerCmd(MT9D111_DRIVER_VAR_SEQUENCER_CMD_REFRESH))
+    {
+        delete mt9d111;
+
         return false;
     }
 
