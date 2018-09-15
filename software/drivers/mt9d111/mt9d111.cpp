@@ -52,9 +52,8 @@ MT9D111::MT9D111()
 }
 
 MT9D111::MT9D111(const char *dev_adr)
+    : MT9D111()
 {
-    this->debug = new Debug("MT9D111");
-
     this->debug->WriteEvent("Initializing...");
     this->debug->NewLine();
 
@@ -63,12 +62,7 @@ MT9D111::MT9D111(const char *dev_adr)
 
 MT9D111::~MT9D111()
 {
-    if (this->is_open)
-    {
-        delete this->i2c;
-    }
-
-    this->is_open = false;
+    this->Close();
 
     delete debug;
 }
@@ -78,34 +72,55 @@ bool MT9D111::Open(const char *dev_adr)
     this->debug->WriteEvent(string("Opening device \"") + string(dev_adr) + string("\"..."));
     this->debug->NewLine();
 
-    this->i2c     = new I2C;
-    this->reset   = new GPIO;
-    this->standby = new GPIO;
+    this->i2c = new I2C;
 
-    if (i2c->Setup(dev_adr, MT9D111_CONFIG_I2C_ID) and
-        reset->Open(MT9D111_GPIO_RESET, GPIO_DIR_OUTPUT) and
-        standby->Open(MT9D111_GPIO_STANDBY, GPIO_DIR_OUTPUT))
+    if (!i2c->Setup(dev_adr, MT9D111_CONFIG_I2C_ID))
     {
-        if (this->HardReset())
-        {
-            this->is_open = true;
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    else
-    {
-        this->debug->WriteEvent("Error opening device!");
+        this->debug->WriteEvent("Error opening I2C bus!");
         this->debug->NewLine();
+
+        delete i2c;
 
         this->is_open = false;
 
         return false;
     }
+
+    this->reset = new GPIO;
+
+    if (!reset->Open(MT9D111_GPIO_RESET, GPIO_DIR_OUTPUT))
+    {
+        this->debug->WriteEvent("Error configuring reset GPIO!");
+        this->debug->NewLine();
+
+        delete reset;
+
+        this->is_open = false;
+
+        return false;
+    }
+
+    this->standby = new GPIO;
+    if (!standby->Open(MT9D111_GPIO_STANDBY, GPIO_DIR_OUTPUT))
+    {
+        this->debug->WriteEvent("Error configuring standby GPIO!");
+        this->debug->NewLine();
+
+        delete standby;
+
+        this->is_open = false;
+
+        return false;
+    }
+
+    if (!this->HardReset())
+    {
+        return this->Close();
+    }
+
+    this->is_open = true;
+
+    return true;
 }
 
 bool MT9D111::Close()
@@ -113,27 +128,45 @@ bool MT9D111::Close()
     this->debug->WriteEvent("Closing device...");
     this->debug->NewLine();
 
-    delete this->i2c;
-    delete this->reset;
-    delete this->standby;
+    if (this->is_open)
+    {
+        delete this->i2c;
+        delete this->reset;
+        delete this->standby;
 
-    this->is_open = false;
+        this->is_open = false;
 
-    return true;
+        return true;
+    }
+    else
+    {
+        this->debug->WriteEvent("Device already closed!");
+        this->debug->NewLine();
+
+        return false;
+    }
 }
 
 bool MT9D111::ReadRegBit(uint8_t adr, uint8_t bit, bool *state)
 {
     uint16_t reg_val;
+
     if (!this->ReadReg(adr, &reg_val))
     {
+        this->debug->WriteEvent("Error reading bit ");
+        this->debug->WriteDec(bit);
+        this->debug->WriteMsg(" from register ");
+        this->debug->WriteHex(adr);
+        this->debug->WriteMsg("!");
+        this->debug->NewLine();
+
         return false;
     }
 
     uint16_t comp = 0;
     comp |= 1 << bit;
 
-    *state = (reg_val & comp)? true:false;
+    *state = (reg_val & comp) ? true : false;
 
     return true;
 }
@@ -141,8 +174,14 @@ bool MT9D111::ReadRegBit(uint8_t adr, uint8_t bit, bool *state)
 bool MT9D111::WriteRegBit(uint8_t adr, uint8_t bit, bool state)
 {
     uint16_t reg_val;
+
     if (!this->ReadReg(adr, &reg_val))
     {
+        this->debug->WriteEvent("Error reading register ");
+        this->debug->WriteHex(adr);
+        this->debug->WriteMsg(" state!");
+        this->debug->NewLine();
+
         return false;
     }
 
@@ -155,7 +194,19 @@ bool MT9D111::WriteRegBit(uint8_t adr, uint8_t bit, bool state)
         reg_val &= (1 << bit);
     }
 
-    return this->WriteReg(adr, reg_val);
+    if (!this->WriteReg(adr, reg_val))
+    {
+        this->debug->WriteEvent("Error writing bit ");
+        this->debug->WriteDec(bit);
+        this->debug->WriteMsg(" from register ");
+        this->debug->WriteHex(adr);
+        this->debug->WriteMsg("!");
+        this->debug->NewLine();
+
+        return false;
+    }
+
+    return true;
 }
 
 bool MT9D111::HardReset()
@@ -196,6 +247,8 @@ bool MT9D111::SoftReset()
 {
     this->debug->WriteEvent("Executing soft reset...");
     this->debug->NewLine();
+
+    this->SetRegisterPage(MT9D111_REG_PAGE_0);
 
     // Bypass the PLL
     if (!this->WriteReg(MT9D111_REG_CLOCK_CONTROL, 0xA000))
@@ -300,7 +353,7 @@ bool MT9D111::EnablePLL(uint16_t val_1, uint16_t val_2)
     if (!(this->WriteReg(MT9D111_REG_PLL_CONTROL_1, val_1) and
         this->WriteReg(MT9D111_REG_PLL_CONTROL_2, val_2)))
     {
-        this->debug->WriteEvent("Error enabling the PLL!");
+        this->debug->WriteEvent("Error programming PLL!");
         this->debug->NewLine();
 
         return false;
@@ -309,7 +362,7 @@ bool MT9D111::EnablePLL(uint16_t val_1, uint16_t val_2)
     // Power up PLL
     if (!this->WriteRegBit(MT9D111_REG_CLOCK_CONTROL, 14, false))
     {
-        this->debug->WriteEvent("Error enabling the PLL!");
+        this->debug->WriteEvent("Error powering up PLL!");
         this->debug->NewLine();
 
         return false;
@@ -321,7 +374,7 @@ bool MT9D111::EnablePLL(uint16_t val_1, uint16_t val_2)
     // Turn off PLL bypass
     if (!this->WriteRegBit(MT9D111_REG_CLOCK_CONTROL, 15, false))
     {
-        this->debug->WriteEvent("Error enabling the PLL!");
+        this->debug->WriteEvent("Error disabling PLL bypass!");
         this->debug->NewLine();
 
         return false;
@@ -372,13 +425,7 @@ bool MT9D111::Config()
 
     for(uint8_t i=0; i<(sizeof(reg_vals_qvga_30fps)/sizeof(Register)); i++)
     {
-        if (!this->WriteAndCheckReg(reg_vals_qvga_30fps[i].address, reg_vals_qvga_30fps[i].value))
-        {
-            this->debug->WriteEvent("Error loading configuration parameters!");
-            this->debug->NewLine();
-
-            return false;
-        }
+        this->WriteReg(reg_vals_qvga_30fps[i].address, reg_vals_qvga_30fps[i].value);
     }
 
     return true;
@@ -624,9 +671,9 @@ bool MT9D111::SetMode(uint8_t mode)
 
 bool MT9D111::SetOutputFormat(uint8_t format)
 {
-    this->debug->WriteEvent("Configuring output format as ");
-
     this->SetRegisterPage(MT9D111_REG_PAGE_1);
+
+    this->debug->WriteEvent("Configuring output format as ");
 
     switch(format)
     {
@@ -714,6 +761,8 @@ bool MT9D111::SetOutputFormat(uint8_t format)
 
 bool MT9D111::SetResolution(uint8_t mode, uint16_t width, uint16_t height)
 {
+    this->SetRegisterPage(MT9D111_REG_PAGE_1);
+
     this->debug->WriteEvent("Configuring resolution as ");
     this->debug->WriteDec(width);
     this->debug->WriteMsg("x");
@@ -726,8 +775,6 @@ bool MT9D111::SetResolution(uint8_t mode, uint16_t width, uint16_t height)
 
         return false;
     }
-
-    this->SetRegisterPage(MT9D111_REG_PAGE_1);
 
     this->debug->WriteMsg(" for ");
 
