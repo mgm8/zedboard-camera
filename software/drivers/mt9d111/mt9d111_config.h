@@ -21,8 +21,6 @@
  */
 
 /**
- * \file mt9d111_config.h
- * 
  * \brief MT9D111 general configuration parameters.
  * 
  * \author Gabriel Mariano Marcelino <gabriel.mm8@gmail.com>
@@ -39,10 +37,6 @@
 #define MT9D111_CONFIG_H_
 
 #include "mt9d111_reg.h"
-
-// PLL values
-#define MT9D111_REG_PLL_CONTROL_1_VAL           0x1000
-#define MT9D111_REG_PLL_CONTROL_2_VAL           0x0500
 
 /**
  * \brief Default registers values (Values after boot).
@@ -122,8 +116,6 @@ const Register reg_vals_qvga_30fps[] =
 
     {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_0,   MT9D111_REG_PAGE_0},
     {0x38                                                               , MT9D111_REG_PAGE_0,   0x0866},    // RESERVED_CORE_38
-//    {MT9D111_REG_SHUTTER_DELAY                                          , MT9D111_REG_PAGE_0,   0x000B},    // SHUTTER DELAY (FROM WIZARD)
-    // Delay = 100ms
 
     {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_2,   MT9D111_REG_PAGE_2},
     {MT9D111_REG_LENS_CORRECTION_CONTROL                                , MT9D111_REG_PAGE_2,   0x0168},    // LENS_CORRECTION_CONTROL
@@ -176,14 +168,12 @@ const Register reg_vals_qvga_30fps[] =
 
     {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_1,   MT9D111_REG_PAGE_1},
     {MT9D111_REG_COLOR_PIPELINE_CONTROL                                 , MT9D111_REG_PAGE_1,   0x01FC},    // COLOR_PIPELINE_CONTROL
-    // Delay = 100ms
 
     {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_1,   MT9D111_REG_PAGE_1},
     {MT9D111_REG_YUV_YCbCr_CONTROL                                      , MT9D111_REG_PAGE_1,   0x0004},    // YUV_YCBCR_CONTROL
 
     {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_0,   MT9D111_REG_PAGE_0},
     {MT9D111_REG_CLOCK_CONTROL                                          , MT9D111_REG_PAGE_0,   0xA000},    // CLOCK_ENABLING
-    // Delay = 100ms
 
     {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_1,   MT9D111_REG_PAGE_1},
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0xA102},    // SEQ_MODE
@@ -198,21 +188,15 @@ const Register reg_vals_qvga_30fps[] =
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x007F},    // SEQ_CAP_MODE (127 frames before switching to Preview)
 
     {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_0,   MT9D111_REG_PAGE_0},
-//    {MT9D111_REG_HORIZONTAL_BLANKING_B                                  , MT9D111_REG_PAGE_0,   0x011E},    // HORZ_BLANK_B
     {MT9D111_REG_HORIZONTAL_BLANKING_B                                  , MT9D111_REG_PAGE_0,   0x00ED},    // HORZ_BLANK_B
-//    {MT9D111_REG_VERTICAL_BLANKING_B                                    , MT9D111_REG_PAGE_0,   0x006F},    // VERT_BLANK_B
     {MT9D111_REG_VERTICAL_BLANKING_B                                    , MT9D111_REG_PAGE_0,   0x000B},    // VERT_BLANK_B
-//    {MT9D111_REG_HORIZONTAL_BLANKING_A                                  , MT9D111_REG_PAGE_0,   0x00FE},    // HORZ_BLANK_A
     {MT9D111_REG_HORIZONTAL_BLANKING_A                                  , MT9D111_REG_PAGE_0,   0x0193},    // HORZ_BLANK_A
-//    {MT9D111_REG_VERTICAL_BLANKING_A                                    , MT9D111_REG_PAGE_0,   0x0013},    // VERT_BLANK_A
     {MT9D111_REG_VERTICAL_BLANKING_A                                    , MT9D111_REG_PAGE_0,   0x000B},    // VERT_BLANK_A
-//    {MT9D111_REG_READ_MODE_B                                            , MT9D111_REG_PAGE_0,   0x0302},    // READ_MODE_B (Image flip settings)
     {MT9D111_REG_READ_MODE_B                                            , MT9D111_REG_PAGE_0,   0x0700},    // READ_MODE_B (Image flip settings)
     {MT9D111_REG_READ_MODE_A                                            , MT9D111_REG_PAGE_0,   0x8400},    // READ_MODE_A (1ADC)
 
     {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_1,   MT9D111_REG_PAGE_1},
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2717},    // MODE_SENSOR_X_DELAY_A
-//    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0318},    // MODE_SENSOR_X_DELAY_A
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0187},    // MODE_SENSOR_X_DELAY_A
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x270F},    // MODE_SENSOR_ROW_START_A
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x001C},    // MODE_SENSOR_ROW_START_A
@@ -237,7 +221,6 @@ const Register reg_vals_qvga_30fps[] =
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2721},    // MODE_SENSOR_COL_WIDTH_B
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0640},    // MODE_SENSOR_COL_WIDTH_B
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2723},    // MODE_SENSOR_X_DELAY_B
-//    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0716},    // MODE_SENSOR_X_DELAY_B
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x03B1},    // MODE_SENSOR_X_DELAY_B
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2725},    // MODE_SENSOR_ROW_SPEED_B
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0011},    // MODE_SENSOR_ROW_SPEED_B
@@ -262,7 +245,6 @@ const Register reg_vals_qvga_30fps[] =
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x276B},    // MODE_FIFO_CONF0_A
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0027},    // MODE_FIFO_CONF0_A
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x276D},    // MODE_FIFO_CONF1_A
-//    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0xE1E1},    // MODE_FIFO_CONF1_A
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0xE0E2},    // MODE_FIFO_CONF1_A
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0xA76F},    // MODE_FIFO_CONF2_A
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x00E1},    // MODE_FIFO_CONF2_A
@@ -271,7 +253,6 @@ const Register reg_vals_qvga_30fps[] =
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2772},    // MODE_FIFO_CONF0_B
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0027},    // MODE_FIFO_CONF0_B
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2774},    // MODE_FIFO_CONF1_B
-//    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0xE1E1},    // MODE_FIFO_CONF1_B
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0xE0E1},    // MODE_FIFO_CONF1_B
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0xA776},    // MODE_FIFO_CONF2_B
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x00E1},    // MODE_FIFO_CONF2_B
@@ -279,9 +260,11 @@ const Register reg_vals_qvga_30fps[] =
     // Set maximum integration time to get a minimum of 15 fps at 45MHz
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0xA20E},    // AE_MAX_INDEX
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0004},    // AE_MAX_INDEX
+
     // Set minimum integration time to get a maximum of 15 fps at 45MHz
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0xA20D},    // AE_MAX_INDEX
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0004},    // AE_MAX_INDEX
+
     // Configue all GPIO for output and set low to save power
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x9078},
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0000},
@@ -291,60 +274,31 @@ const Register reg_vals_qvga_30fps[] =
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0000},
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x9071},
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0000},
+
     // Gamma and contrast
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0xA743},    // MODE_GAM_CONT_A
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0003},    // MODE_GAM_CONT_A
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0xA744},    // MODE_GAM_CONT_B
     {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0003},    // MODE_GAM_CONT_B
-    // Delay = 500 ms
 
     // Set PLL (MCLK = 19 MHz , PCLK = 79 MHz)
     // Set PLL (MCLK = 45 MHz , PCLK = 45 MHz)  -> From Wizard
     {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_0,   MT9D111_REG_PAGE_0},
     {MT9D111_REG_CONTEXT_CONTROL                                        , MT9D111_REG_PAGE_0,   0x0000},
-/*    {MT9D111_REG_CLOCK_CONTROL                                          , MT9D111_REG_PAGE_0,   0xE000},
-//    {MT9D111_REG_PLL_CONTROL_1                                          , MT9D111_REG_PAGE_0,   0x1001},    // PLL Control 1 = 4097
-    {MT9D111_REG_PLL_CONTROL_1                                          , MT9D111_REG_PAGE_0,   0x1003},    // PLL Control 1 = 8200
-//    {MT9D111_REG_PLL_CONTROL_2                                          , MT9D111_REG_PAGE_0,   0x503},    // PLL Control 2 = 1283
-    {MT9D111_REG_PLL_CONTROL_2                                          , MT9D111_REG_PAGE_0,   0x0501},    // PLL Control 2 = 1280
-    {MT9D111_REG_CLOCK_CONTROL                                          , MT9D111_REG_PAGE_0,   0xA000},    // Clock CNTRL: PLL ON = 40960
-    // Delay = 500 ms
 
     {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_0,   MT9D111_REG_PAGE_0},
-    {MT9D111_REG_CLOCK_CONTROL                                          , MT9D111_REG_PAGE_0,   0x2000},    // CLOCK_ENABLING
-*/
-    {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_0,   MT9D111_REG_PAGE_0},
-    // Delay = 500 ms
-/*
+
     {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_1,   MT9D111_REG_PAGE_1},
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2703},    // MODE_OUTPUT_WIDTH_A
-//    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0140},    // MODE_OUTPUT_WIDTH_A
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0280},    // MODE_OUTPUT_WIDTH_A
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2705},    // MODE_OUTPUT_HEIGHT_A
-//    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x00F0},    // MODE_OUTPUT_HEIGHT_A
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x01E0},    // MODE_OUTPUT_HEIGHT_A
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2707},    // MODE_OUTPUT_WIDTH_B
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0280},    // MODE_OUTPUT_WIDTH_B
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2709},    // MODE_OUTPUT_HEIGHT_B
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x01E0},    // MODE_OUTPUT_HEIGHT_B
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2779},    // Spoof Frame Width
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0140},    // Spoof Frame Width
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x277B},    // Spoof Frame Height
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x00F0},    // Spoof Frame Height
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0xA103},    // SEQ_CMD
-    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0005},    // SEQ_CMD
-*/
-    {MT9D111_REG_PAGE_REGISTER                                          , MT9D111_REG_PAGE_1,   MT9D111_REG_PAGE_1},
-    {0xC6, 1, 0x2735}, //MODE_CROP_X0_A
-    {0xC8, 1, 0x0000}, //MODE_CROP_X0_A
-    {0xC6, 1, 0x2737}, //MODE_CROP_X1_A
-    {0xC8, 1, 1600  }, //MODE_CROP_X1_A
-    {0xC6, 1, 0x2739}, //MODE_CROP_Y0_A
-    {0xC8, 1, 0x0000}, //MODE_CROP_Y0_A
-    {0xC6, 1, 0x273B}, //MODE_CROP_Y1_A
-    {0xC8, 1, 1200  }, //MODE_CROP_Y1_A
-    {0xC6, 1, 0xA103},  // SEQ_CMD, Do capture
-    {0xC8, 1, 0x0005},
+    {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2735},    // MODE_CROP_X0_A
+    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0000},    // MODE_CROP_X0_A
+    {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2737},    // MODE_CROP_X1_A
+    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   1600},      // MODE_CROP_X1_A
+    {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x2739},    // MODE_CROP_Y0_A
+    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0000},    // MODE_CROP_Y0_A
+    {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0x273B},    // MODE_CROP_Y1_A
+    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   1200},      // MODE_CROP_Y1_A
+    {MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS                       , MT9D111_REG_PAGE_1,   0xA103},    // SEQ_CMD, Do capture
+    {MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA                          , MT9D111_REG_PAGE_1,   0x0005},
 
     {MT9D111_REG_RESERVED_2                                             , MT9D111_REG_PAGE_0,   0xFFFF}
 };
