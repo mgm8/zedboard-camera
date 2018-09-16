@@ -21,7 +21,7 @@
  */
 
 /**
- * \brief GPIO Raspberry Pi driver.
+ * \brief GPIO driver.
  * 
  * \author Gabriel Mariano Marcelino <gabriel.mm8@gmail.com>
  * 
@@ -38,6 +38,8 @@
 
 #include <stdint.h>
 
+#include <drivers/zynqaxi/zynqaxi.h>
+
 #define GPIO_DIR_OUTPUT         0
 #define GPIO_DIR_INPUT          1
 
@@ -46,23 +48,15 @@
  */
 class GPIO
 {
+    private:
         uint8_t pin;    /**< GPIO pin number. */
         bool dir;       /**< GPIO direction (output or input). */
-        bool state;     /**< GPIO state (HIGH or LOW). */
 
         /**
-         * \brief Export GPIO.
-         *
-         * \return TRUE/FALSE if it was successful or not.
+         * \brief Zynq AXI communication.
          */
-        bool Export();
+        ZynqAXI *zynqaxi;
 
-        /**
-         * \brief Unexport GPIO.
-         *
-         * \return TRUE/FALSE if it was successful or not.
-         */
-        bool Unexport();
     public:
 
         /**

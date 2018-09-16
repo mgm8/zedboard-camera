@@ -21,7 +21,7 @@
  */
 
 /**
- * \brief GPIO Raspberry Pi driver implementation.
+ * \brief GPIO driver implementation.
  * 
  * \author Gabriel Mariano Marcelino <gabriel.mm8@gmail.com>
  * 
@@ -43,6 +43,7 @@ GPIO::GPIO()
 }
 
 GPIO::GPIO(uint8_t p, bool d)
+    : GPIO()
 {
     this->Open(p, d);
 }
@@ -56,21 +57,17 @@ bool GPIO::Open(uint8_t p, bool d)
 {
     this->pin = p;
 
-    return true;
+    this->dir = d;
+
+    this->zynqaxi = new ZynqAXI;
+
+    return this->zynqaxi->Open(0x41200000);
 }
 
 bool GPIO::Close()
 {
-    return (this->Set(false) and this->Unexport());
-}
+    delete zynqaxi;
 
-bool GPIO::Export()
-{
-    return true;
-}
-
-bool GPIO::Unexport()
-{
     return true;
 }
 
@@ -83,26 +80,43 @@ bool GPIO::SetDir(bool d)
 
 bool GPIO::Set(bool s)
 {
-    this->state = s;
+    uint32_t val = this->zynqaxi->Read(0);
+
+    if (s)
+    {
+        val |= (1 << this->pin);
+    }
+    else
+    {
+        val &= ~(1 << this->pin);
+    }
+
+    this->zynqaxi->Write(0, val);
 
     return true;
 }
 
 bool GPIO::Toggle()
 {
-    if (this->state)
-    {
-        return this->Set(false);
-    }
-    else
-    {
-        return this->Set(true);
-    }
+    bool state;
+
+    this->Get(state);
+
+    return this->Set(!state);
 }
 
 bool GPIO::Get(bool &s)
 {
-    s = this->state;
+    uint32_t val = this->zynqaxi->Read(0);
+
+    if (val & (1 << this->pin))
+    {
+        s = true;
+    }
+    else
+    {
+        s = false;
+    }
 
     return true;
 }

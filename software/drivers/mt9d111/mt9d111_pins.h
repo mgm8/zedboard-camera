@@ -37,8 +37,8 @@
 #ifndef MT9D111_PINS_H_
 #define MT9D111_PINS_H_
 
-#define MT9D111_GPIO_RESET          5
-#define MT9D111_GPIO_STANDBY        6
+#define MT9D111_GPIO_RESET          1
+#define MT9D111_GPIO_STANDBY        0
 
 #endif // MT9D111_PINS_H_
 

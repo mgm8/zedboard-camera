@@ -99,7 +99,7 @@ bool MT9D111::Open(const char *dev_adr)
 
         return false;
     }
-
+/*
     this->standby = new GPIO;
     if (!standby->Open(MT9D111_GPIO_STANDBY, GPIO_DIR_OUTPUT))
     {
@@ -112,7 +112,7 @@ bool MT9D111::Open(const char *dev_adr)
 
         return false;
     }
-
+*/
     if (!this->HardReset())
     {
         return this->Close();
@@ -132,7 +132,7 @@ bool MT9D111::Close()
     {
         delete this->i2c;
         delete this->reset;
-        delete this->standby;
+//        delete this->standby;
 
         this->is_open = false;
 
@@ -213,7 +213,7 @@ bool MT9D111::HardReset()
 {
     this->debug->WriteEvent("Executing hard reset...");
     this->debug->NewLine();
-
+/*
     if (!this->standby->Set(false))
     {
         this->debug->WriteEvent("Error during hard reset!");
@@ -221,7 +221,7 @@ bool MT9D111::HardReset()
 
         return false;
     }
-
+*/
     if (!this->reset->Set(false))
     {
         this->debug->WriteEvent("Error during hard reset!");
@@ -301,7 +301,7 @@ bool MT9D111::HardStandby(bool s)
     }
 
     this->debug->NewLine();
-
+/*
     if (!this->standby->Set(s))
     {
         this->debug->WriteEvent("Error during hard standby!");
@@ -309,7 +309,7 @@ bool MT9D111::HardStandby(bool s)
 
         return false;
     }
-
+*/
     return true;
 }
 
