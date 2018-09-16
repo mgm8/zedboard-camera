@@ -230,7 +230,7 @@ bool MT9D111::HardReset()
         return false;
     }
 
-    usleep(100);    // 100 us
+    sleep(1);    // 1 ms
 
     if (!this->reset->Set(true))
     {
@@ -239,6 +239,8 @@ bool MT9D111::HardReset()
 
         return false;
     }
+
+    sleep(1);   // 1 ms
 
     return true;
 }
