@@ -55,6 +55,9 @@ I2C::I2C(const char* dev_adr, uint8_t dev_id)
 
 I2C::~I2C()
 {
+    this->debug->WriteEvent("Closing I2C...");
+    this->debug->NewLine();
+
     errno = 0;
 
     if (close(fd) < 0)

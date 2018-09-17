@@ -108,8 +108,6 @@ bool ZynqAXI::Close()
     }
     else
     {
-        throw runtime_error("The device is not opened!");
-
         return false;
     }
 }

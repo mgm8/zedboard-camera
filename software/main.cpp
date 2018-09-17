@@ -10,10 +10,8 @@ int main()
 
     Mat img;
 
-    if (cam.isOpened())
+    if (cam.read(img))
     {
-        cam.read(img);
-
         imwrite("image.png", img);
     }
 

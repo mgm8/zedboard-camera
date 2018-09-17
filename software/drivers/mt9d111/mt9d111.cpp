@@ -125,11 +125,11 @@ bool MT9D111::Open(const char *dev_adr)
 
 bool MT9D111::Close()
 {
-    this->debug->WriteEvent("Closing device...");
-    this->debug->NewLine();
-
     if (this->is_open)
     {
+        this->debug->WriteEvent("Closing device...");
+        this->debug->NewLine();
+
         delete this->i2c;
         delete this->reset;
 //        delete this->standby;
@@ -140,9 +140,6 @@ bool MT9D111::Close()
     }
     else
     {
-        this->debug->WriteEvent("Device already closed!");
-        this->debug->NewLine();
-
         return false;
     }
 }
@@ -370,8 +367,8 @@ bool MT9D111::EnablePLL(uint16_t val_1, uint16_t val_2)
         return false;
     }
 
-    // Wait for PLL settling time (> 150 us)
-    usleep(500);
+    // Wait for PLL settling time (> 1 ms)
+    usleep(100000);
 
     // Turn off PLL bypass
     if (!this->WriteRegBit(MT9D111_REG_CLOCK_CONTROL, 15, false))
@@ -427,7 +424,7 @@ bool MT9D111::Config()
 
     for(uint8_t i=0; i<(sizeof(reg_vals_qvga_30fps)/sizeof(Register)); i++)
     {
-        this->WriteReg(reg_vals_qvga_30fps[i].address, reg_vals_qvga_30fps[i].value);
+        this->WriteAndCheckReg(reg_vals_qvga_30fps[i].address, reg_vals_qvga_30fps[i].value);
     }
 
     return true;

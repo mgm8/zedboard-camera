@@ -32,7 +32,6 @@
  */
 
 #include <string>
-#include <stdexcept>
 
 #include <stdint.h>
 #include <unistd.h>
@@ -64,7 +63,7 @@ Camera::~Camera()
 {
     this->release();
 
-    delete this->debug;
+    delete debug;
 }
 
 double Camera::get(int propid)
@@ -88,34 +87,44 @@ double Camera::get(int propid)
 
 bool Camera::grab()
 {
-    if (this->isOpened() and sensor->CheckDevice())
+    if (this->isOpened())
     {
-        zynq_axi->Write(1, 1);
-
-        buffer.clear();
-
-        uint32_t adr = 0;
-        for(unsigned int i=0; i<this->height; i++)
+        if (this->sensor->CheckDevice())
         {
-            vector<uint32_t> row;
+            this->zynq_axi->Write(1, 1);
 
-            for(unsigned int j=0; j<this->width; j++)
+            buffer.clear();
+
+            uint32_t adr = 0;
+            for(unsigned int i=0; i<this->height; i++)
             {
-                zynq_axi->Write(0, adr++);
+                vector<uint32_t> row;
 
-                row.push_back(zynq_axi->Read(0));
+                for(unsigned int j=0; j<this->width; j++)
+                {
+                    this->zynq_axi->Write(0, adr++);
+
+                    row.push_back(this->zynq_axi->Read(0));
+                }
+
+                buffer.push_back(row);
             }
 
-            buffer.push_back(row);
+            this->zynq_axi->Write(1, 0);
+
+            return true;
         }
+        else
+        {
+            this->debug->WriteEvent("Error grabbing a frame: Camera disconnected!");
+            this->debug->NewLine();
 
-        zynq_axi->Write(1, 0);
-
-        return true;
+            return false;
+        }
     }
     else
     {
-        this->debug->WriteEvent("Error grabbing a frame: Camera not opened or disconnected!");
+        this->debug->WriteEvent("Error grabbing a frame: Camera not opened!");
         this->debug->NewLine();
 
         return false;
@@ -131,7 +140,6 @@ bool Camera::open(int index)
 {
     string i2c_dev;
 
-    sensor = new MT9D111;
     switch(index)
     {
         case 0:
@@ -153,100 +161,107 @@ bool Camera::open(int index)
             return false;
     }
 
-    if (!sensor->Open(i2c_dev.c_str()))
+    if (this->isOpened())
+    {
+        this->release();    // If already opened, close before open again
+    }
+
+    this->sensor = new MT9D111;
+
+    if (!this->sensor->Open(i2c_dev.c_str()))
     {
         this->debug->WriteEvent("Error during sensor opening!");
         this->debug->NewLine();
 
-        delete sensor;
+        delete this->sensor;
 
         return false;
     }
 
-    if (!sensor->CheckDevice())
+    if (!this->sensor->CheckDevice())
     {
         this->debug->WriteEvent("Error checking sensor!");
         this->debug->NewLine();
 
-        delete sensor;
+        delete this->sensor;
 
         return false;
     }
 
-    if (!sensor->Config())
+    if (!this->sensor->Config())
     {
         this->debug->WriteEvent("Error configuring sensor!");
         this->debug->NewLine();
 
-        delete sensor;
+        delete this->sensor;
 
         return false;
     }
 
     sleep(1);
 
-    if (!sensor->EnablePLL(0x1000, 0x0500))
+    if (!this->sensor->EnablePLL(0x1000, 0x0500))
     {
         this->debug->WriteEvent("Error configuring sensor PLL!");
         this->debug->NewLine();
 
-        delete sensor;
+        delete this->sensor;
 
         return false;
     }
 
-    if (!sensor->SetOutputFormat(MT9D111_OUTPUT_FORMAT_RGB444x))
+    if (!this->sensor->SetOutputFormat(MT9D111_OUTPUT_FORMAT_RGB444x))
     {
         this->debug->WriteEvent("Error configuring sensor output format!");
         this->debug->NewLine();
 
-        delete sensor;
+        delete this->sensor;
 
         return false;
     }
 
-    if (!sensor->SetResolution(MT9D111_MODE_PREVIEW, this->width, this->height))
+    if (!this->sensor->SetResolution(MT9D111_MODE_PREVIEW, this->width, this->height))
     {
         this->debug->WriteEvent("Error configuring sensor resolution for preview mode!");
         this->debug->NewLine();
 
-        delete sensor;
+        delete this->sensor;
 
         return false;
     }
 
-    if (!sensor->SetResolution(MT9D111_MODE_CAPTURE, this->width, this->height))
+    if (!this->sensor->SetResolution(MT9D111_MODE_CAPTURE, this->width, this->height))
     {
         this->debug->WriteEvent("Error configuring sensor resolution for capture mode!");
         this->debug->NewLine();
 
-        delete sensor;
+        delete this->sensor;
 
         return false;
     }
 
-    if (!sensor->WriteReg(0xF0, 0x00))
+    if (!this->sensor->WriteReg(0xF0, 0x00))
     {
-        delete sensor;
+        delete this->sensor;
 
         return false;
     }
 
-    if (!sensor->WriteReg(0x21, 0x8403))
+    if (!this->sensor->WriteReg(0x21, 0x8403))
     {
-        delete sensor;
+        delete this->sensor;
 
         return false;
     }
 
-    if (!sensor->SequencerCmd(MT9D111_DRIVER_VAR_SEQUENCER_CMD_REFRESH))
+    if (!this->sensor->SequencerCmd(MT9D111_DRIVER_VAR_SEQUENCER_CMD_REFRESH))
     {
-        delete sensor;
+        delete this->sensor;
 
         return false;
     }
 
-    zynq_axi = new ZynqAXI(0x43C00000, 4096);
+    this->zynq_axi = new ZynqAXI(0x43C00000, 4096);
 
     this->is_opened = true;
 
@@ -262,11 +277,13 @@ void Camera::release()
 {
     if (this->isOpened())
     {
-        this->debug->WriteEvent("Releasing camera!");
+        this->debug->WriteEvent("Releasing camera...");
         this->debug->NewLine();
 
-        delete sensor;
-        delete zynq_axi;
+        delete this->sensor;
+        delete this->zynq_axi;
+
+        this->is_opened = false;
     }
 }
 
@@ -308,11 +325,13 @@ bool Camera::set(int propid, double value)
             case CAM_PROP_FRAME_WIDTH:
                 this->width = (unsigned int)(value);
 
-                return (sensor->SetResolution(MT9D111_MODE_PREVIEW, (uint16_t)(this->width), (uint16_t)(this->height)) and sensor->SetResolution(MT9D111_MODE_CAPTURE, (uint16_t)(this->width), (uint16_t)(this->height)));
+                return (this->sensor->SetResolution(MT9D111_MODE_PREVIEW, (uint16_t)(this->width), (uint16_t)(this->height)) and
+                        this->sensor->SetResolution(MT9D111_MODE_CAPTURE, (uint16_t)(this->width), (uint16_t)(this->height)));
             case CAM_PROP_FRAME_HEIGHT:
                 this->height = (unsigned int)(value);
 
-                return (sensor->SetResolution(MT9D111_MODE_PREVIEW, (uint16_t)(this->width), (uint16_t)(this->height)) and sensor->SetResolution(MT9D111_MODE_CAPTURE, (uint16_t)(this->width), (uint16_t)(this->height)));
+                return (this->sensor->SetResolution(MT9D111_MODE_PREVIEW, (uint16_t)(this->width), (uint16_t)(this->height)) and
+                        this->sensor->SetResolution(MT9D111_MODE_CAPTURE, (uint16_t)(this->width), (uint16_t)(this->height)));
             case CAM_PROP_FPS:
                 return false;
             case CAM_PROP_FORMAT:
