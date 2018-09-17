@@ -5,6 +5,5 @@
 ## Compiling and Building
 
 ```
-mkdir build
-make BUILD_DIR=build
+make
 ```
