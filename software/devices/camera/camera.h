@@ -39,6 +39,7 @@
 
 #include <opencv2/opencv.hpp>
 
+#include <devices/debug/debug.h>
 #include <drivers/mt9d111/mt9d111.h>
 #include <drivers/zynqaxi/zynqaxi.h>
 
@@ -63,10 +64,16 @@ enum CAM_PROP
 class Camera
 {
     private:
+
+        /**
+         * \brief Debug messages.
+         */
+        Debug *debug;
+
         /**
          * \brief Image sensor.
          */
-        MT9D111 *mt9d111;
+        MT9D111 *sensor;
 
         /**
          * \brief Zynq AXI bus.
