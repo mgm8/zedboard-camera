@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------
 | Tool Version              : Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-| Date                      : Wed Sep 12 01:49:17 2018
+| Date                      : Sun Sep 16 01:04:37 2018
 | Host                      : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 | Command                   : report_io -file design_1_wrapper_io_placed.rpt
 | Design                    : design_1_wrapper
@@ -25,7 +25,7 @@ Table of Contents
 +---------------+
 | Total User IO |
 +---------------+
-|           143 |
+|           145 |
 +---------------+
 
 
@@ -67,7 +67,7 @@ Table of Contents
 | AA8        |                   | High Range | IO_L11N_T1_SRCC_13      | User IO     |                   |      13 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
 | AA9        | vsync_0           | High Range | IO_L11P_T1_SRCC_13      | INPUT       | LVCMOS33          |      13 |            |      |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
 | AA10       |                   | High Range | VCCO_13                 | VCCO        |                   |      13 |            |      |                     |                      |    3.30 |            |           |          |      |                  |              |                   |              |
-| AA11       |                   | High Range | IO_L8P_T1_13            | User IO     |                   |      13 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
+| AA11       | GPIO_0_tri_o[1]   | High Range | IO_L8P_T1_13            | OUTPUT      | LVCMOS33          |      13 |         12 | SLOW |                     |            FP_VTT_50 |         | FIXED      |           |          |      | NONE             |              |                   |              |
 | AA12       |                   | High Range | IO_L7P_T1_13            | User IO     |                   |      13 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
 | AA13       |                   | High Range | IO_L23N_T3_33           | User IO     |                   |      33 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
 | AA14       |                   | High Range | IO_L22N_T3_33           | User IO     |                   |      33 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
@@ -106,7 +106,7 @@ Table of Contents
 | B3         |                   |            | VCCO_MIO0_500           | VCCO        |                   |         |            |      |                     |                      |   any** |            |           |          |      |                  |              |                   |              |
 | B4         | FIXED_IO_mio[11]  |            | PS_MIO11_500            | INOUT       | LVCMOS33          |         |          8 | SLOW |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
 | B5         | FIXED_IO_ps_porb  |            | PS_POR_B_500            | BIDIR       | LVCMOS33          |         |         12 | FAST |                     |            FP_VTT_50 |         | FIXED      |           |          |      | NONE             |              |                   |              |
-| B6         | FIXED_IO_mio[14]  |            | PS_MIO14_500            | INOUT       | LVCMOS33          |         |          8 | SLOW |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
+| B6         | FIXED_IO_mio[14]  |            | PS_MIO14_500            | INOUT       | LVCMOS33          |         |          8 | SLOW |                     |                 NONE |         | FIXED      | PULLUP    |          |      | NONE             |              |                   |              |
 | B7         | FIXED_IO_mio[24]  |            | PS_MIO24_501            | IN          | LVCMOS18          |         |          8 | FAST |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
 | B8         |                   |            | GND                     | GND         |                   |         |            |      |                     |                      |     0.0 |            |           |          |      |                  |              |                   |              |
 | B9         | FIXED_IO_mio[45]  |            | PS_MIO45_501            | INOUT       | LVCMOS18          |         |          8 | FAST |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
@@ -172,7 +172,7 @@ Table of Contents
 | E3         | DDR_dq[4]         |            | PS_DDR_DQ4_502          | INOUT       | SSTL15_T_DCI      |         |            | FAST |           DCI SPLIT |            FP_VTT_50 |         | FIXED      |           |          |      | SPLIT            |              |                   |              |
 | E4         | FIXED_IO_mio[4]   |            | PS_MIO4_500             | INOUT       | LVCMOS33          |         |          8 | FAST |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
 | E5         | FIXED_IO_mio[8]   |            | PS_MIO8_500             | OUT         | LVCMOS33          |         |          8 | FAST |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
-| E6         | FIXED_IO_mio[15]  |            | PS_MIO15_500            | INOUT       | LVCMOS33          |         |          8 | SLOW |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
+| E6         | FIXED_IO_mio[15]  |            | PS_MIO15_500            | INOUT       | LVCMOS33          |         |          8 | SLOW |                     |                 NONE |         | FIXED      | PULLUP    |          |      | NONE             |              |                   |              |
 | E7         |                   |            | GND                     | GND         |                   |         |            |      |                     |                      |     0.0 |            |           |          |      |                  |              |                   |              |
 | E8         | FIXED_IO_mio[29]  |            | PS_MIO29_501            | IN          | LVCMOS18          |         |          8 | FAST |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
 | E9         | FIXED_IO_mio[17]  |            | PS_MIO17_501            | OUT         | LVCMOS18          |         |          8 | FAST |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
@@ -507,7 +507,7 @@ Table of Contents
 | Y8         |                   | High Range | IO_L12N_T1_MRCC_13      | User IO     |                   |      13 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
 | Y9         | sys_clock         | High Range | IO_L12P_T1_MRCC_13      | INPUT       | LVCMOS33          |      13 |            |      |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
 | Y10        | xclk_0            | High Range | IO_L10N_T1_13           | OUTPUT      | LVCMOS33          |      13 |         12 | SLOW |                     |            FP_VTT_50 |         | FIXED      |           |          |      | NONE             |              |                   |              |
-| Y11        |                   | High Range | IO_L10P_T1_13           | User IO     |                   |      13 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
+| Y11        | GPIO_0_tri_o[0]   | High Range | IO_L10P_T1_13           | OUTPUT      | LVCMOS33          |      13 |         12 | SLOW |                     |            FP_VTT_50 |         | FIXED      |           |          |      | NONE             |              |                   |              |
 | Y12        |                   |            | GND                     | GND         |                   |         |            |      |                     |                      |     0.0 |            |           |          |      |                  |              |                   |              |
 | Y13        |                   | High Range | IO_L23P_T3_33           | User IO     |                   |      33 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
 | Y14        |                   | High Range | IO_L22P_T3_33           | User IO     |                   |      33 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |

@@ -2,8 +2,8 @@
 # Vivado v2018.1 (64-bit)
 # SW Build 2188600 on Wed Apr  4 18:39:19 MDT 2018
 # IP Build 2185939 on Wed Apr  4 20:55:05 MDT 2018
-# Start of session at: Wed Sep 12 01:35:45 2018
-# Process ID: 8626
+# Start of session at: Sun Sep 16 00:48:49 2018
+# Process ID: 11573
 # Current directory: /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.runs/design_1_Counter_0_0_synth_1
 # Command line: vivado -log design_1_Counter_0_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_Counter_0_0.tcl
 # Log file: /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.runs/design_1_Counter_0_0_synth_1/design_1_Counter_0_0.vds

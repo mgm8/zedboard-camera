@@ -32,4 +32,13 @@ set_property PACKAGE_PIN V10 [get_ports {data_in_0[2]}]
 set_property PACKAGE_PIN W11 [get_ports {data_in_0[1]}]
 set_property PACKAGE_PIN W12 [get_ports {data_in_0[0]}]
 
-set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets pclk_0_IBUF]
+# Reset
+
+# Standby
+
+#set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets pclk_0_IBUF]
+
+set_property IOSTANDARD LVCMOS33 [get_ports {GPIO_0_tri_o[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {GPIO_0_tri_o[0]}]
+set_property PACKAGE_PIN AA11 [get_ports {GPIO_0_tri_o[1]}]
+set_property PACKAGE_PIN Y11 [get_ports {GPIO_0_tri_o[0]}]

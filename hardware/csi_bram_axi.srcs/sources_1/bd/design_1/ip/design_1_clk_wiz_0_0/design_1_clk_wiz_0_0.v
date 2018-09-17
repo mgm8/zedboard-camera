@@ -56,7 +56,7 @@
 //  Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase
 //   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
 //----------------------------------------------------------------------------
-// sensor_ref____10.000______0.000______50.0______290.478____133.882
+// ____xclk____10.000______0.000______50.0______290.478____133.882
 //
 //----------------------------------------------------------------------------
 // Input Clock   Freq (MHz)    Input Jitter (UI)
@@ -70,7 +70,7 @@
 module design_1_clk_wiz_0_0 
  (
   // Clock out ports
-  output        sensor_ref,
+  output        xclk,
  // Clock in ports
   input         clk_in1
  );
@@ -78,7 +78,7 @@ module design_1_clk_wiz_0_0
   design_1_clk_wiz_0_0_clk_wiz inst
   (
   // Clock out ports  
-  .sensor_ref(sensor_ref),
+  .xclk(xclk),
  // Clock in ports
   .clk_in1(clk_in1)
   );

@@ -6,3 +6,21 @@
 01:55:01 INFO  : Restoring global repository preferences: 
 		 /media/gabriel/Files/Xilinx18/device-tree-xlnx-xilinx-v2018.1
 01:55:02 INFO  : Processing command line option -hwspec /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.sdk/design_1_wrapper.hdf.
+01:35:46 INFO  : Registering command handlers for SDK TCF services
+01:35:49 INFO  : Launching XSCT server: xsct -n -interactive /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.sdk/temp_xsdb_launch_script.tcl
+01:35:55 INFO  : XSCT server has started successfully.
+01:36:12 INFO  : Restoring global repository preferences: 
+		 /media/gabriel/Files/Xilinx18/device-tree-xlnx-xilinx-v2018.1
+01:36:23 INFO  : Successfully done setting XSCT server connection channel  
+01:36:24 INFO  : Successfully done setting SDK workspace  
+01:36:24 INFO  : Processing command line option -hwspec /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.sdk/design_1_wrapper.hdf.
+01:36:25 INFO  : Checking for hwspec changes in the project design_1_wrapper_hw_platform_0.
+01:36:25 INFO  : SDK has detected change in the last modified timestamps for source hardware specification file Source:1537070879000,  Project:1536727965000
+01:36:25 INFO  : The hardware specification for project 'design_1_wrapper_hw_platform_0' is different from /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.sdk/design_1_wrapper.hdf.
+01:36:25 INFO  : Copied contents of /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.sdk/design_1_wrapper.hdf into /design_1_wrapper_hw_platform_0/system.hdf.
+01:36:37 INFO  : BSP Project P/device_tree_bsp_0 has been successfully migrated.
+01:36:39 INFO  : Synchronizing projects in the workspace with the hardware platform specification changes.
+01:36:44 INFO  : 
+01:36:55 INFO  : 
+01:36:55 INFO  : Updating hardware inferred compiler options for zynq_fsbl_0.
+01:36:55 INFO  : Clearing existing target manager status.

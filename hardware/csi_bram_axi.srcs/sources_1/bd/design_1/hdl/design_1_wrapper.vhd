@@ -1,7 +1,7 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
---Date        : Wed Sep 12 01:34:59 2018
+--Date        : Sun Sep 16 00:48:37 2018
 --Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 --Command     : generate_target design_1_wrapper.bd
 --Design      : design_1_wrapper
@@ -34,6 +34,7 @@ entity design_1_wrapper is
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
     FIXED_IO_ps_srstb : inout STD_LOGIC;
+    GPIO_0_tri_o : out STD_LOGIC_VECTOR ( 1 downto 0 );
     data_in_0 : in STD_LOGIC_VECTOR ( 7 downto 0 );
     hsync_0 : in STD_LOGIC;
     pclk_0 : in STD_LOGIC;
@@ -70,9 +71,10 @@ architecture STRUCTURE of design_1_wrapper is
     sys_clock : in STD_LOGIC;
     data_in_0 : in STD_LOGIC_VECTOR ( 7 downto 0 );
     hsync_0 : in STD_LOGIC;
-    pclk_0 : in STD_LOGIC;
     vsync_0 : in STD_LOGIC;
-    xclk_0 : out STD_LOGIC
+    xclk_0 : out STD_LOGIC;
+    pclk_0 : in STD_LOGIC;
+    GPIO_0_tri_o : out STD_LOGIC_VECTOR ( 1 downto 0 )
   );
   end component design_1;
 begin
@@ -99,6 +101,7 @@ design_1_i: component design_1
       FIXED_IO_ps_clk => FIXED_IO_ps_clk,
       FIXED_IO_ps_porb => FIXED_IO_ps_porb,
       FIXED_IO_ps_srstb => FIXED_IO_ps_srstb,
+      GPIO_0_tri_o(1 downto 0) => GPIO_0_tri_o(1 downto 0),
       data_in_0(7 downto 0) => data_in_0(7 downto 0),
       hsync_0 => hsync_0,
       pclk_0 => pclk_0,

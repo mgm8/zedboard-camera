@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
--- Date        : Wed Sep 12 01:38:06 2018
+-- Date        : Sun Sep 16 00:50:30 2018
 -- Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 -- Command     : write_vhdl -force -mode synth_stub
 --               /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.srcs/sources_1/bd/design_1/ip/design_1_Counter_0_0/design_1_Counter_0_0_stub.vhdl
@@ -16,6 +16,7 @@ entity design_1_Counter_0_0 is
   Port ( 
     clk : in STD_LOGIC;
     en : in STD_LOGIC;
+    rst : in STD_LOGIC;
     count : out STD_LOGIC_VECTOR ( 18 downto 0 )
   );
 
@@ -25,7 +26,7 @@ architecture stub of design_1_Counter_0_0 is
 attribute syn_black_box : boolean;
 attribute black_box_pad_pin : string;
 attribute syn_black_box of stub : architecture is true;
-attribute black_box_pad_pin of stub : architecture is "clk,en,count[18:0]";
+attribute black_box_pad_pin of stub : architecture is "clk,en,rst,count[18:0]";
 attribute x_core_info : string;
 attribute x_core_info of stub : architecture is "Counter,Vivado 2018.1";
 begin

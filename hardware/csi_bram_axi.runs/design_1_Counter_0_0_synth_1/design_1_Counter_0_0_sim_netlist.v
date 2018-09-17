@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-// Date        : Wed Sep 12 01:38:04 2018
+// Date        : Sun Sep 16 00:50:29 2018
 // Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 // Command     : write_verilog -force -mode funcsim -rename_top decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix -prefix
 //               decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_ design_1_Counter_0_0_sim_netlist.v
@@ -13,270 +13,469 @@
 `timescale 1 ps / 1 ps
 
 module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_Counter
-   (count,
+   (Q,
     en,
-    clk);
-  output [18:0]count;
+    clk,
+    rst);
+  output [18:0]Q;
   input en;
   input clk;
+  input rst;
 
+  wire [18:0]Q;
   wire clk;
-  wire [18:0]count;
-  wire count_sig;
+  wire \count_sig[10]_i_1_n_0 ;
+  wire \count_sig[11]_i_1_n_0 ;
+  wire \count_sig[12]_i_1_n_0 ;
+  wire \count_sig[13]_i_1_n_0 ;
+  wire \count_sig[14]_i_1_n_0 ;
+  wire \count_sig[15]_i_1_n_0 ;
+  wire \count_sig[16]_i_1_n_0 ;
+  wire \count_sig[17]_i_1_n_0 ;
+  wire \count_sig[18]_i_1_n_0 ;
+  wire \count_sig[18]_i_2_n_0 ;
   wire \count_sig[18]_i_3_n_0 ;
-  wire \count_sig[3]_i_2_n_0 ;
-  wire \count_sig_reg[11]_i_1_n_0 ;
-  wire \count_sig_reg[11]_i_1_n_1 ;
-  wire \count_sig_reg[11]_i_1_n_2 ;
-  wire \count_sig_reg[11]_i_1_n_3 ;
-  wire \count_sig_reg[11]_i_1_n_4 ;
-  wire \count_sig_reg[11]_i_1_n_5 ;
-  wire \count_sig_reg[11]_i_1_n_6 ;
-  wire \count_sig_reg[11]_i_1_n_7 ;
-  wire \count_sig_reg[15]_i_1_n_0 ;
-  wire \count_sig_reg[15]_i_1_n_1 ;
-  wire \count_sig_reg[15]_i_1_n_2 ;
-  wire \count_sig_reg[15]_i_1_n_3 ;
-  wire \count_sig_reg[15]_i_1_n_4 ;
-  wire \count_sig_reg[15]_i_1_n_5 ;
-  wire \count_sig_reg[15]_i_1_n_6 ;
-  wire \count_sig_reg[15]_i_1_n_7 ;
-  wire \count_sig_reg[18]_i_2_n_2 ;
-  wire \count_sig_reg[18]_i_2_n_3 ;
-  wire \count_sig_reg[18]_i_2_n_5 ;
-  wire \count_sig_reg[18]_i_2_n_6 ;
-  wire \count_sig_reg[18]_i_2_n_7 ;
-  wire \count_sig_reg[3]_i_1_n_0 ;
-  wire \count_sig_reg[3]_i_1_n_1 ;
-  wire \count_sig_reg[3]_i_1_n_2 ;
-  wire \count_sig_reg[3]_i_1_n_3 ;
-  wire \count_sig_reg[3]_i_1_n_4 ;
-  wire \count_sig_reg[3]_i_1_n_5 ;
-  wire \count_sig_reg[3]_i_1_n_6 ;
-  wire \count_sig_reg[3]_i_1_n_7 ;
-  wire \count_sig_reg[7]_i_1_n_0 ;
-  wire \count_sig_reg[7]_i_1_n_1 ;
-  wire \count_sig_reg[7]_i_1_n_2 ;
-  wire \count_sig_reg[7]_i_1_n_3 ;
-  wire \count_sig_reg[7]_i_1_n_4 ;
-  wire \count_sig_reg[7]_i_1_n_5 ;
-  wire \count_sig_reg[7]_i_1_n_6 ;
-  wire \count_sig_reg[7]_i_1_n_7 ;
+  wire \count_sig[1]_i_1_n_0 ;
+  wire \count_sig[2]_i_1_n_0 ;
+  wire \count_sig[3]_i_1_n_0 ;
+  wire \count_sig[4]_i_1_n_0 ;
+  wire \count_sig[5]_i_1_n_0 ;
+  wire \count_sig[6]_i_1_n_0 ;
+  wire \count_sig[7]_i_1_n_0 ;
+  wire \count_sig[8]_i_1_n_0 ;
+  wire \count_sig[9]_i_1_n_0 ;
+  wire \count_sig_reg[12]_i_2_n_0 ;
+  wire \count_sig_reg[12]_i_2_n_1 ;
+  wire \count_sig_reg[12]_i_2_n_2 ;
+  wire \count_sig_reg[12]_i_2_n_3 ;
+  wire \count_sig_reg[12]_i_2_n_4 ;
+  wire \count_sig_reg[12]_i_2_n_5 ;
+  wire \count_sig_reg[12]_i_2_n_6 ;
+  wire \count_sig_reg[12]_i_2_n_7 ;
+  wire \count_sig_reg[16]_i_2_n_0 ;
+  wire \count_sig_reg[16]_i_2_n_1 ;
+  wire \count_sig_reg[16]_i_2_n_2 ;
+  wire \count_sig_reg[16]_i_2_n_3 ;
+  wire \count_sig_reg[16]_i_2_n_4 ;
+  wire \count_sig_reg[16]_i_2_n_5 ;
+  wire \count_sig_reg[16]_i_2_n_6 ;
+  wire \count_sig_reg[16]_i_2_n_7 ;
+  wire \count_sig_reg[18]_i_4_n_3 ;
+  wire \count_sig_reg[18]_i_4_n_6 ;
+  wire \count_sig_reg[18]_i_4_n_7 ;
+  wire \count_sig_reg[4]_i_2_n_0 ;
+  wire \count_sig_reg[4]_i_2_n_1 ;
+  wire \count_sig_reg[4]_i_2_n_2 ;
+  wire \count_sig_reg[4]_i_2_n_3 ;
+  wire \count_sig_reg[4]_i_2_n_4 ;
+  wire \count_sig_reg[4]_i_2_n_5 ;
+  wire \count_sig_reg[4]_i_2_n_6 ;
+  wire \count_sig_reg[4]_i_2_n_7 ;
+  wire \count_sig_reg[8]_i_2_n_0 ;
+  wire \count_sig_reg[8]_i_2_n_1 ;
+  wire \count_sig_reg[8]_i_2_n_2 ;
+  wire \count_sig_reg[8]_i_2_n_3 ;
+  wire \count_sig_reg[8]_i_2_n_4 ;
+  wire \count_sig_reg[8]_i_2_n_5 ;
+  wire \count_sig_reg[8]_i_2_n_6 ;
+  wire \count_sig_reg[8]_i_2_n_7 ;
   wire en;
-  wire [3:2]\NLW_count_sig_reg[18]_i_2_CO_UNCONNECTED ;
-  wire [3:3]\NLW_count_sig_reg[18]_i_2_O_UNCONNECTED ;
+  wire [0:0]p_0_in;
+  wire rst;
+  wire [3:1]\NLW_count_sig_reg[18]_i_4_CO_UNCONNECTED ;
+  wire [3:2]\NLW_count_sig_reg[18]_i_4_O_UNCONNECTED ;
 
-  LUT5 #(
-    .INIT(32'hA2222222)) 
-    \count_sig[18]_i_1 
-       (.I0(en),
-        .I1(\count_sig[18]_i_3_n_0 ),
-        .I2(count[18]),
-        .I3(count[15]),
-        .I4(count[14]),
-        .O(count_sig));
   LUT6 #(
-    .INIT(64'h01111111FFFFFFFF)) 
-    \count_sig[18]_i_3 
-       (.I0(count[16]),
-        .I1(count[17]),
-        .I2(count[13]),
-        .I3(count[12]),
-        .I4(count[15]),
-        .I5(count[18]),
-        .O(\count_sig[18]_i_3_n_0 ));
+    .INIT(64'h000000002AAAAAAA)) 
+    \count_sig[0]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(Q[0]),
+        .O(p_0_in));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[10]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[12]_i_2_n_6 ),
+        .O(\count_sig[10]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[11]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[12]_i_2_n_5 ),
+        .O(\count_sig[11]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[12]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[12]_i_2_n_4 ),
+        .O(\count_sig[12]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[13]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[16]_i_2_n_7 ),
+        .O(\count_sig[13]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[14]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[16]_i_2_n_6 ),
+        .O(\count_sig[14]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[15]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[16]_i_2_n_5 ),
+        .O(\count_sig[15]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[16]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[16]_i_2_n_4 ),
+        .O(\count_sig[16]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[17]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[18]_i_4_n_7 ),
+        .O(\count_sig[17]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[18]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[18]_i_4_n_6 ),
+        .O(\count_sig[18]_i_1_n_0 ));
   LUT1 #(
     .INIT(2'h1)) 
-    \count_sig[3]_i_2 
-       (.I0(count[0]),
-        .O(\count_sig[3]_i_2_n_0 ));
-  FDRE #(
+    \count_sig[18]_i_2 
+       (.I0(rst),
+        .O(\count_sig[18]_i_2_n_0 ));
+  LUT5 #(
+    .INIT(32'h0F1F1F1F)) 
+    \count_sig[18]_i_3 
+       (.I0(Q[17]),
+        .I1(Q[16]),
+        .I2(Q[18]),
+        .I3(Q[15]),
+        .I4(Q[14]),
+        .O(\count_sig[18]_i_3_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[1]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[4]_i_2_n_7 ),
+        .O(\count_sig[1]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[2]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[4]_i_2_n_6 ),
+        .O(\count_sig[2]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[3]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[4]_i_2_n_5 ),
+        .O(\count_sig[3]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[4]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[4]_i_2_n_4 ),
+        .O(\count_sig[4]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[5]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[8]_i_2_n_7 ),
+        .O(\count_sig[5]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[6]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[8]_i_2_n_6 ),
+        .O(\count_sig[6]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[7]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[8]_i_2_n_5 ),
+        .O(\count_sig[7]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[8]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[8]_i_2_n_4 ),
+        .O(\count_sig[8]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h2AAAAAAA00000000)) 
+    \count_sig[9]_i_1 
+       (.I0(\count_sig[18]_i_3_n_0 ),
+        .I1(Q[18]),
+        .I2(Q[15]),
+        .I3(Q[12]),
+        .I4(Q[13]),
+        .I5(\count_sig_reg[12]_i_2_n_7 ),
+        .O(\count_sig[9]_i_1_n_0 ));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[0] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[3]_i_1_n_7 ),
-        .Q(count[0]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(p_0_in),
+        .Q(Q[0]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[10] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[11]_i_1_n_5 ),
-        .Q(count[10]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[10]_i_1_n_0 ),
+        .Q(Q[10]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[11] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[11]_i_1_n_4 ),
-        .Q(count[11]),
-        .R(count_sig));
-  CARRY4 \count_sig_reg[11]_i_1 
-       (.CI(\count_sig_reg[7]_i_1_n_0 ),
-        .CO({\count_sig_reg[11]_i_1_n_0 ,\count_sig_reg[11]_i_1_n_1 ,\count_sig_reg[11]_i_1_n_2 ,\count_sig_reg[11]_i_1_n_3 }),
-        .CYINIT(1'b0),
-        .DI({1'b0,1'b0,1'b0,1'b0}),
-        .O({\count_sig_reg[11]_i_1_n_4 ,\count_sig_reg[11]_i_1_n_5 ,\count_sig_reg[11]_i_1_n_6 ,\count_sig_reg[11]_i_1_n_7 }),
-        .S(count[11:8]));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[11]_i_1_n_0 ),
+        .Q(Q[11]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[12] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[15]_i_1_n_7 ),
-        .Q(count[12]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[12]_i_1_n_0 ),
+        .Q(Q[12]));
+  CARRY4 \count_sig_reg[12]_i_2 
+       (.CI(\count_sig_reg[8]_i_2_n_0 ),
+        .CO({\count_sig_reg[12]_i_2_n_0 ,\count_sig_reg[12]_i_2_n_1 ,\count_sig_reg[12]_i_2_n_2 ,\count_sig_reg[12]_i_2_n_3 }),
+        .CYINIT(1'b0),
+        .DI({1'b0,1'b0,1'b0,1'b0}),
+        .O({\count_sig_reg[12]_i_2_n_4 ,\count_sig_reg[12]_i_2_n_5 ,\count_sig_reg[12]_i_2_n_6 ,\count_sig_reg[12]_i_2_n_7 }),
+        .S(Q[12:9]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[13] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[15]_i_1_n_6 ),
-        .Q(count[13]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[13]_i_1_n_0 ),
+        .Q(Q[13]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[14] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[15]_i_1_n_5 ),
-        .Q(count[14]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[14]_i_1_n_0 ),
+        .Q(Q[14]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[15] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[15]_i_1_n_4 ),
-        .Q(count[15]),
-        .R(count_sig));
-  CARRY4 \count_sig_reg[15]_i_1 
-       (.CI(\count_sig_reg[11]_i_1_n_0 ),
-        .CO({\count_sig_reg[15]_i_1_n_0 ,\count_sig_reg[15]_i_1_n_1 ,\count_sig_reg[15]_i_1_n_2 ,\count_sig_reg[15]_i_1_n_3 }),
-        .CYINIT(1'b0),
-        .DI({1'b0,1'b0,1'b0,1'b0}),
-        .O({\count_sig_reg[15]_i_1_n_4 ,\count_sig_reg[15]_i_1_n_5 ,\count_sig_reg[15]_i_1_n_6 ,\count_sig_reg[15]_i_1_n_7 }),
-        .S(count[15:12]));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[15]_i_1_n_0 ),
+        .Q(Q[15]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[16] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[18]_i_2_n_7 ),
-        .Q(count[16]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[16]_i_1_n_0 ),
+        .Q(Q[16]));
+  CARRY4 \count_sig_reg[16]_i_2 
+       (.CI(\count_sig_reg[12]_i_2_n_0 ),
+        .CO({\count_sig_reg[16]_i_2_n_0 ,\count_sig_reg[16]_i_2_n_1 ,\count_sig_reg[16]_i_2_n_2 ,\count_sig_reg[16]_i_2_n_3 }),
+        .CYINIT(1'b0),
+        .DI({1'b0,1'b0,1'b0,1'b0}),
+        .O({\count_sig_reg[16]_i_2_n_4 ,\count_sig_reg[16]_i_2_n_5 ,\count_sig_reg[16]_i_2_n_6 ,\count_sig_reg[16]_i_2_n_7 }),
+        .S(Q[16:13]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[17] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[18]_i_2_n_6 ),
-        .Q(count[17]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[17]_i_1_n_0 ),
+        .Q(Q[17]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[18] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[18]_i_2_n_5 ),
-        .Q(count[18]),
-        .R(count_sig));
-  CARRY4 \count_sig_reg[18]_i_2 
-       (.CI(\count_sig_reg[15]_i_1_n_0 ),
-        .CO({\NLW_count_sig_reg[18]_i_2_CO_UNCONNECTED [3:2],\count_sig_reg[18]_i_2_n_2 ,\count_sig_reg[18]_i_2_n_3 }),
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[18]_i_1_n_0 ),
+        .Q(Q[18]));
+  CARRY4 \count_sig_reg[18]_i_4 
+       (.CI(\count_sig_reg[16]_i_2_n_0 ),
+        .CO({\NLW_count_sig_reg[18]_i_4_CO_UNCONNECTED [3:1],\count_sig_reg[18]_i_4_n_3 }),
         .CYINIT(1'b0),
         .DI({1'b0,1'b0,1'b0,1'b0}),
-        .O({\NLW_count_sig_reg[18]_i_2_O_UNCONNECTED [3],\count_sig_reg[18]_i_2_n_5 ,\count_sig_reg[18]_i_2_n_6 ,\count_sig_reg[18]_i_2_n_7 }),
-        .S({1'b0,count[18:16]}));
-  FDRE #(
+        .O({\NLW_count_sig_reg[18]_i_4_O_UNCONNECTED [3:2],\count_sig_reg[18]_i_4_n_6 ,\count_sig_reg[18]_i_4_n_7 }),
+        .S({1'b0,1'b0,Q[18:17]}));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[1] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[3]_i_1_n_6 ),
-        .Q(count[1]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[1]_i_1_n_0 ),
+        .Q(Q[1]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[2] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[3]_i_1_n_5 ),
-        .Q(count[2]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[2]_i_1_n_0 ),
+        .Q(Q[2]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[3] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[3]_i_1_n_4 ),
-        .Q(count[3]),
-        .R(count_sig));
-  CARRY4 \count_sig_reg[3]_i_1 
-       (.CI(1'b0),
-        .CO({\count_sig_reg[3]_i_1_n_0 ,\count_sig_reg[3]_i_1_n_1 ,\count_sig_reg[3]_i_1_n_2 ,\count_sig_reg[3]_i_1_n_3 }),
-        .CYINIT(1'b0),
-        .DI({1'b0,1'b0,1'b0,1'b1}),
-        .O({\count_sig_reg[3]_i_1_n_4 ,\count_sig_reg[3]_i_1_n_5 ,\count_sig_reg[3]_i_1_n_6 ,\count_sig_reg[3]_i_1_n_7 }),
-        .S({count[3:1],\count_sig[3]_i_2_n_0 }));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[3]_i_1_n_0 ),
+        .Q(Q[3]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[4] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[7]_i_1_n_7 ),
-        .Q(count[4]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[4]_i_1_n_0 ),
+        .Q(Q[4]));
+  CARRY4 \count_sig_reg[4]_i_2 
+       (.CI(1'b0),
+        .CO({\count_sig_reg[4]_i_2_n_0 ,\count_sig_reg[4]_i_2_n_1 ,\count_sig_reg[4]_i_2_n_2 ,\count_sig_reg[4]_i_2_n_3 }),
+        .CYINIT(Q[0]),
+        .DI({1'b0,1'b0,1'b0,1'b0}),
+        .O({\count_sig_reg[4]_i_2_n_4 ,\count_sig_reg[4]_i_2_n_5 ,\count_sig_reg[4]_i_2_n_6 ,\count_sig_reg[4]_i_2_n_7 }),
+        .S(Q[4:1]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[5] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[7]_i_1_n_6 ),
-        .Q(count[5]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[5]_i_1_n_0 ),
+        .Q(Q[5]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[6] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[7]_i_1_n_5 ),
-        .Q(count[6]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[6]_i_1_n_0 ),
+        .Q(Q[6]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[7] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[7]_i_1_n_4 ),
-        .Q(count[7]),
-        .R(count_sig));
-  CARRY4 \count_sig_reg[7]_i_1 
-       (.CI(\count_sig_reg[3]_i_1_n_0 ),
-        .CO({\count_sig_reg[7]_i_1_n_0 ,\count_sig_reg[7]_i_1_n_1 ,\count_sig_reg[7]_i_1_n_2 ,\count_sig_reg[7]_i_1_n_3 }),
-        .CYINIT(1'b0),
-        .DI({1'b0,1'b0,1'b0,1'b0}),
-        .O({\count_sig_reg[7]_i_1_n_4 ,\count_sig_reg[7]_i_1_n_5 ,\count_sig_reg[7]_i_1_n_6 ,\count_sig_reg[7]_i_1_n_7 }),
-        .S(count[7:4]));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[7]_i_1_n_0 ),
+        .Q(Q[7]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[8] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[11]_i_1_n_7 ),
-        .Q(count[8]),
-        .R(count_sig));
-  FDRE #(
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[8]_i_1_n_0 ),
+        .Q(Q[8]));
+  CARRY4 \count_sig_reg[8]_i_2 
+       (.CI(\count_sig_reg[4]_i_2_n_0 ),
+        .CO({\count_sig_reg[8]_i_2_n_0 ,\count_sig_reg[8]_i_2_n_1 ,\count_sig_reg[8]_i_2_n_2 ,\count_sig_reg[8]_i_2_n_3 }),
+        .CYINIT(1'b0),
+        .DI({1'b0,1'b0,1'b0,1'b0}),
+        .O({\count_sig_reg[8]_i_2_n_4 ,\count_sig_reg[8]_i_2_n_5 ,\count_sig_reg[8]_i_2_n_6 ,\count_sig_reg[8]_i_2_n_7 }),
+        .S(Q[8:5]));
+  FDCE #(
     .INIT(1'b0)) 
     \count_sig_reg[9] 
        (.C(clk),
         .CE(en),
-        .D(\count_sig_reg[11]_i_1_n_6 ),
-        .Q(count[9]),
-        .R(count_sig));
+        .CLR(\count_sig[18]_i_2_n_0 ),
+        .D(\count_sig[9]_i_1_n_0 ),
+        .Q(Q[9]));
 endmodule
 
 (* CHECK_LICENSE_TYPE = "design_1_Counter_0_0,Counter,{}" *) (* downgradeipidentifiedwarnings = "yes" *) (* x_core_info = "Counter,Vivado 2018.1" *) 
@@ -284,19 +483,23 @@ endmodule
 module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix
    (clk,
     en,
+    rst,
     count);
-  (* x_interface_info = "xilinx.com:signal:clock:1.0 clk CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_CSI_RX_0_0_data_clk" *) input clk;
+  (* x_interface_info = "xilinx.com:signal:clock:1.0 clk CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME clk, ASSOCIATED_RESET rst, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_CSI_RX_0_0_data_clk" *) input clk;
   input en;
+  (* x_interface_info = "xilinx.com:signal:reset:1.0 rst RST" *) (* x_interface_parameter = "XIL_INTERFACENAME rst, POLARITY ACTIVE_LOW" *) input rst;
   output [18:0]count;
 
   wire clk;
   wire [18:0]count;
   wire en;
+  wire rst;
 
   decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_Counter U0
-       (.clk(clk),
-        .count(count),
-        .en(en));
+       (.Q(count),
+        .clk(clk),
+        .en(en),
+        .rst(rst));
 endmodule
 `ifndef GLBL
 `define GLBL

@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
--- Date        : Wed Sep 12 01:38:07 2018
+-- Date        : Thu Sep 13 13:03:18 2018
 -- Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 -- Command     : write_vhdl -force -mode funcsim
 --               /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.srcs/sources_1/bd/design_1/ip/design_1_clk_wiz_0_0/design_1_clk_wiz_0_0_sim_netlist.vhdl
@@ -16,7 +16,7 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity design_1_clk_wiz_0_0_design_1_clk_wiz_0_0_clk_wiz is
   port (
-    sensor_ref : out STD_LOGIC;
+    xclk : out STD_LOGIC;
     clk_in1 : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -27,7 +27,7 @@ architecture STRUCTURE of design_1_clk_wiz_0_0_design_1_clk_wiz_0_0_clk_wiz is
   signal clk_in1_design_1_clk_wiz_0_0 : STD_LOGIC;
   signal clkfbout_buf_design_1_clk_wiz_0_0 : STD_LOGIC;
   signal clkfbout_design_1_clk_wiz_0_0 : STD_LOGIC;
-  signal sensor_ref_design_1_clk_wiz_0_0 : STD_LOGIC;
+  signal xclk_design_1_clk_wiz_0_0 : STD_LOGIC;
   signal NLW_mmcm_adv_inst_CLKFBOUTB_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcm_adv_inst_CLKFBSTOPPED_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcm_adv_inst_CLKINSTOPPED_UNCONNECTED : STD_LOGIC;
@@ -72,8 +72,8 @@ clkin1_ibufg: unisim.vcomponents.IBUF
     );
 clkout1_buf: unisim.vcomponents.BUFG
      port map (
-      I => sensor_ref_design_1_clk_wiz_0_0,
-      O => sensor_ref
+      I => xclk_design_1_clk_wiz_0_0,
+      O => xclk
     );
 mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
     generic map(
@@ -135,7 +135,7 @@ mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
       CLKIN2 => '0',
       CLKINSEL => '1',
       CLKINSTOPPED => NLW_mmcm_adv_inst_CLKINSTOPPED_UNCONNECTED,
-      CLKOUT0 => sensor_ref_design_1_clk_wiz_0_0,
+      CLKOUT0 => xclk_design_1_clk_wiz_0_0,
       CLKOUT0B => NLW_mmcm_adv_inst_CLKOUT0B_UNCONNECTED,
       CLKOUT1 => NLW_mmcm_adv_inst_CLKOUT1_UNCONNECTED,
       CLKOUT1B => NLW_mmcm_adv_inst_CLKOUT1B_UNCONNECTED,
@@ -168,7 +168,7 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity design_1_clk_wiz_0_0 is
   port (
-    sensor_ref : out STD_LOGIC;
+    xclk : out STD_LOGIC;
     clk_in1 : in STD_LOGIC
   );
   attribute NotValidForBitStream : boolean;
@@ -180,6 +180,6 @@ begin
 inst: entity work.design_1_clk_wiz_0_0_design_1_clk_wiz_0_0_clk_wiz
      port map (
       clk_in1 => clk_in1,
-      sensor_ref => sensor_ref
+      xclk => xclk
     );
 end STRUCTURE;

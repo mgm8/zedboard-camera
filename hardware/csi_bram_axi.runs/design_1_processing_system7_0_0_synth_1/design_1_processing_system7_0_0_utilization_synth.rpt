@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-| Date         : Wed Sep 12 01:40:59 2018
+| Date         : Sat Sep 15 03:17:18 2018
 | Host         : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 | Command      : report_utilization -file design_1_processing_system7_0_0_utilization_synth.rpt -pb design_1_processing_system7_0_0_utilization_synth.pb
 | Design       : design_1_processing_system7_0_0

@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-// Date        : Wed Sep 12 01:38:06 2018
+// Date        : Thu Sep 13 13:03:18 2018
 // Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 // Command     : write_verilog -force -mode funcsim
 //               /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.srcs/sources_1/bd/design_1/ip/design_1_clk_wiz_0_0/design_1_clk_wiz_0_0_sim_netlist.v
@@ -14,32 +14,32 @@
 
 (* NotValidForBitStream *)
 module design_1_clk_wiz_0_0
-   (sensor_ref,
+   (xclk,
     clk_in1);
-  output sensor_ref;
+  output xclk;
   input clk_in1;
 
   (* IBUF_LOW_PWR *) wire clk_in1;
-  wire sensor_ref;
+  wire xclk;
 
   design_1_clk_wiz_0_0_design_1_clk_wiz_0_0_clk_wiz inst
        (.clk_in1(clk_in1),
-        .sensor_ref(sensor_ref));
+        .xclk(xclk));
 endmodule
 
 (* ORIG_REF_NAME = "design_1_clk_wiz_0_0_clk_wiz" *) 
 module design_1_clk_wiz_0_0_design_1_clk_wiz_0_0_clk_wiz
-   (sensor_ref,
+   (xclk,
     clk_in1);
-  output sensor_ref;
+  output xclk;
   input clk_in1;
 
   wire clk_in1;
   wire clk_in1_design_1_clk_wiz_0_0;
   wire clkfbout_buf_design_1_clk_wiz_0_0;
   wire clkfbout_design_1_clk_wiz_0_0;
-  wire sensor_ref;
-  wire sensor_ref_design_1_clk_wiz_0_0;
+  wire xclk;
+  wire xclk_design_1_clk_wiz_0_0;
   wire NLW_mmcm_adv_inst_CLKFBOUTB_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKFBSTOPPED_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKINSTOPPED_UNCONNECTED;
@@ -73,8 +73,8 @@ module design_1_clk_wiz_0_0_design_1_clk_wiz_0_0_clk_wiz
         .O(clk_in1_design_1_clk_wiz_0_0));
   (* BOX_TYPE = "PRIMITIVE" *) 
   BUFG clkout1_buf
-       (.I(sensor_ref_design_1_clk_wiz_0_0),
-        .O(sensor_ref));
+       (.I(xclk_design_1_clk_wiz_0_0),
+        .O(xclk));
   (* BOX_TYPE = "PRIMITIVE" *) 
   MMCME2_ADV #(
     .BANDWIDTH("OPTIMIZED"),
@@ -134,7 +134,7 @@ module design_1_clk_wiz_0_0_design_1_clk_wiz_0_0_clk_wiz
         .CLKIN2(1'b0),
         .CLKINSEL(1'b1),
         .CLKINSTOPPED(NLW_mmcm_adv_inst_CLKINSTOPPED_UNCONNECTED),
-        .CLKOUT0(sensor_ref_design_1_clk_wiz_0_0),
+        .CLKOUT0(xclk_design_1_clk_wiz_0_0),
         .CLKOUT0B(NLW_mmcm_adv_inst_CLKOUT0B_UNCONNECTED),
         .CLKOUT1(NLW_mmcm_adv_inst_CLKOUT1_UNCONNECTED),
         .CLKOUT1B(NLW_mmcm_adv_inst_CLKOUT1B_UNCONNECTED),

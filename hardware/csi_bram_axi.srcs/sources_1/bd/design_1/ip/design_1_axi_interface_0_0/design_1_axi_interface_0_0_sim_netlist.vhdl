@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
--- Date        : Wed Sep 12 01:38:07 2018
+-- Date        : Wed Sep 12 01:38:04 2018
 -- Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
--- Command     : write_vhdl -force -mode funcsim
---               /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.srcs/sources_1/bd/design_1/ip/design_1_axi_interface_0_0/design_1_axi_interface_0_0_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim -rename_top design_1_axi_interface_0_0 -prefix
+--               design_1_axi_interface_0_0_ design_1_axi_interface_0_0_sim_netlist.vhdl
 -- Design      : design_1_axi_interface_0_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -44,8 +44,6 @@ entity design_1_axi_interface_0_0_axi_interface_v2_37a_S00_AXI is
     s00_axi_bready : in STD_LOGIC;
     s00_axi_rready : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_interface_0_0_axi_interface_v2_37a_S00_AXI : entity is "axi_interface_v2_37a_S00_AXI";
 end design_1_axi_interface_0_0_axi_interface_v2_37a_S00_AXI;
 
 architecture STRUCTURE of design_1_axi_interface_0_0_axi_interface_v2_37a_S00_AXI is
@@ -2204,8 +2202,6 @@ entity design_1_axi_interface_0_0_axi_interface_v2_37a is
     s00_axi_bready : in STD_LOGIC;
     s00_axi_rready : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_axi_interface_0_0_axi_interface_v2_37a : entity is "axi_interface_v2_37a";
 end design_1_axi_interface_0_0_axi_interface_v2_37a;
 
 architecture STRUCTURE of design_1_axi_interface_0_0_axi_interface_v2_37a is

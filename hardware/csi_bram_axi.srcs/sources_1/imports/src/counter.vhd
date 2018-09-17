@@ -34,13 +34,16 @@ library ieee;
 
 entity Counter is
     generic(
-        MAX_COUNT   : natural := 640*480;                       --! Counter upper limit.
-        COUNT_WIDTH : natural := 19
+        MAX_COUNT   : natural := 640*480;                           --! Counter upper limit.
+        COUNT_WIDTH : natural := 19;
+        USE_ENABLE  : boolean := TRUE;
+        USE_RESET   : boolean := TRUE
     );
     port(
-        clk     : in std_logic;                                 --! Reference clock.
-        en      : in std_logic;                                 --! Enable signal.
-        count   : out std_logic_vector(COUNT_WIDTH-1 downto 0)  --! Count position.
+        clk         : in std_logic;                                 --! Reference clock.
+        en          : in std_logic;                                 --! Enable signal.
+        rst         : in std_logic;                                 --! Reset signal.
+        count       : out std_logic_vector(COUNT_WIDTH-1 downto 0) --! Count position.
     );
 end Counter;
 
@@ -50,12 +53,20 @@ architecture behavioral of Counter is
 
 begin
 
-    count <= std_logic_vector(to_unsigned(count_sig, count'length));
-
-    process(clk)
+    process(rst, clk)
     begin
-        if rising_edge(clk) then
-            if en = '1' then
+        if USE_RESET = TRUE and rst = '0' then
+            count_sig <= 0;
+        elsif rising_edge(clk) then
+            if USE_ENABLE = TRUE then
+                if en = '1' then
+                    if count_sig < MAX_COUNT then
+                        count_sig <= count_sig + 1;
+                    else
+                        count_sig <= 0;
+                    end if;
+                end if;
+            else
                 if count_sig < MAX_COUNT then
                     count_sig <= count_sig + 1;
                 else
@@ -64,5 +75,7 @@ begin
             end if;
         end if;
     end process;
+
+    count <= std_logic_vector(to_unsigned(count_sig, count'length));
 
 end behavioral;

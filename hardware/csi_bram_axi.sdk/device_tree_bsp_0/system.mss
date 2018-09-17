@@ -213,4 +213,24 @@ BEGIN DRIVER
  PARAMETER HW_INSTANCE = ps7_xadc_0
 END
 
+BEGIN DRIVER
+ PARAMETER DRIVER_NAME = gpio
+ PARAMETER HW_INSTANCE = axi_gpio_0
+ PARAMETER clock-names =  s_axi_aclk
+ PARAMETER clocks = clkc 15
+ PARAMETER reg = 0x41200000 0x10000
+ PARAMETER xlnx,all-inputs = 0
+ PARAMETER xlnx,all-inputs-2 = 0
+ PARAMETER xlnx,all-outputs = 1
+ PARAMETER xlnx,all-outputs-2 = 0
+ PARAMETER xlnx,dout-default = 0x00000000
+ PARAMETER xlnx,dout-default-2 = 0x00000000
+ PARAMETER xlnx,gpio-width = 2
+ PARAMETER xlnx,gpio2-width = 32
+ PARAMETER xlnx,interrupt-present = 0
+ PARAMETER xlnx,is-dual = 0
+ PARAMETER xlnx,tri-default = 0xFFFFFFFF
+ PARAMETER xlnx,tri-default-2 = 0xFFFFFFFF
+END
+
 

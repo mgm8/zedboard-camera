@@ -57,6 +57,7 @@ ENTITY design_1_Counter_0_0 IS
   PORT (
     clk : IN STD_LOGIC;
     en : IN STD_LOGIC;
+    rst : IN STD_LOGIC;
     count : OUT STD_LOGIC_VECTOR(18 DOWNTO 0)
   );
 END design_1_Counter_0_0;
@@ -67,11 +68,14 @@ ARCHITECTURE design_1_Counter_0_0_arch OF design_1_Counter_0_0 IS
   COMPONENT Counter IS
     GENERIC (
       MAX_COUNT : INTEGER;
-      COUNT_WIDTH : INTEGER
+      COUNT_WIDTH : INTEGER;
+      USE_ENABLE : BOOLEAN;
+      USE_RESET : BOOLEAN
     );
     PORT (
       clk : IN STD_LOGIC;
       en : IN STD_LOGIC;
+      rst : IN STD_LOGIC;
       count : OUT STD_LOGIC_VECTOR(18 DOWNTO 0)
     );
   END COMPONENT Counter;
@@ -80,20 +84,25 @@ ARCHITECTURE design_1_Counter_0_0_arch OF design_1_Counter_0_0 IS
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF design_1_Counter_0_0_arch : ARCHITECTURE IS "design_1_Counter_0_0,Counter,{}";
   ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF design_1_Counter_0_0_arch: ARCHITECTURE IS "design_1_Counter_0_0,Counter,{x_ipProduct=Vivado 2018.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=Counter,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,MAX_COUNT=307200,COUNT_WIDTH=19}";
+  ATTRIBUTE CORE_GENERATION_INFO OF design_1_Counter_0_0_arch: ARCHITECTURE IS "design_1_Counter_0_0,Counter,{x_ipProduct=Vivado 2018.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=Counter,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,MAX_COUNT=307200,COUNT_WIDTH=19,USE_ENABLE=TRUE,USE_RESET=TRUE}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
-  ATTRIBUTE X_INTERFACE_PARAMETER OF clk: SIGNAL IS "XIL_INTERFACENAME clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_CSI_RX_0_0_data_clk";
+  ATTRIBUTE X_INTERFACE_PARAMETER OF rst: SIGNAL IS "XIL_INTERFACENAME rst, POLARITY ACTIVE_LOW";
+  ATTRIBUTE X_INTERFACE_INFO OF rst: SIGNAL IS "xilinx.com:signal:reset:1.0 rst RST";
+  ATTRIBUTE X_INTERFACE_PARAMETER OF clk: SIGNAL IS "XIL_INTERFACENAME clk, ASSOCIATED_RESET rst, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_CSI_RX_0_0_data_clk";
   ATTRIBUTE X_INTERFACE_INFO OF clk: SIGNAL IS "xilinx.com:signal:clock:1.0 clk CLK";
 BEGIN
   U0 : Counter
     GENERIC MAP (
       MAX_COUNT => 307200,
-      COUNT_WIDTH => 19
+      COUNT_WIDTH => 19,
+      USE_ENABLE => true,
+      USE_RESET => true
     )
     PORT MAP (
       clk => clk,
       en => en,
+      rst => rst,
       count => count
     );
 END design_1_Counter_0_0_arch;

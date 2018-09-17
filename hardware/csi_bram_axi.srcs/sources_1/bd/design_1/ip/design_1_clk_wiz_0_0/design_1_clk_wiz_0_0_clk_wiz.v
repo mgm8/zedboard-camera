@@ -56,7 +56,7 @@
 //  Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase
 //   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
 //----------------------------------------------------------------------------
-// sensor_ref____10.000______0.000______50.0______290.478____133.882
+// ____xclk____10.000______0.000______50.0______290.478____133.882
 //
 //----------------------------------------------------------------------------
 // Input Clock   Freq (MHz)    Input Jitter (UI)
@@ -69,7 +69,7 @@ module design_1_clk_wiz_0_0_clk_wiz
 
  (// Clock in ports
   // Clock out ports
-  output        sensor_ref,
+  output        xclk,
   input         clk_in1
  );
   // Input buffering
@@ -90,7 +90,7 @@ wire clk_in2_design_1_clk_wiz_0_0;
   //    * Unused inputs are tied off
   //    * Unused outputs are labeled unused
 
-  wire        sensor_ref_design_1_clk_wiz_0_0;
+  wire        xclk_design_1_clk_wiz_0_0;
   wire        clk_out2_design_1_clk_wiz_0_0;
   wire        clk_out3_design_1_clk_wiz_0_0;
   wire        clk_out4_design_1_clk_wiz_0_0;
@@ -137,7 +137,7 @@ wire clk_in2_design_1_clk_wiz_0_0;
    (
     .CLKFBOUT            (clkfbout_design_1_clk_wiz_0_0),
     .CLKFBOUTB           (clkfboutb_unused),
-    .CLKOUT0             (sensor_ref_design_1_clk_wiz_0_0),
+    .CLKOUT0             (xclk_design_1_clk_wiz_0_0),
     .CLKOUT0B            (clkout0b_unused),
     .CLKOUT1             (clkout1_unused),
     .CLKOUT1B            (clkout1b_unused),
@@ -189,8 +189,8 @@ wire clk_in2_design_1_clk_wiz_0_0;
 
 
   BUFG clkout1_buf
-   (.O   (sensor_ref),
-    .I   (sensor_ref_design_1_clk_wiz_0_0));
+   (.O   (xclk),
+    .I   (xclk_design_1_clk_wiz_0_0));
 
 
 

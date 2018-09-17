@@ -55,14 +55,11 @@ USE ieee.numeric_std.ALL;
 
 ENTITY design_1_CSI_RX_0_0 IS
   PORT (
-    clk : IN STD_LOGIC;
     pclk : IN STD_LOGIC;
     vsync : IN STD_LOGIC;
     hsync : IN STD_LOGIC;
     data_in : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-    xclk : OUT STD_LOGIC;
     data_clk : OUT STD_LOGIC;
-    data_ready : OUT STD_LOGIC;
     data_out : OUT STD_LOGIC_VECTOR(11 DOWNTO 0)
   );
 END design_1_CSI_RX_0_0;
@@ -72,14 +69,11 @@ ARCHITECTURE design_1_CSI_RX_0_0_arch OF design_1_CSI_RX_0_0 IS
   ATTRIBUTE DowngradeIPIdentifiedWarnings OF design_1_CSI_RX_0_0_arch: ARCHITECTURE IS "yes";
   COMPONENT CSI_RX IS
     PORT (
-      clk : IN STD_LOGIC;
       pclk : IN STD_LOGIC;
       vsync : IN STD_LOGIC;
       hsync : IN STD_LOGIC;
       data_in : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-      xclk : OUT STD_LOGIC;
       data_clk : OUT STD_LOGIC;
-      data_ready : OUT STD_LOGIC;
       data_out : OUT STD_LOGIC_VECTOR(11 DOWNTO 0)
     );
   END COMPONENT CSI_RX;
@@ -87,19 +81,14 @@ ARCHITECTURE design_1_CSI_RX_0_0_arch OF design_1_CSI_RX_0_0 IS
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER OF data_clk: SIGNAL IS "XIL_INTERFACENAME data_clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_CSI_RX_0_0_data_clk";
   ATTRIBUTE X_INTERFACE_INFO OF data_clk: SIGNAL IS "xilinx.com:signal:clock:1.0 data_clk CLK";
-  ATTRIBUTE X_INTERFACE_PARAMETER OF clk: SIGNAL IS "XIL_INTERFACENAME clk, FREQ_HZ 10000000, PHASE 0.0, CLK_DOMAIN /clk_wiz_0_clk_out1";
-  ATTRIBUTE X_INTERFACE_INFO OF clk: SIGNAL IS "xilinx.com:signal:clock:1.0 clk CLK";
 BEGIN
   U0 : CSI_RX
     PORT MAP (
-      clk => clk,
       pclk => pclk,
       vsync => vsync,
       hsync => hsync,
       data_in => data_in,
-      xclk => xclk,
       data_clk => data_clk,
-      data_ready => data_ready,
       data_out => data_out
     );
 END design_1_CSI_RX_0_0_arch;

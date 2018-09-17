@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-| Date         : Wed Sep 12 01:40:44 2018
+| Date         : Thu Sep 13 13:03:17 2018
 | Host         : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 | Command      : report_utilization -file design_1_CSI_RX_0_0_utilization_synth.rpt -pb design_1_CSI_RX_0_0_utilization_synth.pb
 | Design       : design_1_CSI_RX_0_0
@@ -56,8 +56,8 @@ Table of Contents
 | 0     |          Yes |           - |            - |
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
-| 0     |          Yes |         Set |            - |
-| 14    |          Yes |       Reset |            - |
+| 12    |          Yes |         Set |            - |
+| 2     |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -146,8 +146,9 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| FDRE     |   14 |        Flop & Latch |
+| FDSE     |   12 |        Flop & Latch |
 | LUT3     |    2 |                 LUT |
+| FDRE     |    2 |        Flop & Latch |
 | LUT2     |    1 |                 LUT |
 | LUT1     |    1 |                 LUT |
 +----------+------+---------------------+

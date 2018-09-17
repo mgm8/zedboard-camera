@@ -39,6 +39,7 @@ entity CSI_RX is
         hsync       : in std_logic;                      --! Horizontal sync.
         data_in     : in std_logic_vector(7 downto 0);   --! Data input (data output from the sensor).
         xclk        : out std_logic;                     --! CSI reference clock.
+        img_ready   : out std_logic;                     --! Receiving image flag.
         data_clk    : out std_logic;                     --! Data write clock (same as PCLK).
         data_ready  : out std_logic;                     --! Data ready flag.
         data_out    : out std_logic_vector(11 downto 0)  --! Output data.
@@ -74,5 +75,6 @@ begin
 
     xclk <= clk;
     data_clk <= pclk;
+    img_ready <= vsync;
 
 end behavior;

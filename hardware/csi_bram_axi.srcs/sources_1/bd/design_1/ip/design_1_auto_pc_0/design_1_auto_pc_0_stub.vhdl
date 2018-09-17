@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
--- Date        : Wed Sep 12 01:44:19 2018
+-- Date        : Wed Sep 12 01:44:17 2018
 -- Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
--- Command     : write_vhdl -force -mode synth_stub
---               /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0_stub.vhdl
+-- Command     : write_vhdl -force -mode synth_stub -rename_top design_1_auto_pc_0 -prefix
+--               design_1_auto_pc_0_ design_1_auto_pc_0_stub.vhdl
 -- Design      : design_1_auto_pc_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7z020clg484-1
