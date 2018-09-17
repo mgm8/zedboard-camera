@@ -15,5 +15,8 @@
 # Output dir
 software/build
 
+# Vivado
+*.cache
+
 # Others
 *.swp
