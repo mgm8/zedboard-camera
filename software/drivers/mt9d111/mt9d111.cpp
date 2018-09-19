@@ -227,7 +227,7 @@ bool MT9D111::HardReset()
         return false;
     }
 
-    sleep(1);    // 1 ms
+    usleep(100000);
 
     if (!this->reset->Set(true))
     {
@@ -237,7 +237,7 @@ bool MT9D111::HardReset()
         return false;
     }
 
-    sleep(1);   // 1 ms
+    usleep(100000);
 
     return true;
 }
@@ -580,6 +580,8 @@ bool MT9D111::CheckDevice()
 {
     this->debug->WriteEvent("Checking device...");
     this->debug->NewLine();
+
+    this->SetRegisterPage(MT9D111_REG_PAGE_0);
 
     if (this->is_open)
     {
