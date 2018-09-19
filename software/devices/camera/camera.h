@@ -19,7 +19,7 @@
  */
 
 /**
- * \brief AXI camera device.
+ * \brief Camera device definition.
  *
  * \author Gabriel Mariano Marcelino <gabriel.mm8@gmail.com>
  * 
@@ -40,11 +40,8 @@
 #include <opencv2/opencv.hpp>
 
 #include <devices/debug/debug.h>
+#include <devices/capturer/capturer.h>
 #include <drivers/mt9d111/mt9d111.h>
-#include <drivers/zynqaxi/zynqaxi.h>
-
-#define CAMERA_DEFAULT_WIDTH    640
-#define CAMERA_DEFAULT_HEIGHT   480
 
 /**
  * \brief Camera properties.
@@ -76,29 +73,15 @@ class Camera
         MT9D111 *sensor;
 
         /**
-         * \brief Zynq AXI bus.
+         * \brief Frame capturer.
          */
-        ZynqAXI *zynq_axi;
+        Capturer *capturer;
 
         /**
          * \brief Open/close flag.
          */
         bool is_opened;
 
-        /**
-         * \brief Frame buffer.
-         */
-        std::vector<std::vector<uint32_t> > buffer;
-
-        /**
-         * \brief Camera frames width.
-         */
-        unsigned int width;
-
-        /**
-         * \brief Camera frames height.
-         */
-        unsigned int height;
     public:
 
         /**
@@ -147,9 +130,11 @@ class Camera
          * The methods/functions grab the next frame from camera and return true (non-zero) in the case of
          * success.
          *
+         * \param[in] flag is the image format.
+         *
          * \return True in case of success.
          */
-        bool grab();
+        bool grab(int flag=CAPTURER_FORMAT_GRAY8);
 
         /**
          * \brief Returns true if video capturing has been initialized already.
@@ -177,11 +162,11 @@ class Camera
          * been grabbed (camera has been disconnected), the method return false.
          *
          * \param[out] image is an image from the camera device.
-         * \param[in] flag
+         * \param[in] flag is the image format.
          *
          * \return True in case of success.
          */
-        bool read(cv::Mat &image, int flag=0);
+        bool read(cv::Mat &image, int flag=CAPTURER_FORMAT_GRAY8);
 
         /**
          * \brief Closes the capturing device.
@@ -199,11 +184,11 @@ class Camera
          * (camera has been disconnected), the method return false.
          *
          * \param[out] image is an image from the camera device.
-         * \param[in] flag
+         * \param[in] flag is the image format.
          *
          * \return True in case of success.
          */
-        bool retrieve(cv::Mat &image, int flag=0);
+        bool retrieve(cv::Mat &image, int flag=CAPTURER_FORMAT_GRAY8);
 
         /**
          * \brief Sets a property in the Camera.

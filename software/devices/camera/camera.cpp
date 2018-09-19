@@ -19,7 +19,7 @@
  */
 
 /**
- * \brief AXI camera device implementation.
+ * \brief Camera device implementation.
  * 
  * \author Gabriel Mariano Marcelino <gabriel.mm8@gmail.com>
  * 
@@ -45,9 +45,6 @@ using namespace cv;
 
 Camera::Camera()
 {
-    this->width = CAMERA_DEFAULT_WIDTH;
-    this->height = CAMERA_DEFAULT_HEIGHT;
-
     this->is_opened = false;
 
     this->debug = new Debug("Camera");
@@ -73,9 +70,9 @@ double Camera::get(int propid)
         case CAM_PROP_POS_FRAMES:
             return 0;
         case CAM_PROP_FRAME_WIDTH:
-            return this->width;
+            return (double)(this->capturer->GetResolution().width);
         case CAM_PROP_FRAME_HEIGHT:
-            return this->height;
+            return (double)(this->capturer->GetResolution().height);
         case CAM_PROP_FPS:
             return 0;
         case CAM_PROP_FORMAT:
@@ -85,34 +82,13 @@ double Camera::get(int propid)
     }
 }
 
-bool Camera::grab()
+bool Camera::grab(int flag)
 {
     if (this->isOpened())
     {
         if (this->sensor->CheckDevice())
         {
-            this->zynq_axi->Write(1, 1);
-
-            buffer.clear();
-
-            uint32_t adr = 0;
-            for(unsigned int i=0; i<this->height; i++)
-            {
-                vector<uint32_t> row;
-
-                for(unsigned int j=0; j<this->width; j++)
-                {
-                    this->zynq_axi->Write(0, adr++);
-
-                    row.push_back(this->zynq_axi->Read(0));
-                }
-
-                buffer.push_back(row);
-            }
-
-            this->zynq_axi->Write(1, 0);
-
-            return true;
+            return this->capturer->ReadPixels(flag);
         }
         else
         {
@@ -220,7 +196,7 @@ bool Camera::open(int index)
         return false;
     }
 
-    if (!this->sensor->SetResolution(MT9D111_MODE_PREVIEW, this->width, this->height))
+    if (!this->sensor->SetResolution(MT9D111_MODE_PREVIEW, 640, 480))
     {
         this->debug->WriteEvent("Error configuring sensor resolution for preview mode!");
         this->debug->NewLine();
@@ -230,7 +206,7 @@ bool Camera::open(int index)
         return false;
     }
 
-    if (!this->sensor->SetResolution(MT9D111_MODE_CAPTURE, this->width, this->height))
+    if (!this->sensor->SetResolution(MT9D111_MODE_CAPTURE, 640, 480))
     {
         this->debug->WriteEvent("Error configuring sensor resolution for capture mode!");
         this->debug->NewLine();
@@ -261,7 +237,16 @@ bool Camera::open(int index)
         return false;
     }
 
-    this->zynq_axi = new ZynqAXI(0x43C00000, 4096);
+    this->capturer = new Capturer;
+
+    if (!this->capturer->Open(0x40000000, 128000))
+    {
+        delete this->sensor;
+
+        delete this->capturer;
+
+        return false;
+    }
 
     this->is_opened = true;
 
@@ -270,7 +255,7 @@ bool Camera::open(int index)
 
 bool Camera::read(Mat &image, int flag)
 {
-    return (this->grab() and this->retrieve(image, flag));
+    return (this->grab(flag) and this->retrieve(image, flag));
 }
 
 void Camera::release()
@@ -281,7 +266,7 @@ void Camera::release()
         this->debug->NewLine();
 
         delete this->sensor;
-        delete this->zynq_axi;
+        delete this->capturer;
 
         this->is_opened = false;
     }
@@ -289,25 +274,13 @@ void Camera::release()
 
 bool Camera::retrieve(Mat &image, int flag)
 {
-    if (!this->buffer.empty())
+    if (this->isOpened())
     {
-        image = Mat::zeros(Size(this->get(CAM_PROP_FRAME_WIDTH), this->get(CAM_PROP_FRAME_HEIGHT)), CV_8UC3);
-
-        for(unsigned int i=0; i<this->get(CAM_PROP_FRAME_HEIGHT); i++)
-        {
-            for(unsigned int j=0; j<this->get(CAM_PROP_FRAME_WIDTH); j++)
-            {
-                image.at<Vec3b>(i,j)[0] = ((1 << 8)/(1 << 4))*(this->buffer[i][j] & 0x00F);
-                image.at<Vec3b>(i,j)[1] = ((1 << 8)/(1 << 4))*((this->buffer[i][j] & 0x0F0) >> 4);
-                image.at<Vec3b>(i,j)[2] = ((1 << 8)/(1 << 4))*((this->buffer[i][j] & 0xF00) >> 8);
-            }
-        }
-
-        return true;
+        return this->capturer->GenerateImage(image, flag);
     }
     else
     {
-        this->debug->WriteEvent("Error retrieving frame: Empty buffer!");
+        this->debug->WriteEvent("Error retrieving frame: Camera not opened!");
         this->debug->NewLine();
 
         return false;
@@ -323,15 +296,15 @@ bool Camera::set(int propid, double value)
             case CAM_PROP_POS_FRAMES:
                 return false;
             case CAM_PROP_FRAME_WIDTH:
-                this->width = (unsigned int)(value);
+                this->capturer->SetResolution((unsigned int)(value), this->capturer->GetResolution().height);
 
-                return (this->sensor->SetResolution(MT9D111_MODE_PREVIEW, (uint16_t)(this->width), (uint16_t)(this->height)) and
-                        this->sensor->SetResolution(MT9D111_MODE_CAPTURE, (uint16_t)(this->width), (uint16_t)(this->height)));
+                return (this->sensor->SetResolution(MT9D111_MODE_PREVIEW, (uint16_t)(this->capturer->GetResolution().width), (uint16_t)(this->capturer->GetResolution().height)) and
+                        this->sensor->SetResolution(MT9D111_MODE_CAPTURE, (uint16_t)(this->capturer->GetResolution().width), (uint16_t)(this->capturer->GetResolution().height)));
             case CAM_PROP_FRAME_HEIGHT:
-                this->height = (unsigned int)(value);
+                this->capturer->SetResolution(this->capturer->GetResolution().width, (unsigned int)(value));
 
-                return (this->sensor->SetResolution(MT9D111_MODE_PREVIEW, (uint16_t)(this->width), (uint16_t)(this->height)) and
-                        this->sensor->SetResolution(MT9D111_MODE_CAPTURE, (uint16_t)(this->width), (uint16_t)(this->height)));
+                return (this->sensor->SetResolution(MT9D111_MODE_PREVIEW, (uint16_t)(this->capturer->GetResolution().width), (uint16_t)(this->capturer->GetResolution().height)) and
+                        this->sensor->SetResolution(MT9D111_MODE_CAPTURE, (uint16_t)(this->capturer->GetResolution().width), (uint16_t)(this->capturer->GetResolution().height)));
             case CAM_PROP_FPS:
                 return false;
             case CAM_PROP_FORMAT:
