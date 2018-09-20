@@ -25,7 +25,7 @@
  * 
  * \author Gabriel Mariano Marcelino <gabriel.mm8@gmail.com>
  * 
- * \version 0.2.0
+ * \version 0.2.1
  * 
  * \date 18/09/2018
  * 
@@ -116,13 +116,11 @@ bool Capturer::ReadPixels(int format)
 
         uint32_t pixels = this->GetResolution().width*this->GetResolution().height;
 
-        this->zynq_axi->Write(1, 1);
+        this->Enable();
 
         for(uint32_t adr=0; adr<pixels; adr++)
         {
-            this->zynq_axi->Write(0, adr);
-
-            uint32_t value = this->zynq_axi->Read(0);
+            uint32_t value = this->ReadMemAdr(adr);
 
             switch(format)
             {
@@ -146,7 +144,7 @@ bool Capturer::ReadPixels(int format)
             }
         }
 
-        this->zynq_axi->Write(1, 0);
+        this->Disable();
 
         return true;
     }
@@ -217,6 +215,23 @@ bool Capturer::GenerateImage(Mat &image, int format)
 bool Capturer::GetFrame(Mat &image, int format)
 {
     return this->ReadPixels(format) and this->GenerateImage(image, format);
+}
+
+void Capturer::Enable()
+{
+    this->zynq_axi->Write(1, 1);
+}
+
+void Capturer::Disable()
+{
+    this->zynq_axi->Write(1, 0);
+}
+
+uint32_t Capturer::ReadMemAdr(uint32_t index)
+{
+    this->zynq_axi->Write(0, index);
+
+    return this->zynq_axi->Read(0);
 }
 
 //! \} End of capturer group

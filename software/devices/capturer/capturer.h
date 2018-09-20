@@ -25,7 +25,7 @@
  * 
  * \author Gabriel Mariano Marcelino <gabriel.mm8@gmail.com>
  * 
- * \version 0.1.0
+ * \version 0.2.1
  * 
  * \date 18/09/2018
  * 
@@ -87,6 +87,29 @@ class Capturer
          * \brief Frames resolution.
          */
         cv::Size resolution;
+
+        /**
+         * \brief Enables the memory access.
+         *
+         * \return None.
+         */
+        void Enable();
+
+        /**
+         * \brief Disables the memory access.
+         *
+         * \return None.
+         */
+        void Disable();
+
+        /**
+         * \brief Reads the value of a given memory address (relative to the start position).
+         *
+         * \param[in] index is the memory position index.
+         *
+         * \return The value of the given memory address.
+         */
+        uint32_t ReadMemAdr(uint32_t index);
 
     public:
 
