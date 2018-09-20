@@ -25,7 +25,7 @@
  * 
  * \author Gabriel Mariano Marcelino <gabriel.mm8@gmail.com>
  * 
- * \version 0.1.0
+ * \version 0.2.0
  * 
  * \date 18/09/2018
  * 
@@ -114,55 +114,39 @@ bool Capturer::ReadPixels(int format)
     {
         this->buffer.clear();
 
-        uint32_t pixels;
+        uint32_t pixels = this->GetResolution().width*this->GetResolution().height;
 
-        switch(format)
+        this->zynq_axi->Write(1, 1);
+
+        for(uint32_t adr=0; adr<pixels; adr++)
         {
-            case CAPTURER_FORMAT_GRAY8:
-                pixels = (this->GetResolution().width*this->GetResolution().height)/4;      // 4: 4 pixels per address
-                break;
-            case CAPTURER_FORMAT_RGB444:
-                pixels = (this->GetResolution().width*this->GetResolution().height)/2;      // 2: 2 pixels per address
-                break;
-            case CAPTURER_FORMAT_RGB565:
-                pixels = (this->GetResolution().width*this->GetResolution().height)/2;      // 2: 2 pixels per address
-                break;
-            default:
-                throw invalid_argument("Invalid format in image generation!");
+            this->zynq_axi->Write(0, adr);
 
-                return false;
-        }
-
-        for(uint32_t i=0; i<pixels; i++)
-        {
-            uint32_t adr_value = this->zynq_axi->Read(i);
+            uint32_t value = this->zynq_axi->Read(0);
 
             switch(format)
             {
                 case CAPTURER_FORMAT_GRAY8:
-                    this->buffer.push_back(Point3i(0, (adr_value & 0x000000FF), 0));
-                    this->buffer.push_back(Point3i(0, (adr_value & 0x0000FF00) >> 8, 0));
-                    this->buffer.push_back(Point3i(0, (adr_value & 0x00FF0000) >> 16, 0));
-                    this->buffer.push_back(Point3i(0, (adr_value & 0xFF000000) >> 24, 0));
+                    this->buffer.push_back(Point3i(0, (value & 0x000000FF), 0));
                     break;
                 case CAPTURER_FORMAT_RGB444:
-                    this->buffer.push_back(Point3i(16*((adr_value & 0x0000000F)),
-                                                   16*((adr_value & 0x000000F0) >> 4),
-                                                   16*((adr_value & 0x00000F00) >> 8)));
-                    this->buffer.push_back(Point3i(16*((adr_value & 0x0000F000) >> 12),
-                                                   16*((adr_value & 0x000F0000) >> 16),
-                                                   16*((adr_value & 0x00F00000) >> 20)));
+                    this->buffer.push_back(Point3i(16*((value & 0x0000000F)),
+                                                   16*((value & 0x000000F0) >> 4),
+                                                   16*((value & 0x00000F00) >> 8)));
                     break;
                 case CAPTURER_FORMAT_RGB565:
-                    this->buffer.push_back(Point3i(8*((adr_value & 0x0000001F)),
-                                                   4*((adr_value & 0x000007E0) >> 5),
-                                                   8*((adr_value & 0x0000F800) >> 11)));
-                    this->buffer.push_back(Point3i(8*((adr_value & 0x001F0000) >> 16),
-                                                   4*((adr_value & 0x07E00000) >> 21),
-                                                   8*((adr_value & 0xF8000000) >> 27)));
+                    this->buffer.push_back(Point3i(8*((value & 0x0000001F)),
+                                                   4*((value & 0x000007E0) >> 5),
+                                                   8*((value & 0x0000F800) >> 11)));
                     break;
+                default:
+                    throw invalid_argument("Invalid format in image generation!");
+
+                    return false;
             }
         }
+
+        this->zynq_axi->Write(1, 0);
 
         return true;
     }
@@ -197,9 +181,9 @@ bool Capturer::GenerateImage(Mat &image, int format)
                 return false;
         }
 
-        for(unsigned int i=0; i<this->resolution.width; i++)
+        for(unsigned int i=0; i<this->resolution.height; i++)
         {
-            for(unsigned int j=0; j<this->resolution.height; j++)
+            for(unsigned int j=0; j<this->resolution.width; j++)
             {
                 switch(format)
                 {
