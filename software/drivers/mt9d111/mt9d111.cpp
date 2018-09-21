@@ -988,16 +988,27 @@ bool MT9D111::SetFIFO(bool en, bool spoof)
 
 bool MT9D111::SetSpoofFrames(bool en, uint16_t width, uint16_t height)
 {
-    this->SetRegisterPage(MT9D111_REG_PAGE_2);
+    this->SetRegisterPage(MT9D111_REG_PAGE_1);
 
     if (en)
     {
         this->debug->WriteEvent("Enabling spoof frames...");
         this->debug->NewLine();
 
-        this->WriteRegBit(MT9D111_REG_OUTPUT_CONFIG, 0, true);
-        this->WriteReg(MT9D111_REG_SPOOF_FRAME_WIDTH, width);
-        this->WriteReg(MT9D111_REG_SPOOF_FRAME_HEIGHT, height);
+        this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                     MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                     MT9D111_DRIVER_ID_MODE |
+                                                                     MT9D111_DRIVER_VAR_MODE_SPOOF_WIDTH_B);
+        this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, width);
+
+        this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                     MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                     MT9D111_DRIVER_ID_MODE |
+                                                                     MT9D111_DRIVER_VAR_MODE_SPOOF_HEIGHT_B);
+        this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, height);
+
+        // Sequencer command
+        this->SequencerCmd(MT9D111_DRIVER_VAR_SEQUENCER_CMD_REFRESH);
     }
     else
     {
