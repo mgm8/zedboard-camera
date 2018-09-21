@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-// Date        : Wed Sep 12 01:44:57 2018
+// Date        : Thu Sep 20 17:57:01 2018
 // Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 // Command     : write_verilog -force -mode funcsim
 //               /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.srcs/sources_1/bd/design_1/ip/design_1_xlconcat_0_0/design_1_xlconcat_0_0_sim_netlist.v
@@ -18,15 +18,15 @@ module design_1_xlconcat_0_0
    (In0,
     In1,
     dout);
-  input [11:0]In0;
-  input [19:0]In1;
+  input [7:0]In0;
+  input [23:0]In1;
   output [31:0]dout;
 
-  wire [11:0]In0;
-  wire [19:0]In1;
+  wire [7:0]In0;
+  wire [23:0]In1;
 
-  assign dout[31:12] = In1;
-  assign dout[11:0] = In0;
+  assign dout[31:8] = In1;
+  assign dout[7:0] = In0;
 endmodule
 `ifndef GLBL
 `define GLBL

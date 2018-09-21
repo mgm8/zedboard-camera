@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
--- Date        : Thu Sep 13 13:03:18 2018
+-- Date        : Thu Sep 20 17:59:25 2018
 -- Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 -- Command     : write_vhdl -force -mode funcsim
 --               /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.srcs/sources_1/bd/design_1/ip/design_1_CSI_RX_0_0/design_1_CSI_RX_0_0_sim_netlist.vhdl
@@ -16,11 +16,11 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity design_1_CSI_RX_0_0_CSI_RX is
   port (
-    data_out : out STD_LOGIC_VECTOR ( 11 downto 0 );
+    data_out : out STD_LOGIC_VECTOR ( 5 downto 0 );
     data_clk : out STD_LOGIC;
     hsync : in STD_LOGIC;
     vsync : in STD_LOGIC;
-    data_in : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    data_in : in STD_LOGIC_VECTOR ( 5 downto 0 );
     pclk : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -29,20 +29,28 @@ end design_1_CSI_RX_0_0_CSI_RX;
 
 architecture STRUCTURE of design_1_CSI_RX_0_0_CSI_RX is
   signal data_clk_i_1_n_0 : STD_LOGIC;
-  signal \data_out[11]_i_1_n_0\ : STD_LOGIC;
-  signal \data_out[11]_i_2_n_0\ : STD_LOGIC;
+  signal \^data_out\ : STD_LOGIC_VECTOR ( 5 downto 0 );
+  signal \data_out[2]_i_1_n_0\ : STD_LOGIC;
+  signal \data_out[3]_i_1_n_0\ : STD_LOGIC;
+  signal \data_out[4]_i_1_n_0\ : STD_LOGIC;
+  signal \data_out[5]_i_1_n_0\ : STD_LOGIC;
+  signal \data_out[6]_i_1_n_0\ : STD_LOGIC;
+  signal \data_out[7]_i_1_n_0\ : STD_LOGIC;
+  signal pix_counter : STD_LOGIC_VECTOR ( 0 to 0 );
   signal \pix_counter[0]_i_1_n_0\ : STD_LOGIC;
-  signal \pix_counter_reg_n_0_[0]\ : STD_LOGIC;
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of data_clk_i_1 : label is "soft_lutpair0";
+  attribute SOFT_HLUTNM of data_clk_i_1 : label is "soft_lutpair1";
+  attribute SOFT_HLUTNM of \data_out[4]_i_1\ : label is "soft_lutpair0";
+  attribute SOFT_HLUTNM of \data_out[7]_i_1\ : label is "soft_lutpair1";
   attribute SOFT_HLUTNM of \pix_counter[0]_i_1\ : label is "soft_lutpair0";
 begin
+  data_out(5 downto 0) <= \^data_out\(5 downto 0);
 data_clk_i_1: unisim.vcomponents.LUT3
     generic map(
       INIT => X"80"
     )
         port map (
-      I0 => \pix_counter_reg_n_0_[0]\,
+      I0 => pix_counter(0),
       I1 => vsync,
       I2 => hsync,
       O => data_clk_i_1_n_0
@@ -55,118 +63,125 @@ data_clk_reg: unisim.vcomponents.FDRE
       Q => data_clk,
       R => '0'
     );
-\data_out[11]_i_1\: unisim.vcomponents.LUT2
+\data_out[2]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"7"
+      INIT => X"BFFF8FFF"
     )
         port map (
-      I0 => hsync,
-      I1 => vsync,
-      O => \data_out[11]_i_1_n_0\
+      I0 => data_in(3),
+      I1 => pix_counter(0),
+      I2 => vsync,
+      I3 => hsync,
+      I4 => \^data_out\(0),
+      O => \data_out[2]_i_1_n_0\
     );
-\data_out[11]_i_2\: unisim.vcomponents.LUT1
+\data_out[3]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"1"
+      INIT => X"BFFF8FFF"
     )
         port map (
-      I0 => \pix_counter_reg_n_0_[0]\,
-      O => \data_out[11]_i_2_n_0\
+      I0 => data_in(4),
+      I1 => pix_counter(0),
+      I2 => vsync,
+      I3 => hsync,
+      I4 => \^data_out\(1),
+      O => \data_out[3]_i_1_n_0\
     );
-\data_out_reg[0]\: unisim.vcomponents.FDSE
+\data_out[4]_i_1\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"BFFF8FFF"
+    )
+        port map (
+      I0 => data_in(5),
+      I1 => pix_counter(0),
+      I2 => vsync,
+      I3 => hsync,
+      I4 => \^data_out\(2),
+      O => \data_out[4]_i_1_n_0\
+    );
+\data_out[5]_i_1\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"EFFF2FFF"
+    )
+        port map (
+      I0 => data_in(0),
+      I1 => pix_counter(0),
+      I2 => hsync,
+      I3 => vsync,
+      I4 => \^data_out\(3),
+      O => \data_out[5]_i_1_n_0\
+    );
+\data_out[6]_i_1\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"EFFF2FFF"
+    )
+        port map (
+      I0 => data_in(1),
+      I1 => pix_counter(0),
+      I2 => hsync,
+      I3 => vsync,
+      I4 => \^data_out\(4),
+      O => \data_out[6]_i_1_n_0\
+    );
+\data_out[7]_i_1\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"EFFF2FFF"
+    )
+        port map (
+      I0 => data_in(2),
+      I1 => pix_counter(0),
+      I2 => hsync,
+      I3 => vsync,
+      I4 => \^data_out\(5),
+      O => \data_out[7]_i_1_n_0\
+    );
+\data_out_reg[2]\: unisim.vcomponents.FDRE
      port map (
       C => pclk,
-      CE => \pix_counter_reg_n_0_[0]\,
-      D => data_in(4),
-      Q => data_out(0),
-      S => \data_out[11]_i_1_n_0\
+      CE => '1',
+      D => \data_out[2]_i_1_n_0\,
+      Q => \^data_out\(0),
+      R => '0'
     );
-\data_out_reg[10]\: unisim.vcomponents.FDSE
+\data_out_reg[3]\: unisim.vcomponents.FDRE
      port map (
       C => pclk,
-      CE => \data_out[11]_i_2_n_0\,
-      D => data_in(6),
-      Q => data_out(10),
-      S => \data_out[11]_i_1_n_0\
+      CE => '1',
+      D => \data_out[3]_i_1_n_0\,
+      Q => \^data_out\(1),
+      R => '0'
     );
-\data_out_reg[11]\: unisim.vcomponents.FDSE
+\data_out_reg[4]\: unisim.vcomponents.FDRE
      port map (
       C => pclk,
-      CE => \data_out[11]_i_2_n_0\,
-      D => data_in(7),
-      Q => data_out(11),
-      S => \data_out[11]_i_1_n_0\
+      CE => '1',
+      D => \data_out[4]_i_1_n_0\,
+      Q => \^data_out\(2),
+      R => '0'
     );
-\data_out_reg[1]\: unisim.vcomponents.FDSE
+\data_out_reg[5]\: unisim.vcomponents.FDRE
      port map (
       C => pclk,
-      CE => \pix_counter_reg_n_0_[0]\,
-      D => data_in(5),
-      Q => data_out(1),
-      S => \data_out[11]_i_1_n_0\
+      CE => '1',
+      D => \data_out[5]_i_1_n_0\,
+      Q => \^data_out\(3),
+      R => '0'
     );
-\data_out_reg[2]\: unisim.vcomponents.FDSE
+\data_out_reg[6]\: unisim.vcomponents.FDRE
      port map (
       C => pclk,
-      CE => \pix_counter_reg_n_0_[0]\,
-      D => data_in(6),
-      Q => data_out(2),
-      S => \data_out[11]_i_1_n_0\
+      CE => '1',
+      D => \data_out[6]_i_1_n_0\,
+      Q => \^data_out\(4),
+      R => '0'
     );
-\data_out_reg[3]\: unisim.vcomponents.FDSE
+\data_out_reg[7]\: unisim.vcomponents.FDRE
      port map (
       C => pclk,
-      CE => \pix_counter_reg_n_0_[0]\,
-      D => data_in(7),
-      Q => data_out(3),
-      S => \data_out[11]_i_1_n_0\
-    );
-\data_out_reg[4]\: unisim.vcomponents.FDSE
-     port map (
-      C => pclk,
-      CE => \data_out[11]_i_2_n_0\,
-      D => data_in(0),
-      Q => data_out(4),
-      S => \data_out[11]_i_1_n_0\
-    );
-\data_out_reg[5]\: unisim.vcomponents.FDSE
-     port map (
-      C => pclk,
-      CE => \data_out[11]_i_2_n_0\,
-      D => data_in(1),
-      Q => data_out(5),
-      S => \data_out[11]_i_1_n_0\
-    );
-\data_out_reg[6]\: unisim.vcomponents.FDSE
-     port map (
-      C => pclk,
-      CE => \data_out[11]_i_2_n_0\,
-      D => data_in(2),
-      Q => data_out(6),
-      S => \data_out[11]_i_1_n_0\
-    );
-\data_out_reg[7]\: unisim.vcomponents.FDSE
-     port map (
-      C => pclk,
-      CE => \data_out[11]_i_2_n_0\,
-      D => data_in(3),
-      Q => data_out(7),
-      S => \data_out[11]_i_1_n_0\
-    );
-\data_out_reg[8]\: unisim.vcomponents.FDSE
-     port map (
-      C => pclk,
-      CE => \data_out[11]_i_2_n_0\,
-      D => data_in(4),
-      Q => data_out(8),
-      S => \data_out[11]_i_1_n_0\
-    );
-\data_out_reg[9]\: unisim.vcomponents.FDSE
-     port map (
-      C => pclk,
-      CE => \data_out[11]_i_2_n_0\,
-      D => data_in(5),
-      Q => data_out(9),
-      S => \data_out[11]_i_1_n_0\
+      CE => '1',
+      D => \data_out[7]_i_1_n_0\,
+      Q => \^data_out\(5),
+      R => '0'
     );
 \pix_counter[0]_i_1\: unisim.vcomponents.LUT3
     generic map(
@@ -175,7 +190,7 @@ data_clk_reg: unisim.vcomponents.FDRE
         port map (
       I0 => hsync,
       I1 => vsync,
-      I2 => \pix_counter_reg_n_0_[0]\,
+      I2 => pix_counter(0),
       O => \pix_counter[0]_i_1_n_0\
     );
 \pix_counter_reg[0]\: unisim.vcomponents.FDRE
@@ -186,7 +201,7 @@ data_clk_reg: unisim.vcomponents.FDRE
       C => pclk,
       CE => '1',
       D => \pix_counter[0]_i_1_n_0\,
-      Q => \pix_counter_reg_n_0_[0]\,
+      Q => pix_counter(0),
       R => '0'
     );
 end STRUCTURE;
@@ -201,7 +216,7 @@ entity design_1_CSI_RX_0_0 is
     hsync : in STD_LOGIC;
     data_in : in STD_LOGIC_VECTOR ( 7 downto 0 );
     data_clk : out STD_LOGIC;
-    data_out : out STD_LOGIC_VECTOR ( 11 downto 0 )
+    data_out : out STD_LOGIC_VECTOR ( 7 downto 0 )
   );
   attribute NotValidForBitStream : boolean;
   attribute NotValidForBitStream of design_1_CSI_RX_0_0 : entity is true;
@@ -214,16 +229,21 @@ entity design_1_CSI_RX_0_0 is
 end design_1_CSI_RX_0_0;
 
 architecture STRUCTURE of design_1_CSI_RX_0_0 is
+  signal \^data_out\ : STD_LOGIC_VECTOR ( 5 downto 0 );
   attribute x_interface_info : string;
   attribute x_interface_info of data_clk : signal is "xilinx.com:signal:clock:1.0 data_clk CLK";
   attribute x_interface_parameter : string;
   attribute x_interface_parameter of data_clk : signal is "XIL_INTERFACENAME data_clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_CSI_RX_0_0_data_clk";
 begin
+  data_out(7 downto 6) <= \^data_out\(1 downto 0);
+  data_out(5 downto 0) <= \^data_out\(5 downto 0);
 U0: entity work.design_1_CSI_RX_0_0_CSI_RX
      port map (
       data_clk => data_clk,
-      data_in(7 downto 0) => data_in(7 downto 0),
-      data_out(11 downto 0) => data_out(11 downto 0),
+      data_in(5 downto 3) => data_in(7 downto 5),
+      data_in(2 downto 0) => data_in(2 downto 0),
+      data_out(5 downto 4) => \^data_out\(1 downto 0),
+      data_out(3 downto 0) => \^data_out\(5 downto 2),
       hsync => hsync,
       pclk => pclk,
       vsync => vsync

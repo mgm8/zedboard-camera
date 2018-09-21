@@ -216,7 +216,7 @@ END
 BEGIN DRIVER
  PARAMETER DRIVER_NAME = gpio
  PARAMETER HW_INSTANCE = axi_gpio_0
- PARAMETER clock-names =  s_axi_aclk
+ PARAMETER clock-names = s_axi_aclk
  PARAMETER clocks = clkc 15
  PARAMETER reg = 0x41200000 0x10000
  PARAMETER xlnx,all-inputs = 0

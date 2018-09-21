@@ -203,7 +203,10 @@ proc create_root_design { parentCell } {
      catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
      return 1
    }
-  
+    set_property -dict [ list \
+   CONFIG.MAX_COUNT {480000} \
+ ] $Counter_0
+
   # Create instance: axi_gpio_0, and set properties
   set axi_gpio_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_gpio_0 ]
   set_property -dict [ list \
@@ -225,15 +228,15 @@ proc create_root_design { parentCell } {
    CONFIG.Operating_Mode_A {NO_CHANGE} \
    CONFIG.Port_B_Clock {100} \
    CONFIG.Port_B_Enable_Rate {100} \
-   CONFIG.Read_Width_A {12} \
-   CONFIG.Read_Width_B {12} \
+   CONFIG.Read_Width_A {8} \
+   CONFIG.Read_Width_B {8} \
    CONFIG.Register_PortA_Output_of_Memory_Primitives {false} \
    CONFIG.Register_PortB_Output_of_Memory_Primitives {true} \
    CONFIG.Use_Byte_Write_Enable {false} \
    CONFIG.Use_RSTA_Pin {false} \
-   CONFIG.Write_Depth_A {307200} \
-   CONFIG.Write_Width_A {12} \
-   CONFIG.Write_Width_B {12} \
+   CONFIG.Write_Depth_A {480000} \
+   CONFIG.Write_Width_A {8} \
+   CONFIG.Write_Width_B {8} \
    CONFIG.use_bram_block {Stand_Alone} \
  ] $blk_mem_gen_0
 
@@ -664,8 +667,8 @@ proc create_root_design { parentCell } {
   # Create instance: xlconcat_0, and set properties
   set xlconcat_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 xlconcat_0 ]
   set_property -dict [ list \
-   CONFIG.IN0_WIDTH {12} \
-   CONFIG.IN1_WIDTH {20} \
+   CONFIG.IN0_WIDTH {8} \
+   CONFIG.IN1_WIDTH {24} \
  ] $xlconcat_0
 
   # Create instance: xlconstant_0, and set properties
@@ -679,7 +682,7 @@ proc create_root_design { parentCell } {
   set xlconstant_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_1 ]
   set_property -dict [ list \
    CONFIG.CONST_VAL {0} \
-   CONFIG.CONST_WIDTH {20} \
+   CONFIG.CONST_WIDTH {24} \
  ] $xlconstant_1
 
   # Create instance: xlslice_0, and set properties

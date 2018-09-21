@@ -84,7 +84,7 @@ ARCHITECTURE design_1_Counter_0_0_arch OF design_1_Counter_0_0 IS
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF design_1_Counter_0_0_arch : ARCHITECTURE IS "design_1_Counter_0_0,Counter,{}";
   ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF design_1_Counter_0_0_arch: ARCHITECTURE IS "design_1_Counter_0_0,Counter,{x_ipProduct=Vivado 2018.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=Counter,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,MAX_COUNT=307200,COUNT_WIDTH=19,USE_ENABLE=TRUE,USE_RESET=TRUE}";
+  ATTRIBUTE CORE_GENERATION_INFO OF design_1_Counter_0_0_arch: ARCHITECTURE IS "design_1_Counter_0_0,Counter,{x_ipProduct=Vivado 2018.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=Counter,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,MAX_COUNT=480000,COUNT_WIDTH=19,USE_ENABLE=TRUE,USE_RESET=TRUE}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER OF rst: SIGNAL IS "XIL_INTERFACENAME rst, POLARITY ACTIVE_LOW";
@@ -94,7 +94,7 @@ ARCHITECTURE design_1_Counter_0_0_arch OF design_1_Counter_0_0 IS
 BEGIN
   U0 : Counter
     GENERIC MAP (
-      MAX_COUNT => 307200,
+      MAX_COUNT => 480000,
       COUNT_WIDTH => 19,
       USE_ENABLE => true,
       USE_RESET => true

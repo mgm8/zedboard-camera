@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
--- Date        : Wed Sep 12 01:44:58 2018
+-- Date        : Thu Sep 20 17:57:01 2018
 -- Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 -- Command     : write_vhdl -force -mode funcsim
 --               /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.srcs/sources_1/bd/design_1/ip/design_1_xlconcat_0_0/design_1_xlconcat_0_0_sim_netlist.vhdl
@@ -16,8 +16,8 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity design_1_xlconcat_0_0 is
   port (
-    In0 : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    In1 : in STD_LOGIC_VECTOR ( 19 downto 0 );
+    In0 : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    In1 : in STD_LOGIC_VECTOR ( 23 downto 0 );
     dout : out STD_LOGIC_VECTOR ( 31 downto 0 )
   );
   attribute NotValidForBitStream : boolean;
@@ -31,11 +31,11 @@ entity design_1_xlconcat_0_0 is
 end design_1_xlconcat_0_0;
 
 architecture STRUCTURE of design_1_xlconcat_0_0 is
-  signal \^in0\ : STD_LOGIC_VECTOR ( 11 downto 0 );
-  signal \^in1\ : STD_LOGIC_VECTOR ( 19 downto 0 );
+  signal \^in0\ : STD_LOGIC_VECTOR ( 7 downto 0 );
+  signal \^in1\ : STD_LOGIC_VECTOR ( 23 downto 0 );
 begin
-  \^in0\(11 downto 0) <= In0(11 downto 0);
-  \^in1\(19 downto 0) <= In1(19 downto 0);
-  dout(31 downto 12) <= \^in1\(19 downto 0);
-  dout(11 downto 0) <= \^in0\(11 downto 0);
+  \^in0\(7 downto 0) <= In0(7 downto 0);
+  \^in1\(23 downto 0) <= In1(23 downto 0);
+  dout(31 downto 8) <= \^in1\(23 downto 0);
+  dout(7 downto 0) <= \^in0\(7 downto 0);
 end STRUCTURE;

@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
--- Date        : Thu Sep 13 13:03:17 2018
+-- Date        : Thu Sep 20 17:59:24 2018
 -- Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 -- Command     : write_vhdl -force -mode synth_stub
 --               /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.srcs/sources_1/bd/design_1/ip/design_1_CSI_RX_0_0/design_1_CSI_RX_0_0_stub.vhdl
@@ -19,7 +19,7 @@ entity design_1_CSI_RX_0_0 is
     hsync : in STD_LOGIC;
     data_in : in STD_LOGIC_VECTOR ( 7 downto 0 );
     data_clk : out STD_LOGIC;
-    data_out : out STD_LOGIC_VECTOR ( 11 downto 0 )
+    data_out : out STD_LOGIC_VECTOR ( 7 downto 0 )
   );
 
 end design_1_CSI_RX_0_0;
@@ -28,7 +28,7 @@ architecture stub of design_1_CSI_RX_0_0 is
 attribute syn_black_box : boolean;
 attribute black_box_pad_pin : string;
 attribute syn_black_box of stub : architecture is true;
-attribute black_box_pad_pin of stub : architecture is "pclk,vsync,hsync,data_in[7:0],data_clk,data_out[11:0]";
+attribute black_box_pad_pin of stub : architecture is "pclk,vsync,hsync,data_in[7:0],data_clk,data_out[7:0]";
 attribute x_core_info : string;
 attribute x_core_info of stub : architecture is "CSI_RX,Vivado 2018.1";
 begin

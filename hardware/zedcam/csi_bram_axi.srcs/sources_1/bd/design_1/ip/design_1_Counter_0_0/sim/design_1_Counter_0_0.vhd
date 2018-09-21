@@ -88,7 +88,7 @@ ARCHITECTURE design_1_Counter_0_0_arch OF design_1_Counter_0_0 IS
 BEGIN
   U0 : Counter
     GENERIC MAP (
-      MAX_COUNT => 307200,
+      MAX_COUNT => 480000,
       COUNT_WIDTH => 19,
       USE_ENABLE => true,
       USE_RESET => true

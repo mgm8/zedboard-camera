@@ -1,7 +1,7 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
---Date        : Sun Sep 16 00:48:36 2018
+--Date        : Thu Sep 20 17:53:53 2018
 --Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 --Command     : generate_target design_1.bd
 --Design      : design_1
@@ -1232,11 +1232,11 @@ architecture STRUCTURE of design_1 is
     ena : in STD_LOGIC;
     wea : in STD_LOGIC_VECTOR ( 0 to 0 );
     addra : in STD_LOGIC_VECTOR ( 18 downto 0 );
-    dina : in STD_LOGIC_VECTOR ( 11 downto 0 );
+    dina : in STD_LOGIC_VECTOR ( 7 downto 0 );
     clkb : in STD_LOGIC;
     enb : in STD_LOGIC;
     addrb : in STD_LOGIC_VECTOR ( 18 downto 0 );
-    doutb : out STD_LOGIC_VECTOR ( 11 downto 0 )
+    doutb : out STD_LOGIC_VECTOR ( 7 downto 0 )
   );
   end component design_1_blk_mem_gen_0_0;
   component design_1_axi_interface_0_0 is
@@ -1301,14 +1301,14 @@ architecture STRUCTURE of design_1 is
   end component design_1_xlslice_0_0;
   component design_1_xlconcat_0_0 is
   port (
-    In0 : in STD_LOGIC_VECTOR ( 11 downto 0 );
-    In1 : in STD_LOGIC_VECTOR ( 19 downto 0 );
+    In0 : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    In1 : in STD_LOGIC_VECTOR ( 23 downto 0 );
     dout : out STD_LOGIC_VECTOR ( 31 downto 0 )
   );
   end component design_1_xlconcat_0_0;
   component design_1_xlconstant_1_0 is
   port (
-    dout : out STD_LOGIC_VECTOR ( 19 downto 0 )
+    dout : out STD_LOGIC_VECTOR ( 23 downto 0 )
   );
   end component design_1_xlconstant_1_0;
   component design_1_xlslice_1_0 is
@@ -1317,16 +1317,6 @@ architecture STRUCTURE of design_1 is
     Dout : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
   end component design_1_xlslice_1_0;
-  component design_1_CSI_RX_0_0 is
-  port (
-    pclk : in STD_LOGIC;
-    vsync : in STD_LOGIC;
-    hsync : in STD_LOGIC;
-    data_in : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    data_clk : out STD_LOGIC;
-    data_out : out STD_LOGIC_VECTOR ( 11 downto 0 )
-  );
-  end component design_1_CSI_RX_0_0;
   component design_1_axi_gpio_0_0 is
   port (
     s_axi_aclk : in STD_LOGIC;
@@ -1359,14 +1349,24 @@ architecture STRUCTURE of design_1 is
     count : out STD_LOGIC_VECTOR ( 18 downto 0 )
   );
   end component design_1_Counter_0_0;
+  component design_1_CSI_RX_0_0 is
+  port (
+    pclk : in STD_LOGIC;
+    vsync : in STD_LOGIC;
+    hsync : in STD_LOGIC;
+    data_in : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    data_clk : out STD_LOGIC;
+    data_out : out STD_LOGIC_VECTOR ( 7 downto 0 )
+  );
+  end component design_1_CSI_RX_0_0;
   signal CSI_RX_0_data_clk : STD_LOGIC;
-  signal CSI_RX_0_data_out : STD_LOGIC_VECTOR ( 11 downto 0 );
+  signal CSI_RX_0_data_out : STD_LOGIC_VECTOR ( 7 downto 0 );
   signal Counter_0_count : STD_LOGIC_VECTOR ( 18 downto 0 );
   signal axi_gpio_0_GPIO_TRI_O : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal axi_interface_0_data_out_0 : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal axi_interface_0_data_out_1 : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal axi_interface_0_read_enable : STD_LOGIC;
-  signal blk_mem_gen_0_doutb : STD_LOGIC_VECTOR ( 11 downto 0 );
+  signal blk_mem_gen_0_doutb : STD_LOGIC_VECTOR ( 7 downto 0 );
   signal clk_wiz_0_xclk : STD_LOGIC;
   signal data_in_0_1 : STD_LOGIC_VECTOR ( 7 downto 0 );
   signal hsync_0_1 : STD_LOGIC;
@@ -1474,7 +1474,7 @@ architecture STRUCTURE of design_1 is
   signal vsync_0_1 : STD_LOGIC;
   signal xlconcat_0_dout : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal xlconstant_0_dout : STD_LOGIC_VECTOR ( 31 downto 0 );
-  signal xlconstant_1_dout : STD_LOGIC_VECTOR ( 19 downto 0 );
+  signal xlconstant_1_dout : STD_LOGIC_VECTOR ( 23 downto 0 );
   signal xlslice_0_Dout : STD_LOGIC_VECTOR ( 18 downto 0 );
   signal xlslice_1_Dout : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_axi_interface_0_write_enable_UNCONNECTED : STD_LOGIC;
@@ -1530,7 +1530,7 @@ CSI_RX_0: component design_1_CSI_RX_0_0
      port map (
       data_clk => CSI_RX_0_data_clk,
       data_in(7 downto 0) => data_in_0_1(7 downto 0),
-      data_out(11 downto 0) => CSI_RX_0_data_out(11 downto 0),
+      data_out(7 downto 0) => CSI_RX_0_data_out(7 downto 0),
       hsync => hsync_0_1,
       pclk => pclk_0_1,
       vsync => vsync_0_1
@@ -1605,8 +1605,8 @@ blk_mem_gen_0: component design_1_blk_mem_gen_0_0
       addrb(18 downto 0) => xlslice_0_Dout(18 downto 0),
       clka => CSI_RX_0_data_clk,
       clkb => axi_interface_0_read_enable,
-      dina(11 downto 0) => CSI_RX_0_data_out(11 downto 0),
-      doutb(11 downto 0) => blk_mem_gen_0_doutb(11 downto 0),
+      dina(7 downto 0) => CSI_RX_0_data_out(7 downto 0),
+      doutb(7 downto 0) => blk_mem_gen_0_doutb(7 downto 0),
       ena => hsync_0_1,
       enb => xlslice_1_Dout(0),
       wea(0) => hsync_0_1
@@ -1787,8 +1787,8 @@ rst_ps7_0_100M: component design_1_rst_ps7_0_100M_0
     );
 xlconcat_0: component design_1_xlconcat_0_0
      port map (
-      In0(11 downto 0) => blk_mem_gen_0_doutb(11 downto 0),
-      In1(19 downto 0) => xlconstant_1_dout(19 downto 0),
+      In0(7 downto 0) => blk_mem_gen_0_doutb(7 downto 0),
+      In1(23 downto 0) => xlconstant_1_dout(23 downto 0),
       dout(31 downto 0) => xlconcat_0_dout(31 downto 0)
     );
 xlconstant_0: component design_1_xlconstant_0_0
@@ -1797,7 +1797,7 @@ xlconstant_0: component design_1_xlconstant_0_0
     );
 xlconstant_1: component design_1_xlconstant_1_0
      port map (
-      dout(19 downto 0) => xlconstant_1_dout(19 downto 0)
+      dout(23 downto 0) => xlconstant_1_dout(23 downto 0)
     );
 xlslice_0: component design_1_xlslice_0_0
      port map (

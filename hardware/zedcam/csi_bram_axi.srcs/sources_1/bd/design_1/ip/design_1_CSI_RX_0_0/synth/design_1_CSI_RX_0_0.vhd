@@ -60,7 +60,7 @@ ENTITY design_1_CSI_RX_0_0 IS
     hsync : IN STD_LOGIC;
     data_in : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
     data_clk : OUT STD_LOGIC;
-    data_out : OUT STD_LOGIC_VECTOR(11 DOWNTO 0)
+    data_out : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
   );
 END design_1_CSI_RX_0_0;
 
@@ -74,7 +74,7 @@ ARCHITECTURE design_1_CSI_RX_0_0_arch OF design_1_CSI_RX_0_0 IS
       hsync : IN STD_LOGIC;
       data_in : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
       data_clk : OUT STD_LOGIC;
-      data_out : OUT STD_LOGIC_VECTOR(11 DOWNTO 0)
+      data_out : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
     );
   END COMPONENT CSI_RX;
   ATTRIBUTE X_CORE_INFO : STRING;

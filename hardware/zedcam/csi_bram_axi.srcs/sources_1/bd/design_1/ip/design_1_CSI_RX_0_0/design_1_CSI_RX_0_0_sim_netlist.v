@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-// Date        : Thu Sep 13 13:03:18 2018
+// Date        : Thu Sep 20 17:59:25 2018
 // Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 // Command     : write_verilog -force -mode funcsim
 //               /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.srcs/sources_1/bd/design_1/ip/design_1_CSI_RX_0_0/design_1_CSI_RX_0_0_sim_netlist.v
@@ -26,19 +26,21 @@ module design_1_CSI_RX_0_0
   input hsync;
   input [7:0]data_in;
   (* x_interface_info = "xilinx.com:signal:clock:1.0 data_clk CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME data_clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_CSI_RX_0_0_data_clk" *) output data_clk;
-  output [11:0]data_out;
+  output [7:0]data_out;
 
   wire data_clk;
   wire [7:0]data_in;
-  wire [11:0]data_out;
+  wire [5:0]\^data_out ;
   wire hsync;
   wire pclk;
   wire vsync;
 
+  assign data_out[7:6] = \^data_out [1:0];
+  assign data_out[5:0] = \^data_out [5:0];
   design_1_CSI_RX_0_0_CSI_RX U0
        (.data_clk(data_clk),
-        .data_in(data_in),
-        .data_out(data_out),
+        .data_in({data_in[7:5],data_in[2:0]}),
+        .data_out({\^data_out [1:0],\^data_out [5:2]}),
         .hsync(hsync),
         .pclk(pclk),
         .vsync(vsync));
@@ -52,30 +54,34 @@ module design_1_CSI_RX_0_0_CSI_RX
     vsync,
     data_in,
     pclk);
-  output [11:0]data_out;
+  output [5:0]data_out;
   output data_clk;
   input hsync;
   input vsync;
-  input [7:0]data_in;
+  input [5:0]data_in;
   input pclk;
 
   wire data_clk;
   wire data_clk_i_1_n_0;
-  wire [7:0]data_in;
-  wire [11:0]data_out;
-  wire \data_out[11]_i_1_n_0 ;
-  wire \data_out[11]_i_2_n_0 ;
+  wire [5:0]data_in;
+  wire [5:0]data_out;
+  wire \data_out[2]_i_1_n_0 ;
+  wire \data_out[3]_i_1_n_0 ;
+  wire \data_out[4]_i_1_n_0 ;
+  wire \data_out[5]_i_1_n_0 ;
+  wire \data_out[6]_i_1_n_0 ;
+  wire \data_out[7]_i_1_n_0 ;
   wire hsync;
   wire pclk;
+  wire [0:0]pix_counter;
   wire \pix_counter[0]_i_1_n_0 ;
-  wire \pix_counter_reg_n_0_[0] ;
   wire vsync;
 
-  (* SOFT_HLUTNM = "soft_lutpair0" *) 
+  (* SOFT_HLUTNM = "soft_lutpair1" *) 
   LUT3 #(
     .INIT(8'h80)) 
     data_clk_i_1
-       (.I0(\pix_counter_reg_n_0_[0] ),
+       (.I0(pix_counter),
         .I1(vsync),
         .I2(hsync),
         .O(data_clk_i_1_n_0));
@@ -85,96 +91,105 @@ module design_1_CSI_RX_0_0_CSI_RX
         .D(data_clk_i_1_n_0),
         .Q(data_clk),
         .R(1'b0));
-  LUT2 #(
-    .INIT(4'h7)) 
-    \data_out[11]_i_1 
-       (.I0(hsync),
-        .I1(vsync),
-        .O(\data_out[11]_i_1_n_0 ));
-  LUT1 #(
-    .INIT(2'h1)) 
-    \data_out[11]_i_2 
-       (.I0(\pix_counter_reg_n_0_[0] ),
-        .O(\data_out[11]_i_2_n_0 ));
-  FDSE \data_out_reg[0] 
+  LUT5 #(
+    .INIT(32'hBFFF8FFF)) 
+    \data_out[2]_i_1 
+       (.I0(data_in[3]),
+        .I1(pix_counter),
+        .I2(vsync),
+        .I3(hsync),
+        .I4(data_out[0]),
+        .O(\data_out[2]_i_1_n_0 ));
+  LUT5 #(
+    .INIT(32'hBFFF8FFF)) 
+    \data_out[3]_i_1 
+       (.I0(data_in[4]),
+        .I1(pix_counter),
+        .I2(vsync),
+        .I3(hsync),
+        .I4(data_out[1]),
+        .O(\data_out[3]_i_1_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair0" *) 
+  LUT5 #(
+    .INIT(32'hBFFF8FFF)) 
+    \data_out[4]_i_1 
+       (.I0(data_in[5]),
+        .I1(pix_counter),
+        .I2(vsync),
+        .I3(hsync),
+        .I4(data_out[2]),
+        .O(\data_out[4]_i_1_n_0 ));
+  LUT5 #(
+    .INIT(32'hEFFF2FFF)) 
+    \data_out[5]_i_1 
+       (.I0(data_in[0]),
+        .I1(pix_counter),
+        .I2(hsync),
+        .I3(vsync),
+        .I4(data_out[3]),
+        .O(\data_out[5]_i_1_n_0 ));
+  LUT5 #(
+    .INIT(32'hEFFF2FFF)) 
+    \data_out[6]_i_1 
+       (.I0(data_in[1]),
+        .I1(pix_counter),
+        .I2(hsync),
+        .I3(vsync),
+        .I4(data_out[4]),
+        .O(\data_out[6]_i_1_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair1" *) 
+  LUT5 #(
+    .INIT(32'hEFFF2FFF)) 
+    \data_out[7]_i_1 
+       (.I0(data_in[2]),
+        .I1(pix_counter),
+        .I2(hsync),
+        .I3(vsync),
+        .I4(data_out[5]),
+        .O(\data_out[7]_i_1_n_0 ));
+  FDRE \data_out_reg[2] 
        (.C(pclk),
-        .CE(\pix_counter_reg_n_0_[0] ),
-        .D(data_in[4]),
+        .CE(1'b1),
+        .D(\data_out[2]_i_1_n_0 ),
         .Q(data_out[0]),
-        .S(\data_out[11]_i_1_n_0 ));
-  FDSE \data_out_reg[10] 
+        .R(1'b0));
+  FDRE \data_out_reg[3] 
        (.C(pclk),
-        .CE(\data_out[11]_i_2_n_0 ),
-        .D(data_in[6]),
-        .Q(data_out[10]),
-        .S(\data_out[11]_i_1_n_0 ));
-  FDSE \data_out_reg[11] 
-       (.C(pclk),
-        .CE(\data_out[11]_i_2_n_0 ),
-        .D(data_in[7]),
-        .Q(data_out[11]),
-        .S(\data_out[11]_i_1_n_0 ));
-  FDSE \data_out_reg[1] 
-       (.C(pclk),
-        .CE(\pix_counter_reg_n_0_[0] ),
-        .D(data_in[5]),
+        .CE(1'b1),
+        .D(\data_out[3]_i_1_n_0 ),
         .Q(data_out[1]),
-        .S(\data_out[11]_i_1_n_0 ));
-  FDSE \data_out_reg[2] 
+        .R(1'b0));
+  FDRE \data_out_reg[4] 
        (.C(pclk),
-        .CE(\pix_counter_reg_n_0_[0] ),
-        .D(data_in[6]),
+        .CE(1'b1),
+        .D(\data_out[4]_i_1_n_0 ),
         .Q(data_out[2]),
-        .S(\data_out[11]_i_1_n_0 ));
-  FDSE \data_out_reg[3] 
+        .R(1'b0));
+  FDRE \data_out_reg[5] 
        (.C(pclk),
-        .CE(\pix_counter_reg_n_0_[0] ),
-        .D(data_in[7]),
+        .CE(1'b1),
+        .D(\data_out[5]_i_1_n_0 ),
         .Q(data_out[3]),
-        .S(\data_out[11]_i_1_n_0 ));
-  FDSE \data_out_reg[4] 
+        .R(1'b0));
+  FDRE \data_out_reg[6] 
        (.C(pclk),
-        .CE(\data_out[11]_i_2_n_0 ),
-        .D(data_in[0]),
+        .CE(1'b1),
+        .D(\data_out[6]_i_1_n_0 ),
         .Q(data_out[4]),
-        .S(\data_out[11]_i_1_n_0 ));
-  FDSE \data_out_reg[5] 
+        .R(1'b0));
+  FDRE \data_out_reg[7] 
        (.C(pclk),
-        .CE(\data_out[11]_i_2_n_0 ),
-        .D(data_in[1]),
+        .CE(1'b1),
+        .D(\data_out[7]_i_1_n_0 ),
         .Q(data_out[5]),
-        .S(\data_out[11]_i_1_n_0 ));
-  FDSE \data_out_reg[6] 
-       (.C(pclk),
-        .CE(\data_out[11]_i_2_n_0 ),
-        .D(data_in[2]),
-        .Q(data_out[6]),
-        .S(\data_out[11]_i_1_n_0 ));
-  FDSE \data_out_reg[7] 
-       (.C(pclk),
-        .CE(\data_out[11]_i_2_n_0 ),
-        .D(data_in[3]),
-        .Q(data_out[7]),
-        .S(\data_out[11]_i_1_n_0 ));
-  FDSE \data_out_reg[8] 
-       (.C(pclk),
-        .CE(\data_out[11]_i_2_n_0 ),
-        .D(data_in[4]),
-        .Q(data_out[8]),
-        .S(\data_out[11]_i_1_n_0 ));
-  FDSE \data_out_reg[9] 
-       (.C(pclk),
-        .CE(\data_out[11]_i_2_n_0 ),
-        .D(data_in[5]),
-        .Q(data_out[9]),
-        .S(\data_out[11]_i_1_n_0 ));
+        .R(1'b0));
   (* SOFT_HLUTNM = "soft_lutpair0" *) 
   LUT3 #(
     .INIT(8'h08)) 
     \pix_counter[0]_i_1 
        (.I0(hsync),
         .I1(vsync),
-        .I2(\pix_counter_reg_n_0_[0] ),
+        .I2(pix_counter),
         .O(\pix_counter[0]_i_1_n_0 ));
   FDRE #(
     .INIT(1'b0)) 
@@ -182,7 +197,7 @@ module design_1_CSI_RX_0_0_CSI_RX
        (.C(pclk),
         .CE(1'b1),
         .D(\pix_counter[0]_i_1_n_0 ),
-        .Q(\pix_counter_reg_n_0_[0] ),
+        .Q(pix_counter),
         .R(1'b0));
 endmodule
 `ifndef GLBL

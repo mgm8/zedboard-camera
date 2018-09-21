@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-// Date        : Wed Sep 12 01:44:05 2018
+// Date        : Thu Sep 20 17:57:01 2018
 // Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 // Command     : write_verilog -force -mode funcsim
 //               /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.srcs/sources_1/bd/design_1/ip/design_1_xlconstant_1_0/design_1_xlconstant_1_0_sim_netlist.v
@@ -16,10 +16,14 @@
 (* NotValidForBitStream *)
 module design_1_xlconstant_1_0
    (dout);
-  output [19:0]dout;
+  output [23:0]dout;
 
   wire \<const0> ;
 
+  assign dout[23] = \<const0> ;
+  assign dout[22] = \<const0> ;
+  assign dout[21] = \<const0> ;
+  assign dout[20] = \<const0> ;
   assign dout[19] = \<const0> ;
   assign dout[18] = \<const0> ;
   assign dout[17] = \<const0> ;

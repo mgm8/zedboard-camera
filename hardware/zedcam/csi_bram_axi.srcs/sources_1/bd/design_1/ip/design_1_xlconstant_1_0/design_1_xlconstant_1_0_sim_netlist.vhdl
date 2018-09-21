@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
--- Date        : Wed Sep 12 01:44:05 2018
+-- Date        : Thu Sep 20 17:57:01 2018
 -- Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 -- Command     : write_vhdl -force -mode funcsim
 --               /home/gabriel/xilinx_projects/csi_bram_axi/csi_bram_axi.srcs/sources_1/bd/design_1/ip/design_1_xlconstant_1_0/design_1_xlconstant_1_0_sim_netlist.vhdl
@@ -16,7 +16,7 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity design_1_xlconstant_1_0 is
   port (
-    dout : out STD_LOGIC_VECTOR ( 19 downto 0 )
+    dout : out STD_LOGIC_VECTOR ( 23 downto 0 )
   );
   attribute NotValidForBitStream : boolean;
   attribute NotValidForBitStream of design_1_xlconstant_1_0 : entity is true;
@@ -31,6 +31,10 @@ end design_1_xlconstant_1_0;
 architecture STRUCTURE of design_1_xlconstant_1_0 is
   signal \<const0>\ : STD_LOGIC;
 begin
+  dout(23) <= \<const0>\;
+  dout(22) <= \<const0>\;
+  dout(21) <= \<const0>\;
+  dout(20) <= \<const0>\;
   dout(19) <= \<const0>\;
   dout(18) <= \<const0>\;
   dout(17) <= \<const0>\;

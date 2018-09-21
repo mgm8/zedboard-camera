@@ -52,17 +52,17 @@
 
 (* X_CORE_INFO = "xlconstant_v1_1_4_xlconstant,Vivado 2018.1" *)
 (* CHECK_LICENSE_TYPE = "design_1_xlconstant_1_0,xlconstant_v1_1_4_xlconstant,{}" *)
-(* CORE_GENERATION_INFO = "design_1_xlconstant_1_0,xlconstant_v1_1_4_xlconstant,{x_ipProduct=Vivado 2018.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=xlconstant,x_ipVersion=1.1,x_ipCoreRevision=4,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,CONST_WIDTH=20,CONST_VAL=0x00000}" *)
+(* CORE_GENERATION_INFO = "design_1_xlconstant_1_0,xlconstant_v1_1_4_xlconstant,{x_ipProduct=Vivado 2018.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=xlconstant,x_ipVersion=1.1,x_ipCoreRevision=4,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,CONST_WIDTH=24,CONST_VAL=0x000000}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_xlconstant_1_0 (
   dout
 );
 
-output wire [19 : 0] dout;
+output wire [23 : 0] dout;
 
   xlconstant_v1_1_4_xlconstant #(
-    .CONST_WIDTH(20),
-    .CONST_VAL('H00000)
+    .CONST_WIDTH(24),
+    .CONST_VAL('H000000)
   ) inst (
     .dout(dout)
   );

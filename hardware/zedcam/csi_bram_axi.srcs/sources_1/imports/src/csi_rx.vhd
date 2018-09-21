@@ -36,9 +36,9 @@ entity CSI_RX is
         pclk        : in std_logic;                      --! Input clock signal (pixel clock from CSI).
         vsync       : in std_logic;                      --! Vertical sync.
         hsync       : in std_logic;                      --! Horizontal sync.
-        data_in     : in std_logic_vector(7 downto 0);   --! Data input (data output from the sensor).
+        data_in     : in std_logic_vector(7 downto 0);  --! Data input (data output from the sensor).
         data_clk    : out std_logic;                     --! Data write clock (same as PCLK).
-        data_out    : out std_logic_vector(11 downto 0)  --! Output data.
+        data_out    : out std_logic_vector(7 downto 0)  --! Output data.
         );
 end CSI_RX;
 
@@ -53,11 +53,12 @@ begin
         if rising_edge(pclk) then
             if vsync = '1' and hsync = '1' then
                 if pix_counter = 0 then
-                    data_out(11 downto 4) <= data_in;
+                    data_out(7 downto 5) <= data_in(2 downto 0);
+                    data_out(1 downto 0) <= data_in(2 downto 1);
                     data_clk <= '0';
                     pix_counter <= pix_counter + 1;
                 elsif pix_counter = 1 then
-                    data_out(3 downto 0) <= data_in(7 downto 4);
+                    data_out(4 downto 2) <= data_in(7 downto 5);
                     data_clk <= '1';
                     pix_counter <= 0;
                 end if;

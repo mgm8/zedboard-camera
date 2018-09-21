@@ -1,4 +1,4 @@
-01:42:58 **** Auto Build of configuration Debug for project zynq_fsbl_0 ****
+18:12:40 **** Auto Build of configuration Debug for project zynq_fsbl_0 ****
 make pre-build main-build 
 a9-linaro-pre-build-step
  
@@ -64,5 +64,5 @@ arm-none-eabi-size zynq_fsbl_0.elf  |tee "zynq_fsbl_0.elf.size"
 Finished building: zynq_fsbl_0.elf.size
  
 
-01:43:02 Build Finished (took 4s.29ms)
+18:12:50 Build Finished (took 10s.804ms)
 
