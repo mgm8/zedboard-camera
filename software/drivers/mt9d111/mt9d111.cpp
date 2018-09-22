@@ -1424,7 +1424,7 @@ bool MT9D111::CaptureStillPicture(uint16_t width, uint16_t height, uint16_t fram
     // Capture with no cropping
     this->SetCropping(MT9D111_MODE_CAPTURE, 0, MT9D111_OUTPUT_MAX_WIDTH, 0, MT9D111_OUTPUT_MAX_HEIGHT);
 
-    // If the image size is less than or equal to 800 x 600, binning mode with 1ADC must be enabled
+    // If the image size is less than or equal to 800x600, binning mode with 1ADC must be enabled
     if ((width <= 800) and (height <= 600))
     {
         this->WriteRegBit(MT9D111_REG_READ_MODE_B, 10, true);
@@ -1441,6 +1441,56 @@ bool MT9D111::CaptureStillPicture(uint16_t width, uint16_t height, uint16_t fram
                                                                  MT9D111_DRIVER_VAR_SEQUENCER_CAPTURE_PARAMS_NUM_FRAMES);
 
     this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, frames);
+
+    // Lastly, call the "CAPTURE" command
+    return this->SequencerCmd(MT9D111_DRIVER_VAR_SEQUENCER_CMD_DO_CAPTURE);
+}
+
+bool MT9D111::CaptureVideo(uint16_t width, uint16_t height)
+{
+    this->debug->WriteEvent("Capturing a ");
+    this->debug->WriteDec(width);
+    this->debug->WriteMsg("x");
+    this->debug->WriteDec(height);
+    this->debug->WriteMsg(" video...");
+    this->debug->NewLine();
+
+    this->SetRegisterPage(MT9D111_REG_PAGE_1);
+
+    // set the capture video mode bit
+    this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                 MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                 MT9D111_DRIVER_ID_SEQUENCER |
+                                                                 MT9D111_DRIVER_VAR_SEQUENCER_CAPTURE_PARAMS_MODE);
+
+    this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, 1);
+
+    // Specify the output image size for context B
+    this->SetResolution(MT9D111_MODE_CAPTURE, width, height);
+
+    // Capture with no cropping
+    this->SetCropping(MT9D111_MODE_CAPTURE, 0, MT9D111_OUTPUT_MAX_WIDTH, 0, MT9D111_OUTPUT_MAX_HEIGHT);
+
+    // If the image size is less than or equal to 800x600, binning mode with 1ADC must be enabled
+    if ((width <= 800) and (height <= 600))
+    {
+        this->WriteRegBit(MT9D111_REG_READ_MODE_B, 10, true);
+        this->WriteRegBit(MT9D111_REG_READ_MODE_B, 15, true);
+    }
+
+    // Set the horizontal blanking for context B such that the integration time is the same as preview mode
+    this->WriteReg(MT9D111_REG_HORIZONTAL_BLANKING_B, 0xED);
+
+    // Set mode.sensor_x_delay_B (ID = 7, Offset = 0x23) to adjust frame timing accurately
+    this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                 MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                 MT9D111_DRIVER_ID_MODE |
+                                                                 MT9D111_DRIVER_VAR_MODE_S_EXT_DELAY_B);
+
+    this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, 0x03B1);
+
+    // Set V_Blanking for context_B (R6:0) to obtain 30 fps or another target frame rate
+    this->WriteReg(MT9D111_REG_VERTICAL_BLANKING_B, 0x2F);
 
     // Lastly, call the "CAPTURE" command
     return this->SequencerCmd(MT9D111_DRIVER_VAR_SEQUENCER_CMD_DO_CAPTURE);

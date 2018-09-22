@@ -735,7 +735,7 @@ class MT9D111
          *         - mode.crop_Y0_B // ID = 7, Offset = 0x39
          *         - mode.crop_Y1_B // ID = 7, Offset = 0x3B
          *         .
-         *      #. If the image size is less than or equal to 800 x 600, binning mode with 1ADC must be enabled
+         *      #. If the image size is less than or equal to 800x600, binning mode with 1ADC must be enabled
          *         by:
          *         - R0x20:0[10] = 1 and R0x20:0[15] = 1
          *         .
@@ -759,6 +759,39 @@ class MT9D111
          * \return TRUE/FALSE if successful or not.
          */
         bool CaptureStillPicture(uint16_t width, uint16_t height, uint16_t frames=10);
+
+        /**
+         * \brief Starts a video capture.
+         *
+         * To capture videos:
+         *      #. First, set the capture video mode bit by:
+         *         - seq.captureParams.mode[1] = 1  // ID = 1, Offset = 0x20
+         *         .
+         *      #. Next, specify the output size with mode.OutputWidth B and mode.OutputHeight B. Similar to
+         *         the "Capturing Still Pictures" on page 27, the appropriate variables (ID = 7, Offset =
+         *         0x35/37/39/3B) also need to be adjusted if cropping is used.
+         *      #. If the image size is less than or equal to 800x600 turn on power (1ADC) and binning mode
+         *         for context_B:
+         *         - R0x20:0[10] = 1, R0x20:0[15] = 1
+         *         .
+         *      #. Set H_Blanking for context_B (R0x05:0) to keep the same integration time as in a preview mode.
+         *      #. Set mode.sensor_x_delay_B (ID = 7, Offset = 0x23) to adjust frame timing accurately.
+         *      #. Set V_Blanking for context_B (R6:0) to obtain 30 fps or another target frame rate.
+         *      #. Lastly, call the "CAPTURE" command:
+         *         - seq.cmd = 2    // ID = 1, Offset = 0x03
+         *         .
+         *      .
+         *
+         * To stop video capture and return back to preview, call "PREVIEW" command: seq.cmd = 1
+         *
+         * \see MT9D131 Developer Guide. Capturing Videos. Page 28.
+         *
+         * \param[in] width is width of the video to capture.
+         * \param[in] height is the height of the video to capture.
+         *
+         * \return TRUE/FALSE if successful or not.
+         */
+        bool CaptureVideo(uint16_t width, uint16_t height);
 };
 
 #endif // MT9D111_H_
