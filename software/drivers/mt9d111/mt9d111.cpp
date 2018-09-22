@@ -1305,4 +1305,145 @@ bool MT9D111::SetNumberOfADCs(uint8_t context, uint8_t adcs)
     return true;
 }
 
+bool MT9D111::SetCropping(uint8_t context, uint16_t x0, uint16_t x1, uint16_t y0, uint16_t y1)
+{
+    this->debug->WriteEvent("Configuring image crop as (");
+    this->debug->WriteDec(x0);
+    this->debug->WriteMsg(",");
+    this->debug->WriteDec(x1);
+    this->debug->WriteMsg(",");
+    this->debug->WriteDec(y0);
+    this->debug->WriteMsg(",");
+    this->debug->WriteDec(y1);
+    this->debug->WriteMsg(") for context ");
+    switch(context)
+    {
+        case MT9D111_MODE_PREVIEW:
+            this->debug->WriteMsg("A...");
+            break;
+        case MT9D111_MODE_CAPTURE:
+            this->debug->WriteMsg("B...");
+            break;
+        default:
+            this->debug->WriteMsg("UNKNOWN...");
+    }
+    this->debug->NewLine();
+
+    this->SetRegisterPage(MT9D111_REG_PAGE_1);
+
+    switch(context)
+    {
+        case MT9D111_MODE_PREVIEW:
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                         MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                         MT9D111_DRIVER_ID_MODE |
+                                                                         MT9D111_DRIVER_VAR_MODE_CROP_X0_A);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, x0);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                         MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                         MT9D111_DRIVER_ID_MODE |
+                                                                         MT9D111_DRIVER_VAR_MODE_CROP_X1_A);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, x1);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                         MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                         MT9D111_DRIVER_ID_MODE |
+                                                                         MT9D111_DRIVER_VAR_MODE_CROP_Y0_A);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, y0);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                         MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                         MT9D111_DRIVER_ID_MODE |
+                                                                         MT9D111_DRIVER_VAR_MODE_CROP_Y1_A);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, y1);
+
+            break;
+        case MT9D111_MODE_CAPTURE:
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                         MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                         MT9D111_DRIVER_ID_MODE |
+                                                                         MT9D111_DRIVER_VAR_MODE_CROP_X0_B);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, x0);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                         MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                         MT9D111_DRIVER_ID_MODE |
+                                                                         MT9D111_DRIVER_VAR_MODE_CROP_X1_B);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, x1);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                         MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                         MT9D111_DRIVER_ID_MODE |
+                                                                         MT9D111_DRIVER_VAR_MODE_CROP_Y0_B);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, y0);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                         MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                         MT9D111_DRIVER_ID_MODE |
+                                                                         MT9D111_DRIVER_VAR_MODE_CROP_Y1_B);
+
+            this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, y1);
+
+            break;
+        default:
+            this->debug->WriteEvent("Invalid context!");
+            this->debug->NewLine();
+
+            return false;
+    }
+
+    return true;
+}
+
+bool MT9D111::CaptureStillPicture(uint16_t width, uint16_t height, uint16_t frames)
+{
+    this->debug->WriteEvent("Capturing an still picture...");
+    this->debug->NewLine();
+
+    this->SetRegisterPage(MT9D111_REG_PAGE_1);
+
+    // Clear the capture video mode bit
+    this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                 MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                 MT9D111_DRIVER_ID_SEQUENCER |
+                                                                 MT9D111_DRIVER_VAR_SEQUENCER_CAPTURE_PARAMS_MODE);
+
+    this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, 0);
+
+    // Specify the output image size for context B
+    this->SetResolution(MT9D111_MODE_CAPTURE, width, height);
+
+    // Capture with no cropping
+    this->SetCropping(MT9D111_MODE_CAPTURE, 0, MT9D111_OUTPUT_MAX_WIDTH, 0, MT9D111_OUTPUT_MAX_HEIGHT);
+
+    // If the image size is less than or equal to 800 x 600, binning mode with 1ADC must be enabled
+    if ((width <= 800) and (height <= 600))
+    {
+        this->WriteRegBit(MT9D111_REG_READ_MODE_B, 10, true);
+        this->WriteRegBit(MT9D111_REG_READ_MODE_B, 15, true);
+    }
+
+    // Set the horizontal blanking for context B such that the integration time is the same as preview mode
+    this->WriteReg(MT9D111_REG_HORIZONTAL_BLANKING_B, 0xED);
+
+    // Set how many frames to be issued in capture mode before sequencer goes back to preview mode
+    this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
+                                                                 MT9D111_DRIVER_PHYSICAL_ACCESS_ADDRESS_LOGICAL |
+                                                                 MT9D111_DRIVER_ID_SEQUENCER |
+                                                                 MT9D111_DRIVER_VAR_SEQUENCER_CAPTURE_PARAMS_NUM_FRAMES);
+
+    this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, frames);
+
+    // Lastly, call the "CAPTURE" command
+    return this->SequencerCmd(MT9D111_DRIVER_VAR_SEQUENCER_CMD_DO_CAPTURE);
+}
+
 //! \} End of mt9d111 group

@@ -672,6 +672,93 @@ class MT9D111
          * \return TRUE/FALSE if successful or not.
          */
         bool SetNumberOfADCs(uint8_t context, uint8_t adcs);
+
+        /**
+         * \brief Configures the image cropping region.
+         *
+         * For example, if the user wants to capture a full resolution image (no cropping), these values should
+         * be set:
+         *
+         *      - mode.Output width_B = 1600    // ID = 7, Offset = 0x07
+         *      - mode.Output height_B = 1200   // ID = 7, Offset = 0x09
+         *      - mode.crop_X0_B = 0            // ID = 7, Offset = 0x35
+         *      - mode.crop_X1_B = 1600         // ID = 7, Offset = 0x37
+         *      - mode.crop_Y0_B = 0            // ID = 7, Offset = 0x39
+         *      - mode.crop_Y1_B = 1200         // ID = 7, Offset = 0x3B
+         *      .
+         *
+         * For an 800x600 capture with no cropping:
+         *
+         *      - mode.Output width_B = 800
+         *      - mode.Output height_B = 600
+         *      - mode.crop_X0_B = 0
+         *      - mode.crop_X1_B = 1600
+         *      - mode.crop_Y0_B = 0
+         *      - mode.crop_Y1_B = 1200
+         *      .
+         *
+         * For a VGA capture with cropping of 800x600:
+         *
+         *      - mode.Output Width B = 640
+         *      - mode.Output Height B = 480
+         *      - mode.crop_X0_B = 0
+         *      - mode.crop_X1_B = 800
+         *      - mode.crop_Y0_B = 0
+         *      - mode.crop_Y1_B = 600
+         *      .
+         *
+         * \see MT9D131 Developer Guide. Capturing Still Pictures. Page 27.
+         *
+         * \param[in] context is the context to configure the imagem cropping.
+         * \param[in] x0 is the initial position of the crop region (x-axis).
+         * \param[in] x1 is the final position of the crop region (y-axis).
+         * \param[in] y0 is the initial position of the crop region (y-axis).
+         * \param[in] y1 is the final position of the crop region (y-axis).
+         *
+         * \return TRUE/FALSE if successful or not.
+         */
+        bool SetCropping(uint8_t context, uint16_t x0, uint16_t x1, uint16_t y0, uint16_t y1);
+
+        /**
+         * \brief Prepares the sensor and executes an still picture capture.
+         *
+         * To capture still images:
+         *      #. First clear the capture video mode bit:
+         *         - seq.captureParams.mode[1] = 0
+         *         .
+         *      #. Next, specify the output image size for context B by using the variables mode.OutputWidth_B
+         *         and mode.OutputHeight_B.
+         *      #. If the image is cropped from the original size, the following variables should also be set
+         *         appropriately:
+         *         - mode.crop_X0_B // ID = 7, Offset = 0x35
+         *         - mode.crop_X1_B // ID = 7, Offset = 0x37
+         *         - mode.crop_Y0_B // ID = 7, Offset = 0x39
+         *         - mode.crop_Y1_B // ID = 7, Offset = 0x3B
+         *         .
+         *      #. If the image size is less than or equal to 800 x 600, binning mode with 1ADC must be enabled
+         *         by:
+         *         - R0x20:0[10] = 1 and R0x20:0[15] = 1
+         *         .
+         *         In addition, set the horizontal blanking for context B (r0x05:0) such that the integration
+         *         time is the same as preview mode.
+         *      #. Next, set how many frames to be issued in capture mode before sequencer goes back to preview
+         *         mode:
+         *         - seq.captureParams.numFrames = 2 // 2 for this example (ID = 1, Offset = 0x21)
+         *         .
+         *      #. Lastly, call the "CAPTURE" command:
+         *         - seq.cmd = 2 // ID = 1, Offset = 0x03
+         *         .
+         *      .
+         *
+         * \see MT9D131 Developer Guide. Capturing Still Pictures. Page 27.
+         *
+         * \param[in] width is width of the still image to capture.
+         * \param[in] height is the height of the still image to capture.
+         * \param[in] frames is the number of frames to be issued in capture mode before sequencer goes back to preview mode.
+         *
+         * \return TRUE/FALSE if successful or not.
+         */
+        bool CaptureStillPicture(uint16_t width, uint16_t height, uint16_t frames=10);
 };
 
 #endif // MT9D111_H_
