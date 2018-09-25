@@ -237,9 +237,11 @@ bool Camera::open(int index)
         return false;
     }
 
+    sleep(1);
+
     this->capturer = new Capturer;
 
-    if (!this->capturer->Open(0x40000000, 128000))
+    if (!this->capturer->Open(0x43C00000, 32))
     {
         delete this->sensor;
 
