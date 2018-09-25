@@ -164,6 +164,16 @@ bool Camera::open(int index)
         return false;
     }
 
+    if (!this->sensor->EnablePLL(0x1000, 0x0500))
+    {
+        this->debug->WriteEvent("Error configuring sensor PLL!");
+        this->debug->NewLine();
+
+        delete this->sensor;
+
+        return false;
+    }
+
     if (!this->sensor->Config())
     {
         this->debug->WriteEvent("Error configuring sensor!");
@@ -175,16 +185,6 @@ bool Camera::open(int index)
     }
 
     sleep(1);
-
-    if (!this->sensor->EnablePLL(0x1000, 0x0500))
-    {
-        this->debug->WriteEvent("Error configuring sensor PLL!");
-        this->debug->NewLine();
-
-        delete this->sensor;
-
-        return false;
-    }
 
     if (!this->sensor->SetOutputFormat(MT9D111_OUTPUT_FORMAT_RGB565))
     {
