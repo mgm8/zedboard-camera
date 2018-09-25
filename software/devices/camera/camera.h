@@ -43,6 +43,9 @@
 #include <devices/capturer/capturer.h>
 #include <drivers/mt9d111/mt9d111.h>
 
+#define CAMERA_DEFAULT_FRAME_WIDTH      800
+#define CAMERA_DEFAULT_FRAME_HEIGHT     600
+
 /**
  * \brief Camera properties.
  */

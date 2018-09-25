@@ -196,7 +196,7 @@ bool Camera::open(int index)
         return false;
     }
 
-    if (!this->sensor->SetResolution(MT9D111_MODE_PREVIEW, 640, 480))
+    if (!this->sensor->SetResolution(MT9D111_MODE_PREVIEW, CAMERA_DEFAULT_FRAME_WIDTH, CAMERA_DEFAULT_FRAME_HEIGHT))
     {
         this->debug->WriteEvent("Error configuring sensor resolution for preview mode!");
         this->debug->NewLine();
@@ -206,7 +206,7 @@ bool Camera::open(int index)
         return false;
     }
 
-    if (!this->sensor->SetResolution(MT9D111_MODE_CAPTURE, 640, 480))
+    if (!this->sensor->SetResolution(MT9D111_MODE_CAPTURE, CAMERA_DEFAULT_FRAME_WIDTH, CAMERA_DEFAULT_FRAME_HEIGHT))
     {
         this->debug->WriteEvent("Error configuring sensor resolution for capture mode!");
         this->debug->NewLine();
@@ -247,6 +247,8 @@ bool Camera::open(int index)
 
         return false;
     }
+
+    this->capturer->SetResolution(CAMERA_DEFAULT_FRAME_WIDTH, CAMERA_DEFAULT_FRAME_HEIGHT);
 
     this->is_opened = true;
 
