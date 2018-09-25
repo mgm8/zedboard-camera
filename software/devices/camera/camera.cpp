@@ -186,7 +186,7 @@ bool Camera::open(int index)
         return false;
     }
 
-    if (!this->sensor->SetOutputFormat(MT9D111_OUTPUT_FORMAT_RGB444x))
+    if (!this->sensor->SetOutputFormat(MT9D111_OUTPUT_FORMAT_RGB565))
     {
         this->debug->WriteEvent("Error configuring sensor output format!");
         this->debug->NewLine();
