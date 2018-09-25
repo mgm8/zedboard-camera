@@ -674,6 +674,17 @@ class MT9D111
         bool SetNumberOfADCs(uint8_t context, uint8_t adcs);
 
         /**
+         * \brief Sets the horizontal and vertical blanking for a context.
+         *
+         * \param[in] context is the context (A or B).
+         * \param[in] horizontal is the horizontal blanking for the given context.
+         * \param[in] vertical is the vertical blanking for the given context.
+         *
+         * \return TRUE/FALSE if successful or not.
+         */
+        bool SetBlanking(uint8_t context, uint16_t horizontal, uint16_t vertical);
+
+        /**
          * \brief Configures the image cropping region.
          *
          * For example, if the user wants to capture a full resolution image (no cropping), these values should
