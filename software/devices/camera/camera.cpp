@@ -164,6 +164,16 @@ bool Camera::open(int index)
         return false;
     }
 
+    if (!this->sensor->EnablePLL(0x1000, 0x0500))
+    {
+        this->debug->WriteEvent("Error configuring sensor PLL!");
+        this->debug->NewLine();
+
+        delete this->sensor;
+
+        return false;
+    }
+
     if (!this->sensor->Config())
     {
         this->debug->WriteEvent("Error configuring sensor!");
@@ -176,17 +186,7 @@ bool Camera::open(int index)
 
     sleep(1);
 
-    if (!this->sensor->EnablePLL(0x1000, 0x0500))
-    {
-        this->debug->WriteEvent("Error configuring sensor PLL!");
-        this->debug->NewLine();
-
-        delete this->sensor;
-
-        return false;
-    }
-
-    if (!this->sensor->SetOutputFormat(MT9D111_OUTPUT_FORMAT_RGB444x))
+    if (!this->sensor->SetOutputFormat(MT9D111_OUTPUT_FORMAT_RGB565))
     {
         this->debug->WriteEvent("Error configuring sensor output format!");
         this->debug->NewLine();
@@ -196,7 +196,7 @@ bool Camera::open(int index)
         return false;
     }
 
-    if (!this->sensor->SetResolution(MT9D111_MODE_PREVIEW, 640, 480))
+    if (!this->sensor->SetResolution(MT9D111_MODE_PREVIEW, CAMERA_DEFAULT_FRAME_WIDTH, CAMERA_DEFAULT_FRAME_HEIGHT))
     {
         this->debug->WriteEvent("Error configuring sensor resolution for preview mode!");
         this->debug->NewLine();
@@ -206,7 +206,7 @@ bool Camera::open(int index)
         return false;
     }
 
-    if (!this->sensor->SetResolution(MT9D111_MODE_CAPTURE, 640, 480))
+    if (!this->sensor->SetResolution(MT9D111_MODE_CAPTURE, CAMERA_DEFAULT_FRAME_WIDTH, CAMERA_DEFAULT_FRAME_HEIGHT))
     {
         this->debug->WriteEvent("Error configuring sensor resolution for capture mode!");
         this->debug->NewLine();
@@ -237,9 +237,11 @@ bool Camera::open(int index)
         return false;
     }
 
+    sleep(1);
+
     this->capturer = new Capturer;
 
-    if (!this->capturer->Open(0x40000000, 128000))
+    if (!this->capturer->Open(0x43C00000, 32))
     {
         delete this->sensor;
 
@@ -247,6 +249,8 @@ bool Camera::open(int index)
 
         return false;
     }
+
+    this->capturer->SetResolution(CAMERA_DEFAULT_FRAME_WIDTH, CAMERA_DEFAULT_FRAME_HEIGHT);
 
     this->is_opened = true;
 

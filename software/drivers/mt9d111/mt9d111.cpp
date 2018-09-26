@@ -1305,6 +1305,47 @@ bool MT9D111::SetNumberOfADCs(uint8_t context, uint8_t adcs)
     return true;
 }
 
+bool MT9D111::SetBlanking(uint8_t context, uint16_t horizontal, uint16_t vertical)
+{
+    this->debug->WriteEvent("Configuring blanking for ");
+    switch(context)
+    {
+        case MT9D111_MODE_PREVIEW:
+            this->debug->WriteMsg("PREVIEW mode (");
+            break;
+        case MT9D111_MODE_CAPTURE:
+            this->debug->WriteMsg("CAPTURE mode (");
+            break;
+        default:
+            this->debug->WriteMsg("UNKNOWN mode!");
+            this->debug->NewLine();
+            return false;
+    }
+
+    this->debug->WriteMsg("horizontal=");
+    this->debug->WriteDec(horizontal);
+    this->debug->WriteMsg("vertical=");
+    this->debug->WriteDec(vertical);
+    this->debug->WriteMsg(")...");
+    this->debug->NewLine();
+
+    this->SetRegisterPage(MT9D111_REG_PAGE_0);
+
+    switch(context)
+    {
+        case MT9D111_MODE_PREVIEW:
+            this->WriteReg(MT9D111_REG_HORIZONTAL_BLANKING_A, horizontal);
+            this->WriteReg(MT9D111_REG_VERTICAL_BLANKING_A, vertical);
+            break;
+        case MT9D111_MODE_CAPTURE:
+            this->WriteReg(MT9D111_REG_HORIZONTAL_BLANKING_B, horizontal);
+            this->WriteReg(MT9D111_REG_VERTICAL_BLANKING_B, vertical);
+            break;
+    }
+
+    return true;
+}
+
 bool MT9D111::SetCropping(uint8_t context, uint16_t x0, uint16_t x1, uint16_t y0, uint16_t y1)
 {
     this->debug->WriteEvent("Configuring image crop as (");
