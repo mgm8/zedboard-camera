@@ -18,6 +18,7 @@ software/build
 # Vivado
 *.cache
 *.runs
+*.sdk
 
 # Others
 *.swp
