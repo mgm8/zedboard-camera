@@ -71,10 +71,11 @@ class GPIO
          *
          * \param[in] p is the GPIO pin number.
          * \param[in] d is the GPIO direction (GPIO_DIR_OUTPUT or GPIO_DIR_INPUT).
+         * \param[in] adr is the GPIO pin memory address.
          *
          * \return None
          */
-        GPIO(uint8_t p, bool d=GPIO_DIR_OUTPUT);
+        GPIO(uint8_t p, bool d=GPIO_DIR_OUTPUT, uint32_t adr=0x40000000);
 
         /**
          * \brief Class destructor.
@@ -88,10 +89,11 @@ class GPIO
          *
          * \param[in] p is the GPIO pin number.
          * \param[in] d is the GPIO direction (GPIO_DIR_OUTPUT or GPIO_DIR_INPUT).
+         * \param[in] adr is the GPIO pin memory address.
          *
          * \return TRUE/FALSE if it was successful or not.
          */
-        bool Open(uint8_t p, bool d);
+        bool Open(uint8_t p, bool d, uint32_t adr);
 
         /**
          * \brief Closes the GPIO pin (deinitialization).

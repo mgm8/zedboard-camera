@@ -42,10 +42,10 @@ GPIO::GPIO()
 
 }
 
-GPIO::GPIO(uint8_t p, bool d)
+GPIO::GPIO(uint8_t p, bool d, uint32_t adr)
     : GPIO()
 {
-    this->Open(p, d);
+    this->Open(p, d, adr);
 }
 
 GPIO::~GPIO()
@@ -53,7 +53,7 @@ GPIO::~GPIO()
     this->Close();
 }
 
-bool GPIO::Open(uint8_t p, bool d)
+bool GPIO::Open(uint8_t p, bool d, uint32_t adr)
 {
     this->pin = p;
 
@@ -61,7 +61,7 @@ bool GPIO::Open(uint8_t p, bool d)
 
     this->zynqaxi = new ZynqAXI;
 
-    return this->zynqaxi->Open(0x41200000);
+    return this->zynqaxi->Open(adr);
 }
 
 bool GPIO::Close()

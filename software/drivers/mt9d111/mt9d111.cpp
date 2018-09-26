@@ -88,7 +88,7 @@ bool MT9D111::Open(const char *dev_adr)
 
     this->reset = new GPIO;
 
-    if (!reset->Open(MT9D111_GPIO_RESET, GPIO_DIR_OUTPUT))
+    if (!reset->Open(MT9D111_GPIO_RESET, GPIO_DIR_OUTPUT, MT9D111_GPIO_RESET_ADDRESS))
     {
         this->debug->WriteEvent("Error configuring reset GPIO!");
         this->debug->NewLine();
@@ -99,9 +99,9 @@ bool MT9D111::Open(const char *dev_adr)
 
         return false;
     }
-/*
+
     this->standby = new GPIO;
-    if (!standby->Open(MT9D111_GPIO_STANDBY, GPIO_DIR_OUTPUT))
+    if (!standby->Open(MT9D111_GPIO_STANDBY, GPIO_DIR_OUTPUT, MT9D111_GPIO_STANDBY_ADDRESS))
     {
         this->debug->WriteEvent("Error configuring standby GPIO!");
         this->debug->NewLine();
@@ -112,7 +112,7 @@ bool MT9D111::Open(const char *dev_adr)
 
         return false;
     }
-*/
+
     if (!this->HardReset())
     {
         return this->Close();
@@ -132,7 +132,7 @@ bool MT9D111::Close()
 
         delete this->i2c;
         delete this->reset;
-//        delete this->standby;
+        delete this->standby;
 
         this->is_open = false;
 
@@ -210,7 +210,7 @@ bool MT9D111::HardReset()
 {
     this->debug->WriteEvent("Executing hard reset...");
     this->debug->NewLine();
-/*
+
     if (!this->standby->Set(false))
     {
         this->debug->WriteEvent("Error during hard reset!");
@@ -218,7 +218,7 @@ bool MT9D111::HardReset()
 
         return false;
     }
-*/
+
     if (!this->reset->Set(false))
     {
         this->debug->WriteEvent("Error during hard reset!");
@@ -300,7 +300,7 @@ bool MT9D111::HardStandby(bool s)
     }
 
     this->debug->NewLine();
-/*
+
     if (!this->standby->Set(s))
     {
         this->debug->WriteEvent("Error during hard standby!");
@@ -308,7 +308,7 @@ bool MT9D111::HardStandby(bool s)
 
         return false;
     }
-*/
+
     return true;
 }
 
@@ -1473,7 +1473,7 @@ bool MT9D111::CaptureStillPicture(uint16_t width, uint16_t height, uint16_t fram
     }
 
     // Set the horizontal blanking for context B such that the integration time is the same as preview mode
-    this->WriteReg(MT9D111_REG_HORIZONTAL_BLANKING_B, 0xED);
+    this->WriteReg(MT9D111_REG_HORIZONTAL_BLANKING_B, 0x0222);
 
     // Set how many frames to be issued in capture mode before sequencer goes back to preview mode
     this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
@@ -1520,7 +1520,7 @@ bool MT9D111::CaptureVideo(uint16_t width, uint16_t height)
     }
 
     // Set the horizontal blanking for context B such that the integration time is the same as preview mode
-    this->WriteReg(MT9D111_REG_HORIZONTAL_BLANKING_B, 0xED);
+    this->WriteReg(MT9D111_REG_HORIZONTAL_BLANKING_B, 0x0222);
 
     // Set mode.sensor_x_delay_B (ID = 7, Offset = 0x23) to adjust frame timing accurately
     this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_ADDRESS, MT9D111_DRIVER_VARIABLE_16_BIT_ACCESS |
@@ -1528,10 +1528,10 @@ bool MT9D111::CaptureVideo(uint16_t width, uint16_t height)
                                                                  MT9D111_DRIVER_ID_MODE |
                                                                  MT9D111_DRIVER_VAR_MODE_S_EXT_DELAY_B);
 
-    this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, 0x03B1);
+    this->WriteReg(MT9D111_REG_MICROCONTROLLER_VARIABLE_DATA, 0x000E);
 
     // Set V_Blanking for context_B (R6:0) to obtain 30 fps or another target frame rate
-    this->WriteReg(MT9D111_REG_VERTICAL_BLANKING_B, 0x2F);
+    this->WriteReg(MT9D111_REG_VERTICAL_BLANKING_B, 0x1E);
 
     // Lastly, call the "CAPTURE" command
     return this->SequencerCmd(MT9D111_DRIVER_VAR_SEQUENCER_CMD_DO_CAPTURE);
