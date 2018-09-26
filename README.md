@@ -16,7 +16,7 @@ A camera for the ZedBoard with the MT9D111 sensor.
 #### PMOD Connector Reference
 
 ```
-JA/JB
+JA/JB Front View
 
 -------------------------------
 | 6  | 5  | 4  | 3  | 2  | 1  |
@@ -26,6 +26,8 @@ JA/JB
 ```
 
 #### Pin Reference Table
+
+The table below is the pin reference used in this project. It can be changed in the file [zedcam_constraints.xdc](https://github.com/mgm8/zedboard-camera/blob/master/hardware/zedcam/zedcam.srcs/constrs_1/imports/src/zedcam_constraints.xdc).
 
 | *Pin Name*       | *ArduCam Pin* | *Zynq Pin* | *ZedBoard Pin*    |
 |:-----------------|--------------:|-----------:|------------------:|
