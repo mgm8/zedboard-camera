@@ -338,4 +338,14 @@ bool Camera::capture(Mat &image, int flag)
     return this->read(image, flag);
 }
 
+bool Camera::startRecord()
+{
+    return this->sensor->CaptureVideo(CAMERA_DEFAULT_FRAME_WIDTH, CAMERA_DEFAULT_FRAME_HEIGHT);
+}
+
+bool Camera::stopRecord()
+{
+    return this->sensor->SequencerCmd(MT9D111_DRIVER_VAR_SEQUENCER_CMD_DO_PREVIEW);
+}
+
 //! \} End of camera group

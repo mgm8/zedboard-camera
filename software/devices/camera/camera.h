@@ -220,6 +220,20 @@ class Camera
          * \return True in case of success.
          */
         bool capture(cv::Mat &image, int flag=CAPTURER_FORMAT_GRAY8);
+
+        /**
+         * \brief Enables the video capture mode in the sensor.
+         *
+         * \return True in case of success.
+         */
+        bool startRecord();
+
+        /**
+         * \brief Disables the video capture mode in the sensor.
+         *
+         * \return True in case of success.
+         */
+        bool stopRecord();
 };
 
 #endif // CAMERA_H_
