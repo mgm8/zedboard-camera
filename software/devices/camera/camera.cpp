@@ -329,4 +329,13 @@ bool Camera::set(int propid, double value)
     }
 }
 
+bool Camera::capture(Mat &image, int flag)
+{
+    this->sensor->CaptureStillPicture(CAMERA_DEFAULT_FRAME_WIDTH, CAMERA_DEFAULT_FRAME_HEIGHT, 100);
+
+    sleep(2);
+
+    return this->read(image, flag);
+}
+
 //! \} End of camera group

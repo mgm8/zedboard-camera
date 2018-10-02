@@ -210,6 +210,16 @@ class Camera
          * \return True in case of success.
          */
         bool set(int propid, double value);
+
+        /**
+         * \brief Captures an still image.
+         *
+         * \param[out] image is an image from the camera device.
+         * \param[in] flag is the image format.
+         *
+         * \return True in case of success.
+         */
+        bool capture(cv::Mat &image, int flag=CAPTURER_FORMAT_GRAY8);
 };
 
 #endif // CAMERA_H_
