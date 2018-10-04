@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0xB79B4F7388F9B51A" bd:device="xc7z020clg484-1" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2018.1" bd:top="design_1" bd:version="1.00.a">
+<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0xB79B4F735EC52BE2" bd:device="xc7z020clg484-1" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2018.1" bd:top="design_1" bd:version="1.00.a">
 
   <spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
     <spirit:vendor>xilinx.com</spirit:vendor>
@@ -234,7 +234,7 @@
             <spirit:value>10000000</spirit:value>
             <spirit:vendorExtensions>
               <bd:configElementInfos>
-                <bd:configElementInfo bd:valueSource="user"/>
+                <bd:configElementInfo bd:valueSource="ip_prop"/>
               </bd:configElementInfos>
             </spirit:vendorExtensions>
           </spirit:parameter>
@@ -678,17 +678,6 @@
         </spirit:configurableElementValues>
       </spirit:componentInstance>
       <spirit:componentInstance>
-        <spirit:instanceName>CSI_RX_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="module_ref" spirit:name="CSI_RX" spirit:vendor="xilinx.com" spirit:version="1.0"/>
-        <spirit:configurableElementValues>
-          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_CSI_RX_0_0</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="bd:referenceName">CSI_RX</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="bd:subInstancePath"></spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="bd:referenceType">hdl</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="bd:BoundaryCRC">0x0</spirit:configurableElementValue>
-        </spirit:configurableElementValues>
-      </spirit:componentInstance>
-      <spirit:componentInstance>
         <spirit:instanceName>axi_interface_0</spirit:instanceName>
         <spirit:componentRef spirit:library="user" spirit:name="axi_interface" spirit:vendor="user.org" spirit:version="2.37a"/>
         <spirit:configurableElementValues>
@@ -737,6 +726,50 @@
           <spirit:configurableElementValue spirit:referenceId="CONST_VAL">0</spirit:configurableElementValue>
         </spirit:configurableElementValues>
       </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>CSI_RX_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="module_ref" spirit:name="CSI_RX" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_CSI_RX_0_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceName">CSI_RX</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:subInstancePath"></spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceType">hdl</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:BoundaryCRC">0x0</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>DFlipFlop_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="module_ref" spirit:name="DFlipFlop" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_DFlipFlop_0_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceName">DFlipFlop</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:subInstancePath"></spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceType">hdl</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:BoundaryCRC">0x0</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>DFlipFlop_1</spirit:instanceName>
+        <spirit:componentRef spirit:library="module_ref" spirit:name="DFlipFlop" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_DFlipFlop_1_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceName">DFlipFlop</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:subInstancePath"></spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceType">hdl</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:BoundaryCRC">0x0</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>DFlipFlop_2</spirit:instanceName>
+        <spirit:componentRef spirit:library="module_ref" spirit:name="DFlipFlop" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_DFlipFlop_2_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceName">DFlipFlop</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:subInstancePath"></spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceType">hdl</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:BoundaryCRC">0x0</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
     </spirit:componentInstances>
     <spirit:interconnections>
       <spirit:interconnection>
@@ -775,14 +808,15 @@
         <spirit:name>processing_system7_0_FCLK_CLK0</spirit:name>
         <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="FCLK_CLK0"/>
         <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="M_AXI_GP0_ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="S00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="rst_ps7_0_100M" spirit:portRef="slowest_sync_clk"/>
         <spirit:internalPortReference spirit:componentRef="axi_gpio_0" spirit:portRef="s_axi_aclk"/>
+        <spirit:internalPortReference spirit:componentRef="axi_gpio_1" spirit:portRef="s_axi_aclk"/>
+        <spirit:internalPortReference spirit:componentRef="axi_interface_0" spirit:portRef="s00_axi_aclk"/>
+        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="clkb"/>
+        <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="S00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="axi_gpio_1" spirit:portRef="s_axi_aclk"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M01_ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="axi_interface_0" spirit:portRef="s00_axi_aclk"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M02_ACLK"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
@@ -793,24 +827,18 @@
       <spirit:adHocConnection>
         <spirit:name>rst_ps7_0_100M_peripheral_aresetn</spirit:name>
         <spirit:internalPortReference spirit:componentRef="rst_ps7_0_100M" spirit:portRef="peripheral_aresetn"/>
-        <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="S00_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_gpio_0" spirit:portRef="s_axi_aresetn"/>
-        <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M00_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_gpio_1" spirit:portRef="s_axi_aresetn"/>
-        <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M01_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_interface_0" spirit:portRef="s00_axi_aresetn"/>
+        <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="S00_ARESETN"/>
+        <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M00_ARESETN"/>
+        <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M01_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M02_ARESETN"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>rst_ps7_0_100M_interconnect_aresetn</spirit:name>
         <spirit:internalPortReference spirit:componentRef="rst_ps7_0_100M" spirit:portRef="interconnect_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="ARESETN"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>CSI_RX_0_data_clk</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="CSI_RX_0" spirit:portRef="data_clk"/>
-        <spirit:internalPortReference spirit:componentRef="Counter_0" spirit:portRef="clk"/>
-        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="clka"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>CSI_RX_0_data_out</spirit:name>
@@ -823,23 +851,12 @@
         <spirit:internalPortReference spirit:componentRef="CSI_RX_0" spirit:portRef="data_in"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>hsync_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="hsync_0"/>
-        <spirit:internalPortReference spirit:componentRef="CSI_RX_0" spirit:portRef="hsync"/>
-        <spirit:internalPortReference spirit:componentRef="Counter_0" spirit:portRef="en"/>
-        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="ena"/>
-        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="wea"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>pclk_0_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="pclk_0"/>
         <spirit:internalPortReference spirit:componentRef="CSI_RX_0" spirit:portRef="pclk"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>vsync_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="vsync_0"/>
-        <spirit:internalPortReference spirit:componentRef="CSI_RX_0" spirit:portRef="vsync"/>
-        <spirit:internalPortReference spirit:componentRef="Counter_0" spirit:portRef="rst"/>
+        <spirit:internalPortReference spirit:componentRef="DFlipFlop_0" spirit:portRef="clk"/>
+        <spirit:internalPortReference spirit:componentRef="DFlipFlop_1" spirit:portRef="clk"/>
+        <spirit:internalPortReference spirit:componentRef="DFlipFlop_2" spirit:portRef="clk"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>Counter_0_count</spirit:name>
@@ -855,11 +872,6 @@
         <spirit:name>xlslice_0_Dout</spirit:name>
         <spirit:internalPortReference spirit:componentRef="xlslice_0" spirit:portRef="Dout"/>
         <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="addrb"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>axi_interface_0_read_enable</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="axi_interface_0" spirit:portRef="read_enable"/>
-        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="clkb"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>axi_interface_0_data_out_1</spirit:name>
@@ -892,6 +904,41 @@
         <spirit:name>blk_mem_gen_0_doutb</spirit:name>
         <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="doutb"/>
         <spirit:internalPortReference spirit:componentRef="xlconcat_0" spirit:portRef="In0"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>CSI_RX_0_data_clk</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="CSI_RX_0" spirit:portRef="data_clk"/>
+        <spirit:internalPortReference spirit:componentRef="DFlipFlop_0" spirit:portRef="data_in"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>DFlipFlop_2_output</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="DFlipFlop_0" spirit:portRef="data_out"/>
+        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="clka"/>
+        <spirit:internalPortReference spirit:componentRef="Counter_0" spirit:portRef="clk"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>vsync_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="vsync_0"/>
+        <spirit:internalPortReference spirit:componentRef="CSI_RX_0" spirit:portRef="vsync"/>
+        <spirit:internalPortReference spirit:componentRef="DFlipFlop_1" spirit:portRef="data_in"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>hsync_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="hsync_0"/>
+        <spirit:internalPortReference spirit:componentRef="CSI_RX_0" spirit:portRef="hsync"/>
+        <spirit:internalPortReference spirit:componentRef="DFlipFlop_2" spirit:portRef="data_in"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>DFlipFlop_1_output</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="DFlipFlop_2" spirit:portRef="data_out"/>
+        <spirit:internalPortReference spirit:componentRef="Counter_0" spirit:portRef="en"/>
+        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="ena"/>
+        <spirit:internalPortReference spirit:componentRef="blk_mem_gen_0" spirit:portRef="wea"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>DFlipFlop_1_data_out</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="DFlipFlop_1" spirit:portRef="data_out"/>
+        <spirit:internalPortReference spirit:componentRef="Counter_0" spirit:portRef="rst"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
     <spirit:hierConnections>

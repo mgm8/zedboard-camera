@@ -1,7 +1,7 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
---Date        : Wed Sep 26 17:16:40 2018
+--Date        : Thu Oct  4 11:55:29 2018
 --Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 --Command     : generate_target design_1_wrapper.bd
 --Design      : design_1_wrapper
@@ -71,20 +71,20 @@ architecture STRUCTURE of design_1_wrapper is
     FIXED_IO_ps_srstb : inout STD_LOGIC;
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
-    sys_clock : in STD_LOGIC;
-    xclk_0 : out STD_LOGIC;
     reset_0_tri_o : out STD_LOGIC_VECTOR ( 0 to 0 );
     standby_0_tri_o : out STD_LOGIC_VECTOR ( 0 to 0 );
-    data_in_0 : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    hsync_0 : in STD_LOGIC;
-    pclk_0 : in STD_LOGIC;
-    vsync_0 : in STD_LOGIC;
     IIC_0_0_sda_i : in STD_LOGIC;
     IIC_0_0_sda_o : out STD_LOGIC;
     IIC_0_0_sda_t : out STD_LOGIC;
     IIC_0_0_scl_i : in STD_LOGIC;
     IIC_0_0_scl_o : out STD_LOGIC;
-    IIC_0_0_scl_t : out STD_LOGIC
+    IIC_0_0_scl_t : out STD_LOGIC;
+    sys_clock : in STD_LOGIC;
+    xclk_0 : out STD_LOGIC;
+    data_in_0 : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    hsync_0 : in STD_LOGIC;
+    pclk_0 : in STD_LOGIC;
+    vsync_0 : in STD_LOGIC
   );
   end component design_1;
   component IOBUF is

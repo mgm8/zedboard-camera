@@ -40,7 +40,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 
 # The design that will be created by this Tcl script contains the following 
 # module references:
-# CSI_RX, Counter
+# CSI_RX, Counter, DFlipFlop, DFlipFlop, DFlipFlop
 
 # Please add the sources of those modules before sourcing this Tcl script.
 
@@ -180,9 +180,6 @@ proc create_root_design { parentCell } {
  ] $sys_clock
   set vsync_0 [ create_bd_port -dir I vsync_0 ]
   set xclk_0 [ create_bd_port -dir O -type clk xclk_0 ]
-  set_property -dict [ list \
-   CONFIG.FREQ_HZ {10000000} \
- ] $xclk_0
 
   # Create instance: CSI_RX_0, and set properties
   set block_name CSI_RX
@@ -209,6 +206,39 @@ proc create_root_design { parentCell } {
    CONFIG.MAX_COUNT {479999} \
  ] $Counter_0
 
+  # Create instance: DFlipFlop_0, and set properties
+  set block_name DFlipFlop
+  set block_cell_name DFlipFlop_0
+  if { [catch {set DFlipFlop_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_msg_id "BD_TCL-105" "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $DFlipFlop_0 eq "" } {
+     catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
+  # Create instance: DFlipFlop_1, and set properties
+  set block_name DFlipFlop
+  set block_cell_name DFlipFlop_1
+  if { [catch {set DFlipFlop_1 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_msg_id "BD_TCL-105" "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $DFlipFlop_1 eq "" } {
+     catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
+  # Create instance: DFlipFlop_2, and set properties
+  set block_name DFlipFlop
+  set block_cell_name DFlipFlop_2
+  if { [catch {set DFlipFlop_2 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_msg_id "BD_TCL-105" "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $DFlipFlop_2 eq "" } {
+     catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
   # Create instance: axi_gpio_0, and set properties
   set axi_gpio_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_gpio_0 ]
   set_property -dict [ list \
@@ -716,23 +746,25 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net ps7_0_axi_periph_M02_AXI [get_bd_intf_pins axi_interface_0/S00_AXI] [get_bd_intf_pins ps7_0_axi_periph/M02_AXI]
 
   # Create port connections
-  connect_bd_net -net CSI_RX_0_data_clk [get_bd_pins CSI_RX_0/data_clk] [get_bd_pins Counter_0/clk] [get_bd_pins blk_mem_gen_0/clka]
+  connect_bd_net -net CSI_RX_0_data_clk [get_bd_pins CSI_RX_0/data_clk] [get_bd_pins DFlipFlop_0/data_in]
   connect_bd_net -net CSI_RX_0_data_out [get_bd_pins CSI_RX_0/data_out] [get_bd_pins blk_mem_gen_0/dina]
   connect_bd_net -net Counter_0_count [get_bd_pins Counter_0/count] [get_bd_pins blk_mem_gen_0/addra]
+  connect_bd_net -net DFlipFlop_1_data_out [get_bd_pins Counter_0/rst] [get_bd_pins DFlipFlop_1/data_out]
+  connect_bd_net -net DFlipFlop_1_output [get_bd_pins Counter_0/en] [get_bd_pins DFlipFlop_2/data_out] [get_bd_pins blk_mem_gen_0/ena] [get_bd_pins blk_mem_gen_0/wea]
+  connect_bd_net -net DFlipFlop_2_output [get_bd_pins Counter_0/clk] [get_bd_pins DFlipFlop_0/data_out] [get_bd_pins blk_mem_gen_0/clka]
   connect_bd_net -net axi_interface_0_data_out_0 [get_bd_pins axi_interface_0/data_out_0] [get_bd_pins xlslice_0/Din]
   connect_bd_net -net axi_interface_0_data_out_1 [get_bd_pins axi_interface_0/data_out_1] [get_bd_pins xlslice_1/Din]
-  connect_bd_net -net axi_interface_0_read_enable [get_bd_pins axi_interface_0/read_enable] [get_bd_pins blk_mem_gen_0/clkb]
   connect_bd_net -net blk_mem_gen_0_doutb [get_bd_pins blk_mem_gen_0/doutb] [get_bd_pins xlconcat_0/In0]
   connect_bd_net -net clk_wiz_0_xclk [get_bd_ports xclk_0] [get_bd_pins clk_wiz_0/xclk]
   connect_bd_net -net data_in_0_1 [get_bd_ports data_in_0] [get_bd_pins CSI_RX_0/data_in]
-  connect_bd_net -net hsync_0_1 [get_bd_ports hsync_0] [get_bd_pins CSI_RX_0/hsync] [get_bd_pins Counter_0/en] [get_bd_pins blk_mem_gen_0/ena] [get_bd_pins blk_mem_gen_0/wea]
-  connect_bd_net -net pclk_0_1 [get_bd_ports pclk_0] [get_bd_pins CSI_RX_0/pclk]
-  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins axi_gpio_0/s_axi_aclk] [get_bd_pins axi_gpio_1/s_axi_aclk] [get_bd_pins axi_interface_0/s00_axi_aclk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/M01_ACLK] [get_bd_pins ps7_0_axi_periph/M02_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_100M/slowest_sync_clk]
+  connect_bd_net -net hsync_0_1 [get_bd_ports hsync_0] [get_bd_pins CSI_RX_0/hsync] [get_bd_pins DFlipFlop_2/data_in]
+  connect_bd_net -net pclk_0_1 [get_bd_ports pclk_0] [get_bd_pins CSI_RX_0/pclk] [get_bd_pins DFlipFlop_0/clk] [get_bd_pins DFlipFlop_1/clk] [get_bd_pins DFlipFlop_2/clk]
+  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins axi_gpio_0/s_axi_aclk] [get_bd_pins axi_gpio_1/s_axi_aclk] [get_bd_pins axi_interface_0/s00_axi_aclk] [get_bd_pins blk_mem_gen_0/clkb] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/M01_ACLK] [get_bd_pins ps7_0_axi_periph/M02_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_100M/slowest_sync_clk]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins processing_system7_0/FCLK_RESET0_N] [get_bd_pins rst_ps7_0_100M/ext_reset_in]
   connect_bd_net -net rst_ps7_0_100M_interconnect_aresetn [get_bd_pins ps7_0_axi_periph/ARESETN] [get_bd_pins rst_ps7_0_100M/interconnect_aresetn]
   connect_bd_net -net rst_ps7_0_100M_peripheral_aresetn [get_bd_pins axi_gpio_0/s_axi_aresetn] [get_bd_pins axi_gpio_1/s_axi_aresetn] [get_bd_pins axi_interface_0/s00_axi_aresetn] [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/M01_ARESETN] [get_bd_pins ps7_0_axi_periph/M02_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins rst_ps7_0_100M/peripheral_aresetn]
   connect_bd_net -net sys_clock_1 [get_bd_ports sys_clock] [get_bd_pins clk_wiz_0/clk_in1]
-  connect_bd_net -net vsync_0_1 [get_bd_ports vsync_0] [get_bd_pins CSI_RX_0/vsync] [get_bd_pins Counter_0/rst]
+  connect_bd_net -net vsync_0_1 [get_bd_ports vsync_0] [get_bd_pins CSI_RX_0/vsync] [get_bd_pins DFlipFlop_1/data_in]
   connect_bd_net -net xlconcat_0_dout [get_bd_pins axi_interface_0/data_in_0] [get_bd_pins xlconcat_0/dout]
   connect_bd_net -net xlconstant_0_dout [get_bd_pins axi_interface_0/data_in_1] [get_bd_pins axi_interface_0/data_in_2] [get_bd_pins axi_interface_0/data_in_3] [get_bd_pins xlconstant_0/dout]
   connect_bd_net -net xlconstant_1_dout [get_bd_pins xlconcat_0/In1] [get_bd_pins xlconstant_1/dout]

@@ -1,7 +1,7 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
---Date        : Wed Sep 26 17:16:40 2018
+--Date        : Thu Oct  4 11:55:29 2018
 --Host        : debian-mgm running 64-bit Debian GNU/Linux testing (buster)
 --Command     : generate_target design_1.bd
 --Design      : design_1
@@ -1382,7 +1382,7 @@ entity design_1 is
     xclk_0 : out STD_LOGIC
   );
   attribute CORE_GENERATION_INFO : string;
-  attribute CORE_GENERATION_INFO of design_1 : entity is "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=21,numReposBlks=16,numNonXlnxBlks=1,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=2,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=3,da_board_cnt=1,da_ps7_cnt=1,synth_mode=OOC_per_IP}";
+  attribute CORE_GENERATION_INFO of design_1 : entity is "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=24,numReposBlks=19,numNonXlnxBlks=1,numHierBlks=5,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=5,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=3,da_board_cnt=1,da_ps7_cnt=1,synth_mode=OOC_per_IP}";
   attribute HW_HANDOFF : string;
   attribute HW_HANDOFF of design_1 : entity is "design_1.hwdef";
 end design_1;
@@ -1555,16 +1555,6 @@ architecture STRUCTURE of design_1 is
     count : out STD_LOGIC_VECTOR ( 18 downto 0 )
   );
   end component design_1_Counter_0_0;
-  component design_1_CSI_RX_0_0 is
-  port (
-    pclk : in STD_LOGIC;
-    vsync : in STD_LOGIC;
-    hsync : in STD_LOGIC;
-    data_in : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    data_clk : out STD_LOGIC;
-    data_out : out STD_LOGIC_VECTOR ( 7 downto 0 )
-  );
-  end component design_1_CSI_RX_0_0;
   component design_1_axi_interface_0_0 is
   port (
     data_in_0 : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -1629,14 +1619,47 @@ architecture STRUCTURE of design_1 is
     dout : out STD_LOGIC_VECTOR ( 23 downto 0 )
   );
   end component design_1_xlconstant_1_0;
+  component design_1_CSI_RX_0_0 is
+  port (
+    pclk : in STD_LOGIC;
+    vsync : in STD_LOGIC;
+    hsync : in STD_LOGIC;
+    data_in : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    data_clk : out STD_LOGIC;
+    data_out : out STD_LOGIC_VECTOR ( 7 downto 0 )
+  );
+  end component design_1_CSI_RX_0_0;
+  component design_1_DFlipFlop_0_0 is
+  port (
+    clk : in STD_LOGIC;
+    data_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    data_out : out STD_LOGIC_VECTOR ( 0 to 0 )
+  );
+  end component design_1_DFlipFlop_0_0;
+  component design_1_DFlipFlop_1_0 is
+  port (
+    clk : in STD_LOGIC;
+    data_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    data_out : out STD_LOGIC_VECTOR ( 0 to 0 )
+  );
+  end component design_1_DFlipFlop_1_0;
+  component design_1_DFlipFlop_2_0 is
+  port (
+    clk : in STD_LOGIC;
+    data_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    data_out : out STD_LOGIC_VECTOR ( 0 to 0 )
+  );
+  end component design_1_DFlipFlop_2_0;
   signal CSI_RX_0_data_clk : STD_LOGIC;
   signal CSI_RX_0_data_out : STD_LOGIC_VECTOR ( 7 downto 0 );
   signal Counter_0_count : STD_LOGIC_VECTOR ( 18 downto 0 );
+  signal DFlipFlop_1_data_out : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal DFlipFlop_1_output : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal DFlipFlop_2_output : STD_LOGIC_VECTOR ( 0 to 0 );
   signal axi_gpio_0_GPIO_TRI_O : STD_LOGIC_VECTOR ( 0 to 0 );
   signal axi_gpio_1_GPIO_TRI_O : STD_LOGIC_VECTOR ( 0 to 0 );
   signal axi_interface_0_data_out_0 : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal axi_interface_0_data_out_1 : STD_LOGIC_VECTOR ( 31 downto 0 );
-  signal axi_interface_0_read_enable : STD_LOGIC;
   signal blk_mem_gen_0_doutb : STD_LOGIC_VECTOR ( 7 downto 0 );
   signal clk_wiz_0_xclk : STD_LOGIC;
   signal data_in_0_1 : STD_LOGIC_VECTOR ( 7 downto 0 );
@@ -1771,6 +1794,7 @@ architecture STRUCTURE of design_1 is
   signal xlconstant_1_dout : STD_LOGIC_VECTOR ( 23 downto 0 );
   signal xlslice_0_Dout : STD_LOGIC_VECTOR ( 18 downto 0 );
   signal xlslice_1_Dout : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal NLW_axi_interface_0_read_enable_UNCONNECTED : STD_LOGIC;
   signal NLW_axi_interface_0_write_enable_UNCONNECTED : STD_LOGIC;
   signal NLW_axi_interface_0_data_out_2_UNCONNECTED : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal NLW_axi_interface_0_data_out_3_UNCONNECTED : STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -1817,8 +1841,8 @@ architecture STRUCTURE of design_1 is
   attribute X_INTERFACE_INFO of DDR_dqs_n : signal is "xilinx.com:interface:ddrx:1.0 DDR DQS_N";
   attribute X_INTERFACE_INFO of DDR_dqs_p : signal is "xilinx.com:interface:ddrx:1.0 DDR DQS_P";
   attribute X_INTERFACE_INFO of FIXED_IO_mio : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO MIO";
-  attribute X_INTERFACE_INFO of reset_0_tri_o : signal is "xilinx.com:interface:gpio:1.0 reset_0 ";
-  attribute X_INTERFACE_INFO of standby_0_tri_o : signal is "xilinx.com:interface:gpio:1.0 standby_0 ";
+  attribute X_INTERFACE_INFO of reset_0_tri_o : signal is "xilinx.com:interface:gpio:1.0 reset_0 TRI_O";
+  attribute X_INTERFACE_INFO of standby_0_tri_o : signal is "xilinx.com:interface:gpio:1.0 standby_0 TRI_O";
 begin
   IIC_0_0_scl_o <= processing_system7_0_IIC_0_SCL_O;
   IIC_0_0_scl_t <= processing_system7_0_IIC_0_SCL_T;
@@ -1845,10 +1869,28 @@ CSI_RX_0: component design_1_CSI_RX_0_0
     );
 Counter_0: component design_1_Counter_0_0
      port map (
-      clk => CSI_RX_0_data_clk,
+      clk => DFlipFlop_2_output(0),
       count(18 downto 0) => Counter_0_count(18 downto 0),
-      en => hsync_0_1,
-      rst => vsync_0_1
+      en => DFlipFlop_1_output(0),
+      rst => DFlipFlop_1_data_out(0)
+    );
+DFlipFlop_0: component design_1_DFlipFlop_0_0
+     port map (
+      clk => pclk_0_1,
+      data_in(0) => CSI_RX_0_data_clk,
+      data_out(0) => DFlipFlop_2_output(0)
+    );
+DFlipFlop_1: component design_1_DFlipFlop_1_0
+     port map (
+      clk => pclk_0_1,
+      data_in(0) => vsync_0_1,
+      data_out(0) => DFlipFlop_1_data_out(0)
+    );
+DFlipFlop_2: component design_1_DFlipFlop_2_0
+     port map (
+      clk => pclk_0_1,
+      data_in(0) => hsync_0_1,
+      data_out(0) => DFlipFlop_1_output(0)
     );
 axi_gpio_0: component design_1_axi_gpio_0_0
      port map (
@@ -1906,7 +1948,7 @@ axi_interface_0: component design_1_axi_interface_0_0
       data_out_1(31 downto 0) => axi_interface_0_data_out_1(31 downto 0),
       data_out_2(31 downto 0) => NLW_axi_interface_0_data_out_2_UNCONNECTED(31 downto 0),
       data_out_3(31 downto 0) => NLW_axi_interface_0_data_out_3_UNCONNECTED(31 downto 0),
-      read_enable => axi_interface_0_read_enable,
+      read_enable => NLW_axi_interface_0_read_enable_UNCONNECTED,
       s00_axi_aclk => processing_system7_0_FCLK_CLK0,
       s00_axi_araddr(3 downto 0) => ps7_0_axi_periph_M02_AXI_ARADDR(3 downto 0),
       s00_axi_aresetn => rst_ps7_0_100M_peripheral_aresetn(0),
@@ -1934,13 +1976,13 @@ blk_mem_gen_0: component design_1_blk_mem_gen_0_0
      port map (
       addra(18 downto 0) => Counter_0_count(18 downto 0),
       addrb(18 downto 0) => xlslice_0_Dout(18 downto 0),
-      clka => CSI_RX_0_data_clk,
-      clkb => axi_interface_0_read_enable,
+      clka => DFlipFlop_2_output(0),
+      clkb => processing_system7_0_FCLK_CLK0,
       dina(7 downto 0) => CSI_RX_0_data_out(7 downto 0),
       doutb(7 downto 0) => blk_mem_gen_0_doutb(7 downto 0),
-      ena => hsync_0_1,
+      ena => DFlipFlop_1_output(0),
       enb => xlslice_1_Dout(0),
-      wea(0) => hsync_0_1
+      wea(0) => DFlipFlop_1_output(0)
     );
 clk_wiz_0: component design_1_clk_wiz_0_0
      port map (

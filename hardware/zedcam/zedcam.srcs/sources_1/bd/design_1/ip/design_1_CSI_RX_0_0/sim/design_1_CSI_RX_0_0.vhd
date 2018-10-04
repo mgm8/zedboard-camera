@@ -68,6 +68,9 @@ ARCHITECTURE design_1_CSI_RX_0_0_arch OF design_1_CSI_RX_0_0 IS
   ATTRIBUTE DowngradeIPIdentifiedWarnings : STRING;
   ATTRIBUTE DowngradeIPIdentifiedWarnings OF design_1_CSI_RX_0_0_arch: ARCHITECTURE IS "yes";
   COMPONENT CSI_RX IS
+    GENERIC (
+      DATA_WIDTH : INTEGER
+    );
     PORT (
       pclk : IN STD_LOGIC;
       vsync : IN STD_LOGIC;
@@ -83,6 +86,9 @@ ARCHITECTURE design_1_CSI_RX_0_0_arch OF design_1_CSI_RX_0_0 IS
   ATTRIBUTE X_INTERFACE_INFO OF data_clk: SIGNAL IS "xilinx.com:signal:clock:1.0 data_clk CLK";
 BEGIN
   U0 : CSI_RX
+    GENERIC MAP (
+      DATA_WIDTH => 8
+    )
     PORT MAP (
       pclk => pclk,
       vsync => vsync,

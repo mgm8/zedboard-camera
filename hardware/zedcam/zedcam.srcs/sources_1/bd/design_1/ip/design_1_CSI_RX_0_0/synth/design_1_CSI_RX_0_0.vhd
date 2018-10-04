@@ -68,6 +68,9 @@ ARCHITECTURE design_1_CSI_RX_0_0_arch OF design_1_CSI_RX_0_0 IS
   ATTRIBUTE DowngradeIPIdentifiedWarnings : STRING;
   ATTRIBUTE DowngradeIPIdentifiedWarnings OF design_1_CSI_RX_0_0_arch: ARCHITECTURE IS "yes";
   COMPONENT CSI_RX IS
+    GENERIC (
+      DATA_WIDTH : INTEGER
+    );
     PORT (
       pclk : IN STD_LOGIC;
       vsync : IN STD_LOGIC;
@@ -82,13 +85,16 @@ ARCHITECTURE design_1_CSI_RX_0_0_arch OF design_1_CSI_RX_0_0 IS
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF design_1_CSI_RX_0_0_arch : ARCHITECTURE IS "design_1_CSI_RX_0_0,CSI_RX,{}";
   ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF design_1_CSI_RX_0_0_arch: ARCHITECTURE IS "design_1_CSI_RX_0_0,CSI_RX,{x_ipProduct=Vivado 2018.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=CSI_RX,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL}";
+  ATTRIBUTE CORE_GENERATION_INFO OF design_1_CSI_RX_0_0_arch: ARCHITECTURE IS "design_1_CSI_RX_0_0,CSI_RX,{x_ipProduct=Vivado 2018.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=CSI_RX,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VHDL,x_ipSimLanguage=VHDL,DATA_WIDTH=8}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER OF data_clk: SIGNAL IS "XIL_INTERFACENAME data_clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_CSI_RX_0_0_data_clk";
   ATTRIBUTE X_INTERFACE_INFO OF data_clk: SIGNAL IS "xilinx.com:signal:clock:1.0 data_clk CLK";
 BEGIN
   U0 : CSI_RX
+    GENERIC MAP (
+      DATA_WIDTH => 8
+    )
     PORT MAP (
       pclk => pclk,
       vsync => vsync,
